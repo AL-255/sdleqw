@@ -1,0 +1,467 @@
+# chunk 08 — tests 264..296
+WAIT 100
+SNAP boot
+
+# Test 264: sqrt_2_after keys='2@'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 2
+TAP R
+WAIT 20
+SNAP sqrt_2_after
+TAP ON
+WAIT 15
+
+# Test 265: sqrt_3_after keys='3@'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 3
+TAP R
+WAIT 20
+SNAP sqrt_3_after
+TAP ON
+WAIT 15
+
+# Test 266: sqrt_then_2 keys='@2'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP 2
+WAIT 20
+SNAP sqrt_then_2
+TAP ON
+WAIT 15
+
+# Test 267: sqrt_then_4 keys='@4'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP 4
+WAIT 20
+SNAP sqrt_then_4
+TAP ON
+WAIT 15
+
+# Test 268: sqrt_X_squared keys='@X^2'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP X
+TAP Q
+TAP 2
+WAIT 20
+SNAP sqrt_X_squared
+TAP ON
+WAIT 15
+
+# Test 269: sqrt_then_sum keys='@1+1'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP 1
+TAP PLUS
+TAP 1
+WAIT 20
+SNAP sqrt_then_sum
+TAP ON
+WAIT 15
+
+# Test 270: sqrt_X_plus_Y keys='@X+Y'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP X
+TAP PLUS
+TAP ALPHA
+TAP Y
+WAIT 20
+SNAP sqrt_X_plus_Y
+TAP ON
+WAIT 15
+
+# Test 271: sqrt_a_div_b keys='@A/B'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP ALPHA
+TAP A
+TAP Z
+TAP ALPHA
+TAP B
+WAIT 20
+SNAP sqrt_a_div_b
+TAP ON
+WAIT 15
+
+# Test 272: sqrt_X_plus_1 keys='@X+1'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP X
+TAP PLUS
+TAP 1
+WAIT 20
+SNAP sqrt_X_plus_1
+TAP ON
+WAIT 15
+
+# Test 273: sqrt_PI keys='@PI'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP ALPHA
+TAP P
+TAP ALPHA
+TAP I
+WAIT 20
+SNAP sqrt_PI
+TAP ON
+WAIT 15
+
+# Test 274: sqrt_long keys='@VARIABLE'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP ALPHA
+TAP V
+TAP ALPHA
+TAP A
+TAP ALPHA
+TAP R
+TAP ALPHA
+TAP I
+TAP ALPHA
+TAP A
+TAP ALPHA
+TAP B
+TAP ALPHA
+TAP L
+TAP ALPHA
+TAP E
+WAIT 20
+SNAP sqrt_long
+TAP ON
+WAIT 15
+
+# Test 275: sqrt_in_div keys='@4/2'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP 4
+TAP Z
+TAP 2
+WAIT 20
+SNAP sqrt_in_div
+TAP ON
+WAIT 15
+
+# Test 276: sqrt_R keys='@R'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP ALPHA
+TAP R
+WAIT 20
+SNAP sqrt_R
+TAP ON
+WAIT 15
+
+# Test 277: sqrt_t keys='@t'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP ALPHA
+TAP T
+WAIT 20
+SNAP sqrt_t
+TAP ON
+WAIT 15
+
+# Test 278: sqrt_after_n keys='@n'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP ALPHA
+TAP N
+WAIT 20
+SNAP sqrt_after_n
+TAP ON
+WAIT 15
+
+# Test 279: sqrt_after_long_name keys='@ALPHA'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP ALPHA
+TAP A
+TAP ALPHA
+TAP L
+TAP ALPHA
+TAP P
+TAP ALPHA
+TAP H
+TAP ALPHA
+TAP A
+WAIT 20
+SNAP sqrt_after_long_name
+TAP ON
+WAIT 15
+
+# Test 280: sqrt_after_minus keys='-@4'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP MINUS
+TAP R
+TAP 4
+WAIT 20
+SNAP sqrt_after_minus
+TAP ON
+WAIT 15
+
+# Test 281: nthroot_3_X keys='#3$rX'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP 3
+TAP RIGHT
+TAP X
+WAIT 20
+SNAP nthroot_3_X
+TAP ON
+WAIT 15
+
+# Test 282: nthroot_2_4 keys='#2$r4'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP 2
+TAP RIGHT
+TAP 4
+WAIT 20
+SNAP nthroot_2_4
+TAP ON
+WAIT 15
+
+# Test 283: nthroot_3_8 keys='#3$r8'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP 3
+TAP RIGHT
+TAP 8
+WAIT 20
+SNAP nthroot_3_8
+TAP ON
+WAIT 15
+
+# Test 284: nthroot_4_16 keys='#4$r16'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP 4
+TAP RIGHT
+TAP 1
+TAP 6
+WAIT 20
+SNAP nthroot_4_16
+TAP ON
+WAIT 15
+
+# Test 285: nthroot_5_X keys='#5$rX'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP 5
+TAP RIGHT
+TAP X
+WAIT 20
+SNAP nthroot_5_X
+TAP ON
+WAIT 15
+
+# Test 286: nthroot_n_X keys='#n$rX'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP ALPHA
+TAP N
+TAP RIGHT
+TAP X
+WAIT 20
+SNAP nthroot_n_X
+TAP ON
+WAIT 15
+
+# Test 287: nthroot_3_a keys='#3$ra'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP 3
+TAP RIGHT
+TAP ALPHA
+TAP A
+WAIT 20
+SNAP nthroot_3_a
+TAP ON
+WAIT 15
+
+# Test 288: nthroot_X_2 keys='#X$r2'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP X
+TAP RIGHT
+TAP 2
+WAIT 20
+SNAP nthroot_X_2
+TAP ON
+WAIT 15
+
+# Test 289: nthroot_2_X_squared keys='#2$rX^2'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP 2
+TAP RIGHT
+TAP X
+TAP Q
+TAP 2
+WAIT 20
+SNAP nthroot_2_X_squared
+TAP ON
+WAIT 15
+
+# Test 290: nthroot_n_2 keys='#n$r2'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP R
+TAP ALPHA
+TAP N
+TAP RIGHT
+TAP 2
+WAIT 20
+SNAP nthroot_n_2
+TAP ON
+WAIT 15
+
+# Test 291: paren_around_X keys='X('
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP LEFTSHIFT
+TAP Z
+WAIT 20
+SNAP paren_around_X
+TAP ON
+WAIT 15
+
+# Test 292: paren_around_5 keys='5('
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP LEFTSHIFT
+TAP Z
+WAIT 20
+SNAP paren_around_5
+TAP ON
+WAIT 15
+
+# Test 293: paren_around_a_plus_b keys='A+B('
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP ALPHA
+TAP A
+TAP PLUS
+TAP ALPHA
+TAP B
+TAP LEFTSHIFT
+TAP Z
+WAIT 20
+SNAP paren_around_a_plus_b
+TAP ON
+WAIT 15
+
+# Test 294: paren_around_X_div_Y keys='X/Y('
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP Z
+TAP ALPHA
+TAP Y
+TAP LEFTSHIFT
+TAP Z
+WAIT 20
+SNAP paren_around_X_div_Y
+TAP ON
+WAIT 15
+
+# Test 295: paren_double keys='X(('
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP LEFTSHIFT
+TAP Z
+TAP LEFTSHIFT
+TAP Z
+WAIT 20
+SNAP paren_double
+TAP ON
+WAIT 15
+
+# Test 296: paren_then_op keys='X(+1'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP LEFTSHIFT
+TAP Z
+TAP PLUS
+TAP 1
+WAIT 20
+SNAP paren_then_op
+TAP ON
+WAIT 15
+
+QUIT

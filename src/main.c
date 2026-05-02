@@ -133,6 +133,170 @@ static int translate_key(SDL_Keysym ks, eqw_key *out)
     return 0;
 }
 
+/* ============================================================
+ * Scripted batch mode (--batch FILE --snap-prefix PATH).
+ *
+ * Script syntax (one command per line; '#' = comment):
+ *   RESET           # blank EQW (initial state: edit on placeholder)
+ *   KEYS <chars>    # feed key chars to eqw (mini-language; see below)
+ *   ENTER_EQW       # no-op for sdleqw (we start in EQW); for x50ng compat
+ *   EXIT_EQW        # send ON (esc) so subsequent RESET starts fresh
+ *   SNAP <name>     # write /prefix_<name>.pgm
+ *   NAME <s>        # tag for next SNAP
+ *   COMMENT <s>     # ignored
+ *   QUIT
+ *
+ * KEYS mini-language (sdleqw side):
+ *   digits/letters: literal char insertion (alpha-locked already)
+ *   '+', '-', '*', '/': binary ops
+ *   '^': power
+ *   '@': sqrt;   '#': nth-root
+ *   '(': parens; '|': abs
+ *   '$I': integral; '$S': sum; '$D': derivative; '$W': where
+ *   '$C': complex; '$U': promote NAME -> userfunc
+ *   ',': next arg
+ *   '$l/$r/$u/$k': arrows; '$e': ENTER; '$x': ESC; '$b': BACKSPACE; '$t': TAB
+ *   '$D': DEL; '$K': CLEAR; '$L': CLEAR-ALL-BUT
+ *   '$z': zoom; '$s/$c/$T/$n/$X/$g/$a': prefix-fns SIN/COS/TAN/LN/EXP/LOG/ABS
+ * ============================================================ */
+
+#include <ctype.h>
+
+static void send_eqw(eqw_t *e, eqw_keycode k, int ch)
+{
+    eqw_key key = { 0 };
+    key.k = k;
+    key.ch = ch;
+    eqw_handle(e, &key);
+}
+
+static int feed_keys(eqw_t *e, const char *s)
+{
+    while (*s) {
+        char c = *s++;
+        if (c == '$') {
+            char esc = *s++;
+            switch (esc) {
+            case 'l': send_eqw(e, EQW_K_LEFT, 0); break;
+            case 'r': send_eqw(e, EQW_K_RIGHT, 0); break;
+            case 'u': send_eqw(e, EQW_K_UP, 0); break;
+            case 'k': send_eqw(e, EQW_K_DOWN, 0); break;
+            case 'e': send_eqw(e, EQW_K_ENTER, 0); break;
+            case 'x': send_eqw(e, EQW_K_ESC, 0); break;
+            case 'b': send_eqw(e, EQW_K_BACKSPACE, 0); break;
+            case 't': send_eqw(e, EQW_K_TAB, 0); break;
+            case 'D': send_eqw(e, EQW_K_DEL, 0); break;
+            case 'K': send_eqw(e, EQW_K_CLEAR, 0); break;
+            case 'L': { eqw_key K = {0}; K.k = EQW_K_CLEAR; K.shift = 1; eqw_handle(e, &K); break; }
+            case 'z': send_eqw(e, EQW_K_ZOOM, 0); break;
+            case 's': send_eqw(e, EQW_K_FUNC_SIN, 0); break;
+            case 'c': send_eqw(e, EQW_K_FUNC_COS, 0); break;
+            case 'T': send_eqw(e, EQW_K_FUNC_TAN, 0); break;
+            case 'n': send_eqw(e, EQW_K_FUNC_LN, 0); break;
+            case 'X': send_eqw(e, EQW_K_FUNC_EXP, 0); break;
+            case 'g': send_eqw(e, EQW_K_FUNC_LOG, 0); break;
+            case 'a': send_eqw(e, EQW_K_FUNC_ABS, 0); break;
+            case 'I': send_eqw(e, EQW_K_INTEG, 0); break;
+            case 'S': send_eqw(e, EQW_K_SUM, 0); break;
+            case 'P': send_eqw(e, EQW_K_DERIV, 0); break;
+            case 'W': send_eqw(e, EQW_K_WHERE, 0); break;
+            case 'Z': send_eqw(e, EQW_K_CMPLX, 0); break;
+            case 'F': send_eqw(e, EQW_K_USERFUNC, 0); break;
+            default:
+                fprintf(stderr, "feed_keys: unknown $%c\n", esc);
+                return -1;
+            }
+            continue;
+        }
+        switch (c) {
+        case '+': send_eqw(e, EQW_K_PLUS, 0); break;
+        case '-': send_eqw(e, EQW_K_MINUS, 0); break;
+        case '*': send_eqw(e, EQW_K_MUL, 0); break;
+        case '/': send_eqw(e, EQW_K_DIV, 0); break;
+        case '^': send_eqw(e, EQW_K_POW, 0); break;
+        case '@': send_eqw(e, EQW_K_SQRT, 0); break;
+        case '#': send_eqw(e, EQW_K_NTHROOT, 0); break;
+        case '(': send_eqw(e, EQW_K_PAREN, 0); break;
+        case '|': send_eqw(e, EQW_K_ABS, 0); break;
+        case ',': send_eqw(e, EQW_K_COMMA, 0); break;
+        case ' ': send_eqw(e, EQW_K_COMMA, 0); break;
+        default:
+            if (isalnum((unsigned char)c) || c == '.' || c == '_') {
+                send_eqw(e, EQW_K_CHAR, (unsigned char)c);
+            } else {
+                fprintf(stderr, "feed_keys: unknown '%c' (0x%02x)\n",
+                        c, (unsigned)(unsigned char)c);
+                return -1;
+            }
+            break;
+        }
+    }
+    return 0;
+}
+
+static void save_pgm(eqw_t *e, const char *path)
+{
+    bitmap_t *bm = bm_new(LCD_W, LCD_H);
+    eqw_render(e, bm, 0);
+    FILE *f = fopen(path, "wb");
+    if (!f) { perror(path); bm_free(bm); return; }
+    fprintf(f, "P5\n%d %d\n255\n", LCD_W, LCD_H);
+    for (int y = 0; y < LCD_H; y++)
+        for (int x = 0; x < LCD_W; x++)
+            fputc(bm_get(bm, x, y) ? 0x1A : 0xC0, f);
+    fclose(f);
+    bm_free(bm);
+}
+
+static int run_batch(const char *script_path, const char *snap_prefix)
+{
+    FILE *fp = fopen(script_path, "r");
+    if (!fp) { perror(script_path); return 1; }
+    eqw_t *e = eqw_new();
+    char line[1024];
+    char tag[256] = "";
+    int snap_idx = 0;
+    int line_no = 0;
+    while (fgets(line, sizeof(line), fp)) {
+        line_no++;
+        char *p = line;
+        while (*p && isspace((unsigned char)*p)) p++;
+        if (!*p || *p == '#') continue;
+        size_t n = strlen(p);
+        while (n > 0 && (p[n-1] == '\n' || p[n-1] == '\r')) p[--n] = 0;
+
+        char *cmd = strtok(p, " \t");
+        char *arg = strtok(NULL, "");
+        if (!cmd) continue;
+
+        if (!strcmp(cmd, "RESET")) {
+            eqw_free(e);
+            e = eqw_new();
+        } else if (!strcmp(cmd, "ENTER_EQW") || !strcmp(cmd, "EXIT_EQW") ||
+                   !strcmp(cmd, "COMMENT")) {
+            /* no-op for sdleqw */
+        } else if (!strcmp(cmd, "KEYS")) {
+            if (arg) feed_keys(e, arg);
+        } else if (!strcmp(cmd, "NAME")) {
+            if (arg) { strncpy(tag, arg, sizeof(tag) - 1); tag[sizeof(tag) - 1] = 0; }
+        } else if (!strcmp(cmd, "SNAP")) {
+            const char *name = arg ? arg : (tag[0] ? tag : "snap");
+            char path[1024];
+            snprintf(path, sizeof(path), "%s_%04d_%s.pgm",
+                     snap_prefix ? snap_prefix : "snap", snap_idx++, name);
+            save_pgm(e, path);
+            tag[0] = 0;
+        } else if (!strcmp(cmd, "QUIT")) {
+            break;
+        } else {
+            fprintf(stderr, "%s:%d: unknown command '%s'\n", script_path, line_no, cmd);
+        }
+    }
+    fclose(fp);
+    eqw_free(e);
+    return 0;
+}
+
 /* Headless render: build expression N, render once to a 131x80 PGM. */
 static int render_to_pgm(const char *path, int demo_idx)
 {
@@ -208,12 +372,18 @@ int main(int argc, char **argv)
 {
     int headless = 0;
     const char *out_path = NULL;
+    const char *batch_path = NULL;
+    const char *snap_prefix = "/tmp/sdleqw";
     int demo = 0;
     int demo_idx = 0;
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "--render") && i + 1 < argc) {
             out_path = argv[++i];
             headless = 1;
+        } else if (!strcmp(argv[i], "--batch") && i + 1 < argc) {
+            batch_path = argv[++i];
+        } else if (!strcmp(argv[i], "--snap-prefix") && i + 1 < argc) {
+            snap_prefix = argv[++i];
         } else if (!strcmp(argv[i], "--demo") && i + 1 < argc &&
                    argv[i+1][0] >= '0' && argv[i+1][0] <= '9') {
             demo = 1;
@@ -222,14 +392,17 @@ int main(int argc, char **argv)
             demo = 1;
         } else if (!strcmp(argv[i], "--help") || !strcmp(argv[i], "-h")) {
             fprintf(stderr,
-                "Usage: %s [--demo [N]] [--render path.pgm]\n"
-                "  --demo [N]   start with demo N loaded (0..%d)\n"
-                "  --render P   headless: render selected demo to P (PGM)\n",
+                "Usage: %s [--demo [N]] [--render path.pgm] [--batch SCRIPT --snap-prefix PFX]\n"
+                "  --demo [N]            start with demo N loaded (0..%d)\n"
+                "  --render P            headless: render selected demo to P (PGM)\n"
+                "  --batch SCRIPT        run script and write SNAPs to <PFX>_NNNN_<name>.pgm\n"
+                "  --snap-prefix PFX     path prefix for SNAP outputs (default /tmp/sdleqw)\n",
                 argv[0], eqw_demo_count() - 1);
             return 0;
         }
     }
 
+    if (batch_path) return run_batch(batch_path, snap_prefix);
     if (headless) return render_to_pgm(out_path, demo_idx);
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {

@@ -1,0 +1,509 @@
+# chunk 14 — tests 462..494
+WAIT 100
+SNAP boot
+
+# Test 462: nav_simple_left keys='5+3$l$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP LEFT
+TAP LEFT
+WAIT 20
+SNAP nav_simple_left
+TAP ON
+WAIT 15
+
+# Test 463: nav_up_in_div keys='1/2$u$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 1
+TAP Z
+TAP 2
+TAP UP
+TAP UP
+WAIT 20
+SNAP nav_up_in_div
+TAP ON
+WAIT 15
+
+# Test 464: nav_down_in_div keys='1/2$k$k'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 1
+TAP Z
+TAP 2
+TAP DOWN
+TAP DOWN
+WAIT 20
+SNAP nav_down_in_div
+TAP ON
+WAIT 15
+
+# Test 465: nav_around_pow keys='X^2$u$k'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP Q
+TAP 2
+TAP UP
+TAP DOWN
+WAIT 20
+SNAP nav_around_pow
+TAP ON
+WAIT 15
+
+# Test 466: nav_around_sqrt keys='@X$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP X
+TAP UP
+WAIT 20
+SNAP nav_around_sqrt
+TAP ON
+WAIT 15
+
+# Test 467: nav_in_func keys='X$s$k'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP S
+TAP DOWN
+WAIT 20
+SNAP nav_in_func
+TAP ON
+WAIT 15
+
+# Test 468: nav_in_func_args keys='F$FX,Y$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP ALPHA
+TAP F
+TAP LEFTSHIFT
+TAP Z
+TAP X
+TAP SPACE
+TAP ALPHA
+TAP Y
+TAP LEFT
+WAIT 20
+SNAP nav_in_func_args
+TAP ON
+WAIT 15
+
+# Test 469: nav_around_paren keys='X+Y($u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP PLUS
+TAP ALPHA
+TAP Y
+TAP LEFTSHIFT
+TAP Z
+TAP UP
+WAIT 20
+SNAP nav_around_paren
+TAP ON
+WAIT 15
+
+# Test 470: nav_through_complex keys='3$Z4$l$r'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 3
+TAP LEFTSHIFT
+TAP PERIOD
+TAP 4
+TAP LEFT
+TAP RIGHT
+WAIT 20
+SNAP nav_through_complex
+TAP ON
+WAIT 15
+
+# Test 471: nav_in_integ keys='$I0$rX$rX$rX$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP U
+TAP 0
+TAP RIGHT
+TAP X
+TAP RIGHT
+TAP X
+TAP RIGHT
+TAP X
+TAP LEFT
+WAIT 20
+SNAP nav_in_integ
+TAP ON
+WAIT 15
+
+# Test 472: nav_in_sum keys='$Sk$r1$rn$rk$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP RIGHTSHIFT
+TAP S
+TAP ALPHA
+TAP K
+TAP RIGHT
+TAP 1
+TAP RIGHT
+TAP ALPHA
+TAP N
+TAP RIGHT
+TAP ALPHA
+TAP K
+TAP LEFT
+WAIT 20
+SNAP nav_in_sum
+TAP ON
+WAIT 15
+
+# Test 473: nav_through_long_expr keys='5+3*4$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP MULTIPLY
+TAP 4
+TAP LEFT
+WAIT 20
+SNAP nav_through_long_expr
+TAP ON
+WAIT 15
+
+# Test 474: nav_after_left keys='5+3$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP LEFT
+WAIT 20
+SNAP nav_after_left
+TAP ON
+WAIT 15
+
+# Test 475: nav_after_right keys='5+3$r'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP RIGHT
+WAIT 20
+SNAP nav_after_right
+TAP ON
+WAIT 15
+
+# Test 476: nav_after_two_lefts keys='5+3$l$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP LEFT
+TAP LEFT
+WAIT 20
+SNAP nav_after_two_lefts
+TAP ON
+WAIT 15
+
+# Test 477: nav_after_three_rights keys='5+3$r$r$r'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP RIGHT
+TAP RIGHT
+TAP RIGHT
+WAIT 20
+SNAP nav_after_three_rights
+TAP ON
+WAIT 15
+
+# Test 478: nav_in_neg keys='-5$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP MINUS
+TAP 5
+TAP UP
+WAIT 20
+SNAP nav_in_neg
+TAP ON
+WAIT 15
+
+# Test 479: nav_back_to_root keys='X+Y+Z$u$u$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP PLUS
+TAP ALPHA
+TAP Y
+TAP PLUS
+TAP ALPHA
+TAP Z
+TAP UP
+TAP UP
+TAP UP
+WAIT 20
+SNAP nav_back_to_root
+TAP ON
+WAIT 15
+
+# Test 480: nav_first_arg keys='5+3$l$l$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP LEFT
+TAP LEFT
+TAP LEFT
+WAIT 20
+SNAP nav_first_arg
+TAP ON
+WAIT 15
+
+# Test 481: nav_last_arg keys='5+3*4$r$r$r'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP MULTIPLY
+TAP 4
+TAP RIGHT
+TAP RIGHT
+TAP RIGHT
+WAIT 20
+SNAP nav_last_arg
+TAP ON
+WAIT 15
+
+# Test 482: nav_nested_div_up keys='1/X+Y$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 1
+TAP Z
+TAP X
+TAP PLUS
+TAP ALPHA
+TAP Y
+TAP UP
+WAIT 20
+SNAP nav_nested_div_up
+TAP ON
+WAIT 15
+
+# Test 483: nav_after_paren_wrap keys='X+Y($u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP PLUS
+TAP ALPHA
+TAP Y
+TAP LEFTSHIFT
+TAP Z
+TAP UP
+WAIT 20
+SNAP nav_after_paren_wrap
+TAP ON
+WAIT 15
+
+# Test 484: nav_in_abs keys='X|$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP ALPHA
+TAP A
+TAP ALPHA
+TAP B
+TAP ALPHA
+TAP S
+TAP LEFTSHIFT
+TAP Z
+TAP UP
+WAIT 20
+SNAP nav_in_abs
+TAP ON
+WAIT 15
+
+# Test 485: nav_in_complex keys='5$Z4$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP LEFTSHIFT
+TAP PERIOD
+TAP 4
+TAP UP
+WAIT 20
+SNAP nav_in_complex
+TAP ON
+WAIT 15
+
+# Test 486: nav_in_two_arg_func keys='F$FX,Y$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP ALPHA
+TAP F
+TAP LEFTSHIFT
+TAP Z
+TAP X
+TAP SPACE
+TAP ALPHA
+TAP Y
+TAP LEFT
+WAIT 20
+SNAP nav_in_two_arg_func
+TAP ON
+WAIT 15
+
+# Test 487: nav_in_three_arg_func keys='F$FX,Y,Z$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP ALPHA
+TAP F
+TAP LEFTSHIFT
+TAP Z
+TAP X
+TAP SPACE
+TAP ALPHA
+TAP Y
+TAP SPACE
+TAP ALPHA
+TAP Z
+TAP LEFT
+WAIT 20
+SNAP nav_in_three_arg_func
+TAP ON
+WAIT 15
+
+# Test 488: nav_after_userfunc keys='F$FX,Y$r'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP ALPHA
+TAP F
+TAP LEFTSHIFT
+TAP Z
+TAP X
+TAP SPACE
+TAP ALPHA
+TAP Y
+TAP RIGHT
+WAIT 20
+SNAP nav_after_userfunc
+TAP ON
+WAIT 15
+
+# Test 489: nav_in_pow_after_arrows keys='X^2$u$k'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP Q
+TAP 2
+TAP UP
+TAP DOWN
+WAIT 20
+SNAP nav_in_pow_after_arrows
+TAP ON
+WAIT 15
+
+# Test 490: nav_complex_path keys='1+2*3$u$u$k'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 1
+TAP PLUS
+TAP 2
+TAP MULTIPLY
+TAP 3
+TAP UP
+TAP UP
+TAP DOWN
+WAIT 20
+SNAP nav_complex_path
+TAP ON
+WAIT 15
+
+# Test 491: auto_2X keys='2X'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 2
+TAP X
+WAIT 20
+SNAP auto_2X
+TAP ON
+WAIT 15
+
+# Test 492: auto_3PI keys='3PI'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 3
+TAP ALPHA
+TAP P
+TAP ALPHA
+TAP I
+WAIT 20
+SNAP auto_3PI
+TAP ON
+WAIT 15
+
+# Test 493: auto_5L keys='5L'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP ALPHA
+TAP L
+WAIT 20
+SNAP auto_5L
+TAP ON
+WAIT 15
+
+# Test 494: auto_2X_again keys='2X'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 2
+TAP X
+WAIT 20
+SNAP auto_2X_again
+TAP ON
+WAIT 15
+
+QUIT

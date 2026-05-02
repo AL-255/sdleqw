@@ -37,7 +37,11 @@ static int needs_parens(expr_kind par, int idx, expr_kind ch)
     case EX_CMPLX:
         return 0;
     case EX_POW:
-        if (idx == 1) return 0; /* exponent renders standalone */
+        if (idx == 1) {
+            /* exponent: HP parenthesizes additive/multiplicative children */
+            if (ch == EX_ADD || ch == EX_SUB || ch == EX_NEG) return 1;
+            return 0;
+        }
         if (ch == EX_NEG) return 1;
         if (ch == EX_NUM || ch == EX_NAME) return 0;
         return pc < pp;
@@ -79,7 +83,7 @@ static void layout_text(render_ctx *ctx, expr *e)
         w += g->advance;
     }
     if (w > 0) w -= 1; /* trim trailing advance gap */
-    if (w < 4) w = 4;
+    if (w < 1) w = 1;
     e->w = w;
     e->h = FH(ctx);
     e->axis = FAX(ctx);
@@ -149,8 +153,9 @@ void render_layout(render_ctx *ctx, expr *e)
         expr *n = e->kids[0], *d = e->kids[1];
         int nw = n->w, dw = d->w;
         e->w = (nw > dw ? nw : dw) + 2;
-        e->h = n->h + 1 + d->h;
-        e->axis = n->h;       /* bar sits on parent axis */
+        /* HP layout: num + 1-row gap + bar + 1-row gap + den */
+        e->h = n->h + 3 + d->h;
+        e->axis = n->h + 1;   /* bar sits on parent axis (after gap) */
         break;
     }
 
@@ -433,8 +438,9 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
         int n_x = center - n->w / 2;
         int d_x = center - d->w / 2;
         place_and_draw(ctx, bm, n, n_x, y);
-        bm_hline(bm, x, y + n->h, e->w, 1);
-        place_and_draw(ctx, bm, d, d_x, y + n->h + 1);
+        /* gap row at y + n->h, bar at y + n->h + 1, gap at y + n->h + 2 */
+        bm_hline(bm, x, y + n->h + 1, e->w, 1);
+        place_and_draw(ctx, bm, d, d_x, y + n->h + 3);
         break;
     }
 
@@ -457,7 +463,16 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
         }
         cx += 1;
         int saved = ctx->use_mini; ctx->use_mini = 1;
-        place_and_draw(ctx, bm, ex, cx, y);
+        if (needs_parens(EX_POW, 1, ex->kind)) {
+            int pw = paren_w_for(ex->h);
+            glyph_draw_paren_l(bm, cx, y, ex->h, 1);
+            cx += pw;
+            place_and_draw(ctx, bm, ex, cx, y);
+            cx += ex->w;
+            glyph_draw_paren_r(bm, cx, y, ex->h, 1);
+        } else {
+            place_and_draw(ctx, bm, ex, cx, y);
+        }
         ctx->use_mini = saved;
         break;
     }

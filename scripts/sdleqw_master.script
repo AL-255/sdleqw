@@ -1,0 +1,3098 @@
+# sdleqw_master.script — auto-generated
+# Test 0: num_0 keys='0'
+RESET
+NAME num_0
+KEYS 0
+SNAP num_0
+
+# Test 1: num_1 keys='1'
+RESET
+NAME num_1
+KEYS 1
+SNAP num_1
+
+# Test 2: num_2 keys='2'
+RESET
+NAME num_2
+KEYS 2
+SNAP num_2
+
+# Test 3: num_3 keys='3'
+RESET
+NAME num_3
+KEYS 3
+SNAP num_3
+
+# Test 4: num_4 keys='4'
+RESET
+NAME num_4
+KEYS 4
+SNAP num_4
+
+# Test 5: num_5 keys='5'
+RESET
+NAME num_5
+KEYS 5
+SNAP num_5
+
+# Test 6: num_6 keys='6'
+RESET
+NAME num_6
+KEYS 6
+SNAP num_6
+
+# Test 7: num_7 keys='7'
+RESET
+NAME num_7
+KEYS 7
+SNAP num_7
+
+# Test 8: num_8 keys='8'
+RESET
+NAME num_8
+KEYS 8
+SNAP num_8
+
+# Test 9: num_9 keys='9'
+RESET
+NAME num_9
+KEYS 9
+SNAP num_9
+
+# Test 10: num_10 keys='10'
+RESET
+NAME num_10
+KEYS 10
+SNAP num_10
+
+# Test 11: num_42 keys='42'
+RESET
+NAME num_42
+KEYS 42
+SNAP num_42
+
+# Test 12: num_100 keys='100'
+RESET
+NAME num_100
+KEYS 100
+SNAP num_100
+
+# Test 13: num_1234 keys='1234'
+RESET
+NAME num_1234
+KEYS 1234
+SNAP num_1234
+
+# Test 14: num_12345 keys='12345'
+RESET
+NAME num_12345
+KEYS 12345
+SNAP num_12345
+
+# Test 15: num_3p14 keys='3.14'
+RESET
+NAME num_3p14
+KEYS 3.14
+SNAP num_3p14
+
+# Test 16: num_0p5 keys='0.5'
+RESET
+NAME num_0p5
+KEYS 0.5
+SNAP num_0p5
+
+# Test 17: num_2p0 keys='2.0'
+RESET
+NAME num_2p0
+KEYS 2.0
+SNAP num_2p0
+
+# Test 18: num_7p5 keys='7.5'
+RESET
+NAME num_7p5
+KEYS 7.5
+SNAP num_7p5
+
+# Test 19: num_0p001 keys='0.001'
+RESET
+NAME num_0p001
+KEYS 0.001
+SNAP num_0p001
+
+# Test 20: num_99p99 keys='99.99'
+RESET
+NAME num_99p99
+KEYS 99.99
+SNAP num_99p99
+
+# Test 21: num_1000000 keys='1000000'
+RESET
+NAME num_1000000
+KEYS 1000000
+SNAP num_1000000
+
+# Test 22: num_5p0 keys='5.0'
+RESET
+NAME num_5p0
+KEYS 5.0
+SNAP num_5p0
+
+# Test 23: num_1p0 keys='1.0'
+RESET
+NAME num_1p0
+KEYS 1.0
+SNAP num_1p0
+
+# Test 24: num_25 keys='25'
+RESET
+NAME num_25
+KEYS 25
+SNAP num_25
+
+# Test 25: num_360 keys='360'
+RESET
+NAME num_360
+KEYS 360
+SNAP num_360
+
+# Test 26: num_180 keys='180'
+RESET
+NAME num_180
+KEYS 180
+SNAP num_180
+
+# Test 27: num_2p5 keys='2.5'
+RESET
+NAME num_2p5
+KEYS 2.5
+SNAP num_2p5
+
+# Test 28: num_neg_5 keys='-5'
+RESET
+NAME num_neg_5
+KEYS -5
+SNAP num_neg_5
+
+# Test 29: num_neg_3p14 keys='-3.14'
+RESET
+NAME num_neg_3p14
+KEYS -3.14
+SNAP num_neg_3p14
+
+# Test 30: num_dot_5 keys='.5'
+RESET
+NAME num_dot_5
+KEYS .5
+SNAP num_dot_5
+
+# Test 31: num_99 keys='99'
+RESET
+NAME num_99
+KEYS 99
+SNAP num_99
+
+# Test 32: num_1000 keys='1000'
+RESET
+NAME num_1000
+KEYS 1000
+SNAP num_1000
+
+# Test 33: num_500 keys='500'
+RESET
+NAME num_500
+KEYS 500
+SNAP num_500
+
+# Test 34: name_A keys='A'
+RESET
+NAME name_A
+KEYS A
+SNAP name_A
+
+# Test 35: name_B keys='B'
+RESET
+NAME name_B
+KEYS B
+SNAP name_B
+
+# Test 36: name_E keys='E'
+RESET
+NAME name_E
+KEYS E
+SNAP name_E
+
+# Test 37: name_F keys='F'
+RESET
+NAME name_F
+KEYS F
+SNAP name_F
+
+# Test 38: name_G keys='G'
+RESET
+NAME name_G
+KEYS G
+SNAP name_G
+
+# Test 39: name_H keys='H'
+RESET
+NAME name_H
+KEYS H
+SNAP name_H
+
+# Test 40: name_J keys='J'
+RESET
+NAME name_J
+KEYS J
+SNAP name_J
+
+# Test 41: name_K keys='K'
+RESET
+NAME name_K
+KEYS K
+SNAP name_K
+
+# Test 42: name_L keys='L'
+RESET
+NAME name_L
+KEYS L
+SNAP name_L
+
+# Test 43: name_M keys='M'
+RESET
+NAME name_M
+KEYS M
+SNAP name_M
+
+# Test 44: name_N keys='N'
+RESET
+NAME name_N
+KEYS N
+SNAP name_N
+
+# Test 45: name_O keys='O'
+RESET
+NAME name_O
+KEYS O
+SNAP name_O
+
+# Test 46: name_R keys='R'
+RESET
+NAME name_R
+KEYS R
+SNAP name_R
+
+# Test 47: name_T keys='T'
+RESET
+NAME name_T
+KEYS T
+SNAP name_T
+
+# Test 48: name_Y keys='Y'
+RESET
+NAME name_Y
+KEYS Y
+SNAP name_Y
+
+# Test 49: name_Z keys='Z'
+RESET
+NAME name_Z
+KEYS Z
+SNAP name_Z
+
+# Test 50: name_a keys='a'
+RESET
+NAME name_a
+KEYS a
+SNAP name_a
+
+# Test 51: name_b keys='b'
+RESET
+NAME name_b
+KEYS b
+SNAP name_b
+
+# Test 52: name_e keys='e'
+RESET
+NAME name_e
+KEYS e
+SNAP name_e
+
+# Test 53: name_f keys='f'
+RESET
+NAME name_f
+KEYS f
+SNAP name_f
+
+# Test 54: name_g keys='g'
+RESET
+NAME name_g
+KEYS g
+SNAP name_g
+
+# Test 55: name_h keys='h'
+RESET
+NAME name_h
+KEYS h
+SNAP name_h
+
+# Test 56: name_j keys='j'
+RESET
+NAME name_j
+KEYS j
+SNAP name_j
+
+# Test 57: name_k keys='k'
+RESET
+NAME name_k
+KEYS k
+SNAP name_k
+
+# Test 58: name_l keys='l'
+RESET
+NAME name_l
+KEYS l
+SNAP name_l
+
+# Test 59: name_m keys='m'
+RESET
+NAME name_m
+KEYS m
+SNAP name_m
+
+# Test 60: name_n keys='n'
+RESET
+NAME name_n
+KEYS n
+SNAP name_n
+
+# Test 61: name_o keys='o'
+RESET
+NAME name_o
+KEYS o
+SNAP name_o
+
+# Test 62: name_r keys='r'
+RESET
+NAME name_r
+KEYS r
+SNAP name_r
+
+# Test 63: name_t keys='t'
+RESET
+NAME name_t
+KEYS t
+SNAP name_t
+
+# Test 64: name_y keys='y'
+RESET
+NAME name_y
+KEYS y
+SNAP name_y
+
+# Test 65: name_z keys='z'
+RESET
+NAME name_z
+KEYS z
+SNAP name_z
+
+# Test 66: name_X keys='X'
+RESET
+NAME name_X
+KEYS X
+SNAP name_X
+
+# Test 67: name_x keys='x'
+RESET
+NAME name_x
+KEYS x
+SNAP name_x
+
+# Test 68: name_xy keys='xy'
+RESET
+NAME name_xy
+KEYS xy
+SNAP name_xy
+
+# Test 69: name_abc keys='ABC'
+RESET
+NAME name_abc
+KEYS ABC
+SNAP name_abc
+
+# Test 70: name_t keys='t'
+RESET
+NAME name_t
+KEYS t
+SNAP name_t
+
+# Test 71: name_R keys='R'
+RESET
+NAME name_R
+KEYS R
+SNAP name_R
+
+# Test 72: name_b keys='b'
+RESET
+NAME name_b
+KEYS b
+SNAP name_b
+
+# Test 73: name_PI keys='PI'
+RESET
+NAME name_PI
+KEYS PI
+SNAP name_PI
+
+# Test 74: name_OMEGA keys='OMEGA'
+RESET
+NAME name_OMEGA
+KEYS OMEGA
+SNAP name_OMEGA
+
+# Test 75: name_THETA keys='THETA'
+RESET
+NAME name_THETA
+KEYS THETA
+SNAP name_THETA
+
+# Test 76: name_var1 keys='var1'
+RESET
+NAME name_var1
+KEYS var1
+SNAP name_var1
+
+# Test 77: name_X1 keys='X1'
+RESET
+NAME name_X1
+KEYS X1
+SNAP name_X1
+
+# Test 78: name_a1 keys='a1'
+RESET
+NAME name_a1
+KEYS a1
+SNAP name_a1
+
+# Test 79: name_FOO keys='FOO'
+RESET
+NAME name_FOO
+KEYS FOO
+SNAP name_FOO
+
+# Test 80: name_BAR keys='BAR'
+RESET
+NAME name_BAR
+KEYS BAR
+SNAP name_BAR
+
+# Test 81: name_PHI keys='PHI'
+RESET
+NAME name_PHI
+KEYS PHI
+SNAP name_PHI
+
+# Test 82: name_zeta keys='zeta'
+RESET
+NAME name_zeta
+KEYS zeta
+SNAP name_zeta
+
+# Test 83: name_eta keys='eta'
+RESET
+NAME name_eta
+KEYS eta
+SNAP name_eta
+
+# Test 84: name_NUMBER keys='NUMBER'
+RESET
+NAME name_NUMBER
+KEYS NUMBER
+SNAP name_NUMBER
+
+# Test 85: name_value keys='value'
+RESET
+NAME name_value
+KEYS value
+SNAP name_value
+
+# Test 86: name_alpha keys='alpha'
+RESET
+NAME name_alpha
+KEYS alpha
+SNAP name_alpha
+
+# Test 87: name_beta keys='beta'
+RESET
+NAME name_beta
+KEYS beta
+SNAP name_beta
+
+# Test 88: name_gamma keys='gamma'
+RESET
+NAME name_gamma
+KEYS gamma
+SNAP name_gamma
+
+# Test 89: name_delta keys='delta'
+RESET
+NAME name_delta
+KEYS delta
+SNAP name_delta
+
+# Test 90: name_long keys='VARIABLE'
+RESET
+NAME name_long
+KEYS VARIABLE
+SNAP name_long
+
+# Test 91: name_kappa keys='kappa'
+RESET
+NAME name_kappa
+KEYS kappa
+SNAP name_kappa
+
+# Test 92: add_1_1 keys='1+1'
+RESET
+NAME add_1_1
+KEYS 1+1
+SNAP add_1_1
+
+# Test 93: add_1_2 keys='1+2'
+RESET
+NAME add_1_2
+KEYS 1+2
+SNAP add_1_2
+
+# Test 94: add_5_3 keys='5+3'
+RESET
+NAME add_5_3
+KEYS 5+3
+SNAP add_5_3
+
+# Test 95: add_X_Y keys='X+Y'
+RESET
+NAME add_X_Y
+KEYS X+Y
+SNAP add_X_Y
+
+# Test 96: add_X_5 keys='X+5'
+RESET
+NAME add_X_5
+KEYS X+5
+SNAP add_X_5
+
+# Test 97: add_5_X keys='5+X'
+RESET
+NAME add_5_X
+KEYS 5+X
+SNAP add_5_X
+
+# Test 98: add_a_b keys='A+B'
+RESET
+NAME add_a_b
+KEYS A+B
+SNAP add_a_b
+
+# Test 99: add_3_3_3 keys='3+3+3'
+RESET
+NAME add_3_3_3
+KEYS 3+3+3
+SNAP add_3_3_3
+
+# Test 100: add_5_X_2 keys='5+X+2'
+RESET
+NAME add_5_X_2
+KEYS 5+X+2
+SNAP add_5_X_2
+
+# Test 101: add_1p5_2p5 keys='1.5+2.5'
+RESET
+NAME add_1p5_2p5
+KEYS 1.5+2.5
+SNAP add_1p5_2p5
+
+# Test 102: add_3p14_2p71 keys='3.14+2.71'
+RESET
+NAME add_3p14_2p71
+KEYS 3.14+2.71
+SNAP add_3p14_2p71
+
+# Test 103: add_X_Y_Z keys='X+Y+Z'
+RESET
+NAME add_X_Y_Z
+KEYS X+Y+Z
+SNAP add_X_Y_Z
+
+# Test 104: add_long keys='1+2+3+4+5'
+RESET
+NAME add_long
+KEYS 1+2+3+4+5
+SNAP add_long
+
+# Test 105: add_two_names keys='FOO+BAR'
+RESET
+NAME add_two_names
+KEYS FOO+BAR
+SNAP add_two_names
+
+# Test 106: add_zero keys='0+5'
+RESET
+NAME add_zero
+KEYS 0+5
+SNAP add_zero
+
+# Test 107: add_decimal keys='0.1+0.2'
+RESET
+NAME add_decimal
+KEYS 0.1+0.2
+SNAP add_decimal
+
+# Test 108: add_X_X keys='X+X'
+RESET
+NAME add_X_X
+KEYS X+X
+SNAP add_X_X
+
+# Test 109: add_t_dt keys='t+dt'
+RESET
+NAME add_t_dt
+KEYS t+dt
+SNAP add_t_dt
+
+# Test 110: add_neg_5_3 keys='-5+3'
+RESET
+NAME add_neg_5_3
+KEYS -5+3
+SNAP add_neg_5_3
+
+# Test 111: add_3_neg_5 keys='3+-5'
+RESET
+NAME add_3_neg_5
+KEYS 3+-5
+SNAP add_3_neg_5
+
+# Test 112: add_long_decimal keys='1.234+5.678'
+RESET
+NAME add_long_decimal
+KEYS 1.234+5.678
+SNAP add_long_decimal
+
+# Test 113: add_var_with_index keys='X1+X2'
+RESET
+NAME add_var_with_index
+KEYS X1+X2
+SNAP add_var_with_index
+
+# Test 114: add_var_const keys='X+1'
+RESET
+NAME add_var_const
+KEYS X+1
+SNAP add_var_const
+
+# Test 115: add_var_neg_const keys='X+-1'
+RESET
+NAME add_var_neg_const
+KEYS X+-1
+SNAP add_var_neg_const
+
+# Test 116: add_PI_2 keys='PI+2'
+RESET
+NAME add_PI_2
+KEYS PI+2
+SNAP add_PI_2
+
+# Test 117: add_X_PI keys='X+PI'
+RESET
+NAME add_X_PI
+KEYS X+PI
+SNAP add_X_PI
+
+# Test 118: add_E_M keys='E+M'
+RESET
+NAME add_E_M
+KEYS E+M
+SNAP add_E_M
+
+# Test 119: add_p_q keys='p+q'
+RESET
+NAME add_p_q
+KEYS p+q
+SNAP add_p_q
+
+# Test 120: add_n_1 keys='n+1'
+RESET
+NAME add_n_1
+KEYS n+1
+SNAP add_n_1
+
+# Test 121: add_2_n keys='2+n'
+RESET
+NAME add_2_n
+KEYS 2+n
+SNAP add_2_n
+
+# Test 122: add_six_terms keys='1+2+3+4+5+6'
+RESET
+NAME add_six_terms
+KEYS 1+2+3+4+5+6
+SNAP add_six_terms
+
+# Test 123: add_N_M_K keys='N+M+K'
+RESET
+NAME add_N_M_K
+KEYS N+M+K
+SNAP add_N_M_K
+
+# Test 124: add_const_var keys='5+L'
+RESET
+NAME add_const_var
+KEYS 5+L
+SNAP add_const_var
+
+# Test 125: add_var_var_var keys='A+B+R'
+RESET
+NAME add_var_var_var
+KEYS A+B+R
+SNAP add_var_var_var
+
+# Test 126: add_three_const keys='10+20+30'
+RESET
+NAME add_three_const
+KEYS 10+20+30
+SNAP add_three_const
+
+# Test 127: add_three_decimals keys='1.1+2.2+3.3'
+RESET
+NAME add_three_decimals
+KEYS 1.1+2.2+3.3
+SNAP add_three_decimals
+
+# Test 128: add_neg_neg keys='-1+-2'
+RESET
+NAME add_neg_neg
+KEYS -1+-2
+SNAP add_neg_neg
+
+# Test 129: add_X_neg_Y keys='X+-Y'
+RESET
+NAME add_X_neg_Y
+KEYS X+-Y
+SNAP add_X_neg_Y
+
+# Test 130: add_Y_X keys='Y+X'
+RESET
+NAME add_Y_X
+KEYS Y+X
+SNAP add_Y_X
+
+# Test 131: add_x_x_x keys='x+x+x'
+RESET
+NAME add_x_x_x
+KEYS x+x+x
+SNAP add_x_x_x
+
+# Test 132: add_M_n keys='M+n'
+RESET
+NAME add_M_n
+KEYS M+n
+SNAP add_M_n
+
+# Test 133: add_u_v keys='u+v'
+RESET
+NAME add_u_v
+KEYS u+v
+SNAP add_u_v
+
+# Test 134: add_ten_const keys='10+10'
+RESET
+NAME add_ten_const
+KEYS 10+10
+SNAP add_ten_const
+
+# Test 135: add_decim_5_5 keys='5.5+5.5'
+RESET
+NAME add_decim_5_5
+KEYS 5.5+5.5
+SNAP add_decim_5_5
+
+# Test 136: add_long_var_const keys='VARIABLE+1'
+RESET
+NAME add_long_var_const
+KEYS VARIABLE+1
+SNAP add_long_var_const
+
+# Test 137: add_bigname_const keys='ALPHA+1'
+RESET
+NAME add_bigname_const
+KEYS ALPHA+1
+SNAP add_bigname_const
+
+# Test 138: add_bigname_bigname keys='ALPHA+BETA'
+RESET
+NAME add_bigname_bigname
+KEYS ALPHA+BETA
+SNAP add_bigname_bigname
+
+# Test 139: add_X_neg_3 keys='X+-3'
+RESET
+NAME add_X_neg_3
+KEYS X+-3
+SNAP add_X_neg_3
+
+# Test 140: add_neg_X_5 keys='-X+5'
+RESET
+NAME add_neg_X_5
+KEYS -X+5
+SNAP add_neg_X_5
+
+# Test 141: add_R_y keys='R+y'
+RESET
+NAME add_R_y
+KEYS R+y
+SNAP add_R_y
+
+# Test 142: sub_5_3 keys='5-3'
+RESET
+NAME sub_5_3
+KEYS 5-3
+SNAP sub_5_3
+
+# Test 143: sub_X_Y keys='X-Y'
+RESET
+NAME sub_X_Y
+KEYS X-Y
+SNAP sub_X_Y
+
+# Test 144: sub_X_5 keys='X-5'
+RESET
+NAME sub_X_5
+KEYS X-5
+SNAP sub_X_5
+
+# Test 145: sub_X_1 keys='X-1'
+RESET
+NAME sub_X_1
+KEYS X-1
+SNAP sub_X_1
+
+# Test 146: sub_a_b keys='A-B'
+RESET
+NAME sub_a_b
+KEYS A-B
+SNAP sub_a_b
+
+# Test 147: sub_long keys='10-3-2'
+RESET
+NAME sub_long
+KEYS 10-3-2
+SNAP sub_long
+
+# Test 148: sub_decimal keys='1.5-0.5'
+RESET
+NAME sub_decimal
+KEYS 1.5-0.5
+SNAP sub_decimal
+
+# Test 149: sub_negative keys='-1-1'
+RESET
+NAME sub_negative
+KEYS -1-1
+SNAP sub_negative
+
+# Test 150: sub_X_neg_Y keys='X--Y'
+RESET
+NAME sub_X_neg_Y
+KEYS X--Y
+SNAP sub_X_neg_Y
+
+# Test 151: sub_5_X_3 keys='5-X-3'
+RESET
+NAME sub_5_X_3
+KEYS 5-X-3
+SNAP sub_5_X_3
+
+# Test 152: sub_n_1 keys='n-1'
+RESET
+NAME sub_n_1
+KEYS n-1
+SNAP sub_n_1
+
+# Test 153: sub_p_q keys='p-q'
+RESET
+NAME sub_p_q
+KEYS p-q
+SNAP sub_p_q
+
+# Test 154: sub_R_y keys='R-y'
+RESET
+NAME sub_R_y
+KEYS R-y
+SNAP sub_R_y
+
+# Test 155: sub_2_X keys='2-X'
+RESET
+NAME sub_2_X
+KEYS 2-X
+SNAP sub_2_X
+
+# Test 156: sub_X_2 keys='X-2'
+RESET
+NAME sub_X_2
+KEYS X-2
+SNAP sub_X_2
+
+# Test 157: sub_PI_3 keys='PI-3'
+RESET
+NAME sub_PI_3
+KEYS PI-3
+SNAP sub_PI_3
+
+# Test 158: sub_X_X keys='X-X'
+RESET
+NAME sub_X_X
+KEYS X-X
+SNAP sub_X_X
+
+# Test 159: sub_a_a_a keys='A-A-A'
+RESET
+NAME sub_a_a_a
+KEYS A-A-A
+SNAP sub_a_a_a
+
+# Test 160: sub_x_PI keys='x-PI'
+RESET
+NAME sub_x_PI
+KEYS x-PI
+SNAP sub_x_PI
+
+# Test 161: sub_X_one keys='X-1'
+RESET
+NAME sub_X_one
+KEYS X-1
+SNAP sub_X_one
+
+# Test 162: sub_X_zero keys='X-0'
+RESET
+NAME sub_X_zero
+KEYS X-0
+SNAP sub_X_zero
+
+# Test 163: sub_six_minus_two keys='6-2'
+RESET
+NAME sub_six_minus_two
+KEYS 6-2
+SNAP sub_six_minus_two
+
+# Test 164: sub_four_minus_one keys='4-1'
+RESET
+NAME sub_four_minus_one
+KEYS 4-1
+SNAP sub_four_minus_one
+
+# Test 165: sub_seven_minus_three keys='7-3'
+RESET
+NAME sub_seven_minus_three
+KEYS 7-3
+SNAP sub_seven_minus_three
+
+# Test 166: sub_eight_minus_four keys='8-4'
+RESET
+NAME sub_eight_minus_four
+KEYS 8-4
+SNAP sub_eight_minus_four
+
+# Test 167: sub_nine_minus_five keys='9-5'
+RESET
+NAME sub_nine_minus_five
+KEYS 9-5
+SNAP sub_nine_minus_five
+
+# Test 168: sub_Z_R keys='Z-R'
+RESET
+NAME sub_Z_R
+KEYS Z-R
+SNAP sub_Z_R
+
+# Test 169: sub_long_var keys='VARIABLE-1'
+RESET
+NAME sub_long_var
+KEYS VARIABLE-1
+SNAP sub_long_var
+
+# Test 170: sub_neg_const keys='-3-X'
+RESET
+NAME sub_neg_const
+KEYS -3-X
+SNAP sub_neg_const
+
+# Test 171: mul_2_3 keys='2*3'
+RESET
+NAME mul_2_3
+KEYS 2*3
+SNAP mul_2_3
+
+# Test 172: mul_5_X keys='5*X'
+RESET
+NAME mul_5_X
+KEYS 5*X
+SNAP mul_5_X
+
+# Test 173: mul_X_5 keys='X*5'
+RESET
+NAME mul_X_5
+KEYS X*5
+SNAP mul_X_5
+
+# Test 174: mul_X_Y keys='X*Y'
+RESET
+NAME mul_X_Y
+KEYS X*Y
+SNAP mul_X_Y
+
+# Test 175: mul_a_b_c keys='A*B*R'
+RESET
+NAME mul_a_b_c
+KEYS A*B*R
+SNAP mul_a_b_c
+
+# Test 176: mul_2_PI keys='2*PI'
+RESET
+NAME mul_2_PI
+KEYS 2*PI
+SNAP mul_2_PI
+
+# Test 177: mul_3_4 keys='3*4'
+RESET
+NAME mul_3_4
+KEYS 3*4
+SNAP mul_3_4
+
+# Test 178: mul_decimals keys='1.5*2.5'
+RESET
+NAME mul_decimals
+KEYS 1.5*2.5
+SNAP mul_decimals
+
+# Test 179: mul_neg keys='-2*3'
+RESET
+NAME mul_neg
+KEYS -2*3
+SNAP mul_neg
+
+# Test 180: mul_X_2 keys='X*2'
+RESET
+NAME mul_X_2
+KEYS X*2
+SNAP mul_X_2
+
+# Test 181: mul_2_X_3 keys='2*X*3'
+RESET
+NAME mul_2_X_3
+KEYS 2*X*3
+SNAP mul_2_X_3
+
+# Test 182: mul_n_n keys='n*n'
+RESET
+NAME mul_n_n
+KEYS n*n
+SNAP mul_n_n
+
+# Test 183: mul_X_X_X keys='X*X*X'
+RESET
+NAME mul_X_X_X
+KEYS X*X*X
+SNAP mul_X_X_X
+
+# Test 184: mul_3_PI_R keys='3*PI*R'
+RESET
+NAME mul_3_PI_R
+KEYS 3*PI*R
+SNAP mul_3_PI_R
+
+# Test 185: mul_R_t keys='R*t'
+RESET
+NAME mul_R_t
+KEYS R*t
+SNAP mul_R_t
+
+# Test 186: mul_with_long keys='RHO*V'
+RESET
+NAME mul_with_long
+KEYS RHO*V
+SNAP mul_with_long
+
+# Test 187: mul_const_const keys='10*10'
+RESET
+NAME mul_const_const
+KEYS 10*10
+SNAP mul_const_const
+
+# Test 188: mul_lots keys='1*2*3*4'
+RESET
+NAME mul_lots
+KEYS 1*2*3*4
+SNAP mul_lots
+
+# Test 189: mul_PI_R_R keys='PI*R*R'
+RESET
+NAME mul_PI_R_R
+KEYS PI*R*R
+SNAP mul_PI_R_R
+
+# Test 190: mul_decimal_var keys='0.5*X'
+RESET
+NAME mul_decimal_var
+KEYS 0.5*X
+SNAP mul_decimal_var
+
+# Test 191: mul_2_n keys='2*n'
+RESET
+NAME mul_2_n
+KEYS 2*n
+SNAP mul_2_n
+
+# Test 192: mul_X_neg_1 keys='X*-1'
+RESET
+NAME mul_X_neg_1
+KEYS X*-1
+SNAP mul_X_neg_1
+
+# Test 193: mul_neg_X keys='-X*2'
+RESET
+NAME mul_neg_X
+KEYS -X*2
+SNAP mul_neg_X
+
+# Test 194: mul_alpha_beta keys='ALPHA*BETA'
+RESET
+NAME mul_alpha_beta
+KEYS ALPHA*BETA
+SNAP mul_alpha_beta
+
+# Test 195: mul_xyz keys='x*y*z'
+RESET
+NAME mul_xyz
+KEYS x*y*z
+SNAP mul_xyz
+
+# Test 196: mul_pqr keys='p*q*r'
+RESET
+NAME mul_pqr
+KEYS p*q*r
+SNAP mul_pqr
+
+# Test 197: mul_2_L keys='2*L'
+RESET
+NAME mul_2_L
+KEYS 2*L
+SNAP mul_2_L
+
+# Test 198: mul_3_OMEGA keys='3*OMEGA'
+RESET
+NAME mul_3_OMEGA
+KEYS 3*OMEGA
+SNAP mul_3_OMEGA
+
+# Test 199: mul_THETA_2 keys='THETA*2'
+RESET
+NAME mul_THETA_2
+KEYS THETA*2
+SNAP mul_THETA_2
+
+# Test 200: mul_zero_X keys='0*X'
+RESET
+NAME mul_zero_X
+KEYS 0*X
+SNAP mul_zero_X
+
+# Test 201: div_1_2 keys='1/2'
+RESET
+NAME div_1_2
+KEYS 1/2
+SNAP div_1_2
+
+# Test 202: div_2_3 keys='2/3'
+RESET
+NAME div_2_3
+KEYS 2/3
+SNAP div_2_3
+
+# Test 203: div_X_Y keys='X/Y'
+RESET
+NAME div_X_Y
+KEYS X/Y
+SNAP div_X_Y
+
+# Test 204: div_5_X keys='5/X'
+RESET
+NAME div_5_X
+KEYS 5/X
+SNAP div_5_X
+
+# Test 205: div_X_5 keys='X/5'
+RESET
+NAME div_X_5
+KEYS X/5
+SNAP div_X_5
+
+# Test 206: div_X_X keys='X/X'
+RESET
+NAME div_X_X
+KEYS X/X
+SNAP div_X_X
+
+# Test 207: div_chain keys='1/2/3'
+RESET
+NAME div_chain
+KEYS 1/2/3
+SNAP div_chain
+
+# Test 208: div_decimals keys='3.14/2'
+RESET
+NAME div_decimals
+KEYS 3.14/2
+SNAP div_decimals
+
+# Test 209: div_a_b keys='A/B'
+RESET
+NAME div_a_b
+KEYS A/B
+SNAP div_a_b
+
+# Test 210: div_PI_2 keys='PI/2'
+RESET
+NAME div_PI_2
+KEYS PI/2
+SNAP div_PI_2
+
+# Test 211: div_2_PI keys='2/PI'
+RESET
+NAME div_2_PI
+KEYS 2/PI
+SNAP div_2_PI
+
+# Test 212: div_X_2 keys='X/2'
+RESET
+NAME div_X_2
+KEYS X/2
+SNAP div_X_2
+
+# Test 213: div_X_neg_2 keys='X/-2'
+RESET
+NAME div_X_neg_2
+KEYS X/-2
+SNAP div_X_neg_2
+
+# Test 214: div_neg_X_5 keys='-X/5'
+RESET
+NAME div_neg_X_5
+KEYS -X/5
+SNAP div_neg_X_5
+
+# Test 215: div_one_X keys='1/X'
+RESET
+NAME div_one_X
+KEYS 1/X
+SNAP div_one_X
+
+# Test 216: div_X_one keys='X/1'
+RESET
+NAME div_X_one
+KEYS X/1
+SNAP div_X_one
+
+# Test 217: div_t_5 keys='t/5'
+RESET
+NAME div_t_5
+KEYS t/5
+SNAP div_t_5
+
+# Test 218: div_5_t keys='5/t'
+RESET
+NAME div_5_t
+KEYS 5/t
+SNAP div_5_t
+
+# Test 219: div_R_y keys='R/y'
+RESET
+NAME div_R_y
+KEYS R/y
+SNAP div_R_y
+
+# Test 220: div_long_var keys='VARIABLE/2'
+RESET
+NAME div_long_var
+KEYS VARIABLE/2
+SNAP div_long_var
+
+# Test 221: div_const_var keys='10/X'
+RESET
+NAME div_const_var
+KEYS 10/X
+SNAP div_const_var
+
+# Test 222: div_var_const keys='X/10'
+RESET
+NAME div_var_const
+KEYS X/10
+SNAP div_var_const
+
+# Test 223: div_two_var keys='X/Y'
+RESET
+NAME div_two_var
+KEYS X/Y
+SNAP div_two_var
+
+# Test 224: div_p_q keys='p/q'
+RESET
+NAME div_p_q
+KEYS p/q
+SNAP div_p_q
+
+# Test 225: div_n_2 keys='n/2'
+RESET
+NAME div_n_2
+KEYS n/2
+SNAP div_n_2
+
+# Test 226: div_2_n keys='2/n'
+RESET
+NAME div_2_n
+KEYS 2/n
+SNAP div_2_n
+
+# Test 227: div_F_t keys='F/t'
+RESET
+NAME div_F_t
+KEYS F/t
+SNAP div_F_t
+
+# Test 228: div_a_b_c keys='A/B/R'
+RESET
+NAME div_a_b_c
+KEYS A/B/R
+SNAP div_a_b_c
+
+# Test 229: div_xyz keys='x/y/z'
+RESET
+NAME div_xyz
+KEYS x/y/z
+SNAP div_xyz
+
+# Test 230: div_neg_a_b keys='-A/B'
+RESET
+NAME div_neg_a_b
+KEYS -A/B
+SNAP div_neg_a_b
+
+# Test 231: pow_X_2 keys='X^2'
+RESET
+NAME pow_X_2
+KEYS X^2
+SNAP pow_X_2
+
+# Test 232: pow_X_3 keys='X^3'
+RESET
+NAME pow_X_3
+KEYS X^3
+SNAP pow_X_3
+
+# Test 233: pow_2_X keys='2^X'
+RESET
+NAME pow_2_X
+KEYS 2^X
+SNAP pow_2_X
+
+# Test 234: pow_X_n keys='X^n'
+RESET
+NAME pow_X_n
+KEYS X^n
+SNAP pow_X_n
+
+# Test 235: pow_X_Y keys='X^Y'
+RESET
+NAME pow_X_Y
+KEYS X^Y
+SNAP pow_X_Y
+
+# Test 236: pow_e_X keys='e^X'
+RESET
+NAME pow_e_X
+KEYS e^X
+SNAP pow_e_X
+
+# Test 237: pow_X_2_plus_1 keys='X^2+1'
+RESET
+NAME pow_X_2_plus_1
+KEYS X^2+1
+SNAP pow_X_2_plus_1
+
+# Test 238: pow_pow keys='X^Y^Z'
+RESET
+NAME pow_pow
+KEYS X^Y^Z
+SNAP pow_pow
+
+# Test 239: pow_decimal keys='X^0.5'
+RESET
+NAME pow_decimal
+KEYS X^0.5
+SNAP pow_decimal
+
+# Test 240: pow_neg keys='X^-1'
+RESET
+NAME pow_neg
+KEYS X^-1
+SNAP pow_neg
+
+# Test 241: pow_N_2 keys='N^2'
+RESET
+NAME pow_N_2
+KEYS N^2
+SNAP pow_N_2
+
+# Test 242: pow_R_2 keys='R^2'
+RESET
+NAME pow_R_2
+KEYS R^2
+SNAP pow_R_2
+
+# Test 243: pow_t_2 keys='t^2'
+RESET
+NAME pow_t_2
+KEYS t^2
+SNAP pow_t_2
+
+# Test 244: pow_y_3 keys='y^3'
+RESET
+NAME pow_y_3
+KEYS y^3
+SNAP pow_y_3
+
+# Test 245: pow_a_b keys='A^B'
+RESET
+NAME pow_a_b
+KEYS A^B
+SNAP pow_a_b
+
+# Test 246: pow_PI_X_2 keys='PI*X^2'
+RESET
+NAME pow_PI_X_2
+KEYS PI*X^2
+SNAP pow_PI_X_2
+
+# Test 247: pow_2_2_2 keys='2^2^2'
+RESET
+NAME pow_2_2_2
+KEYS 2^2^2
+SNAP pow_2_2_2
+
+# Test 248: pow_X_4 keys='X^4'
+RESET
+NAME pow_X_4
+KEYS X^4
+SNAP pow_X_4
+
+# Test 249: pow_X_5 keys='X^5'
+RESET
+NAME pow_X_5
+KEYS X^5
+SNAP pow_X_5
+
+# Test 250: pow_X_6 keys='X^6'
+RESET
+NAME pow_X_6
+KEYS X^6
+SNAP pow_X_6
+
+# Test 251: pow_X_10 keys='X^10'
+RESET
+NAME pow_X_10
+KEYS X^10
+SNAP pow_X_10
+
+# Test 252: pow_X_neg_2 keys='X^-2'
+RESET
+NAME pow_X_neg_2
+KEYS X^-2
+SNAP pow_X_neg_2
+
+# Test 253: pow_X_X keys='X^X'
+RESET
+NAME pow_X_X
+KEYS X^X
+SNAP pow_X_X
+
+# Test 254: pow_n_k keys='n^k'
+RESET
+NAME pow_n_k
+KEYS n^k
+SNAP pow_n_k
+
+# Test 255: pow_x_third keys='X^0.33'
+RESET
+NAME pow_x_third
+KEYS X^0.33
+SNAP pow_x_third
+
+# Test 256: pow_2_n_minus_1 keys='2^n-1'
+RESET
+NAME pow_2_n_minus_1
+KEYS 2^n-1
+SNAP pow_2_n_minus_1
+
+# Test 257: pow_n_n keys='n^n'
+RESET
+NAME pow_n_n
+KEYS n^n
+SNAP pow_n_n
+
+# Test 258: pow_OMEGA_X keys='OMEGA*X'
+RESET
+NAME pow_OMEGA_X
+KEYS OMEGA*X
+SNAP pow_OMEGA_X
+
+# Test 259: pow_a_inv keys='a^-1'
+RESET
+NAME pow_a_inv
+KEYS a^-1
+SNAP pow_a_inv
+
+# Test 260: pow_var_2 keys='VARIABLE^2'
+RESET
+NAME pow_var_2
+KEYS VARIABLE^2
+SNAP pow_var_2
+
+# Test 261: sqrt_just keys='@'
+RESET
+NAME sqrt_just
+KEYS @
+SNAP sqrt_just
+
+# Test 262: sqrt_X_after keys='X@'
+RESET
+NAME sqrt_X_after
+KEYS X@
+SNAP sqrt_X_after
+
+# Test 263: sqrt_then_X keys='@X'
+RESET
+NAME sqrt_then_X
+KEYS @X
+SNAP sqrt_then_X
+
+# Test 264: sqrt_2_after keys='2@'
+RESET
+NAME sqrt_2_after
+KEYS 2@
+SNAP sqrt_2_after
+
+# Test 265: sqrt_3_after keys='3@'
+RESET
+NAME sqrt_3_after
+KEYS 3@
+SNAP sqrt_3_after
+
+# Test 266: sqrt_then_2 keys='@2'
+RESET
+NAME sqrt_then_2
+KEYS @2
+SNAP sqrt_then_2
+
+# Test 267: sqrt_then_4 keys='@4'
+RESET
+NAME sqrt_then_4
+KEYS @4
+SNAP sqrt_then_4
+
+# Test 268: sqrt_X_squared keys='@X^2'
+RESET
+NAME sqrt_X_squared
+KEYS @X^2
+SNAP sqrt_X_squared
+
+# Test 269: sqrt_then_sum keys='@1+1'
+RESET
+NAME sqrt_then_sum
+KEYS @1+1
+SNAP sqrt_then_sum
+
+# Test 270: sqrt_X_plus_Y keys='@X+Y'
+RESET
+NAME sqrt_X_plus_Y
+KEYS @X+Y
+SNAP sqrt_X_plus_Y
+
+# Test 271: sqrt_a_div_b keys='@A/B'
+RESET
+NAME sqrt_a_div_b
+KEYS @A/B
+SNAP sqrt_a_div_b
+
+# Test 272: sqrt_X_plus_1 keys='@X+1'
+RESET
+NAME sqrt_X_plus_1
+KEYS @X+1
+SNAP sqrt_X_plus_1
+
+# Test 273: sqrt_PI keys='@PI'
+RESET
+NAME sqrt_PI
+KEYS @PI
+SNAP sqrt_PI
+
+# Test 274: sqrt_long keys='@VARIABLE'
+RESET
+NAME sqrt_long
+KEYS @VARIABLE
+SNAP sqrt_long
+
+# Test 275: sqrt_in_div keys='@4/2'
+RESET
+NAME sqrt_in_div
+KEYS @4/2
+SNAP sqrt_in_div
+
+# Test 276: sqrt_R keys='@R'
+RESET
+NAME sqrt_R
+KEYS @R
+SNAP sqrt_R
+
+# Test 277: sqrt_t keys='@t'
+RESET
+NAME sqrt_t
+KEYS @t
+SNAP sqrt_t
+
+# Test 278: sqrt_after_n keys='@n'
+RESET
+NAME sqrt_after_n
+KEYS @n
+SNAP sqrt_after_n
+
+# Test 279: sqrt_after_long_name keys='@ALPHA'
+RESET
+NAME sqrt_after_long_name
+KEYS @ALPHA
+SNAP sqrt_after_long_name
+
+# Test 280: sqrt_after_minus keys='-@4'
+RESET
+NAME sqrt_after_minus
+KEYS -@4
+SNAP sqrt_after_minus
+
+# Test 281: nthroot_3_X keys='#3$rX'
+RESET
+NAME nthroot_3_X
+KEYS #3$rX
+SNAP nthroot_3_X
+
+# Test 282: nthroot_2_4 keys='#2$r4'
+RESET
+NAME nthroot_2_4
+KEYS #2$r4
+SNAP nthroot_2_4
+
+# Test 283: nthroot_3_8 keys='#3$r8'
+RESET
+NAME nthroot_3_8
+KEYS #3$r8
+SNAP nthroot_3_8
+
+# Test 284: nthroot_4_16 keys='#4$r16'
+RESET
+NAME nthroot_4_16
+KEYS #4$r16
+SNAP nthroot_4_16
+
+# Test 285: nthroot_5_X keys='#5$rX'
+RESET
+NAME nthroot_5_X
+KEYS #5$rX
+SNAP nthroot_5_X
+
+# Test 286: nthroot_n_X keys='#n$rX'
+RESET
+NAME nthroot_n_X
+KEYS #n$rX
+SNAP nthroot_n_X
+
+# Test 287: nthroot_3_a keys='#3$ra'
+RESET
+NAME nthroot_3_a
+KEYS #3$ra
+SNAP nthroot_3_a
+
+# Test 288: nthroot_X_2 keys='#X$r2'
+RESET
+NAME nthroot_X_2
+KEYS #X$r2
+SNAP nthroot_X_2
+
+# Test 289: nthroot_2_X_squared keys='#2$rX^2'
+RESET
+NAME nthroot_2_X_squared
+KEYS #2$rX^2
+SNAP nthroot_2_X_squared
+
+# Test 290: nthroot_n_2 keys='#n$r2'
+RESET
+NAME nthroot_n_2
+KEYS #n$r2
+SNAP nthroot_n_2
+
+# Test 291: paren_around_X keys='X('
+RESET
+NAME paren_around_X
+KEYS X(
+SNAP paren_around_X
+
+# Test 292: paren_around_5 keys='5('
+RESET
+NAME paren_around_5
+KEYS 5(
+SNAP paren_around_5
+
+# Test 293: paren_around_a_plus_b keys='A+B('
+RESET
+NAME paren_around_a_plus_b
+KEYS A+B(
+SNAP paren_around_a_plus_b
+
+# Test 294: paren_around_X_div_Y keys='X/Y('
+RESET
+NAME paren_around_X_div_Y
+KEYS X/Y(
+SNAP paren_around_X_div_Y
+
+# Test 295: paren_double keys='X(('
+RESET
+NAME paren_double
+KEYS X((
+SNAP paren_double
+
+# Test 296: paren_then_op keys='X(+1'
+RESET
+NAME paren_then_op
+KEYS X(+1
+SNAP paren_then_op
+
+# Test 297: paren_around_sum keys='X+Y('
+RESET
+NAME paren_around_sum
+KEYS X+Y(
+SNAP paren_around_sum
+
+# Test 298: paren_around_diff keys='X-Y('
+RESET
+NAME paren_around_diff
+KEYS X-Y(
+SNAP paren_around_diff
+
+# Test 299: paren_around_pow keys='X^2('
+RESET
+NAME paren_around_pow
+KEYS X^2(
+SNAP paren_around_pow
+
+# Test 300: paren_around_decimal keys='3.14('
+RESET
+NAME paren_around_decimal
+KEYS 3.14(
+SNAP paren_around_decimal
+
+# Test 301: paren_around_neg_X keys='-X('
+RESET
+NAME paren_around_neg_X
+KEYS -X(
+SNAP paren_around_neg_X
+
+# Test 302: paren_X_div_2 keys='X(/2'
+RESET
+NAME paren_X_div_2
+KEYS X(/2
+SNAP paren_X_div_2
+
+# Test 303: paren_around_abc keys='ABC('
+RESET
+NAME paren_around_abc
+KEYS ABC(
+SNAP paren_around_abc
+
+# Test 304: paren_around_PI keys='PI('
+RESET
+NAME paren_around_PI
+KEYS PI(
+SNAP paren_around_PI
+
+# Test 305: paren_around_long keys='VARIABLE('
+RESET
+NAME paren_around_long
+KEYS VARIABLE(
+SNAP paren_around_long
+
+# Test 306: abs_X keys='X|'
+RESET
+NAME abs_X
+KEYS X|
+SNAP abs_X
+
+# Test 307: abs_5 keys='5|'
+RESET
+NAME abs_5
+KEYS 5|
+SNAP abs_5
+
+# Test 308: abs_X_plus_Y keys='X+Y|'
+RESET
+NAME abs_X_plus_Y
+KEYS X+Y|
+SNAP abs_X_plus_Y
+
+# Test 309: abs_X_minus_5 keys='X-5|'
+RESET
+NAME abs_X_minus_5
+KEYS X-5|
+SNAP abs_X_minus_5
+
+# Test 310: abs_X_squared keys='X^2|'
+RESET
+NAME abs_X_squared
+KEYS X^2|
+SNAP abs_X_squared
+
+# Test 311: abs_X_div_Y keys='X/Y|'
+RESET
+NAME abs_X_div_Y
+KEYS X/Y|
+SNAP abs_X_div_Y
+
+# Test 312: abs_PI keys='PI|'
+RESET
+NAME abs_PI
+KEYS PI|
+SNAP abs_PI
+
+# Test 313: abs_neg_X keys='-X|'
+RESET
+NAME abs_neg_X
+KEYS -X|
+SNAP abs_neg_X
+
+# Test 314: abs_long_name keys='VARIABLE|'
+RESET
+NAME abs_long_name
+KEYS VARIABLE|
+SNAP abs_long_name
+
+# Test 315: abs_a_plus_b keys='A+B|'
+RESET
+NAME abs_a_plus_b
+KEYS A+B|
+SNAP abs_a_plus_b
+
+# Test 316: sin_X keys='X$s'
+RESET
+NAME sin_X
+KEYS X$s
+SNAP sin_X
+
+# Test 317: sin_2 keys='2$s'
+RESET
+NAME sin_2
+KEYS 2$s
+SNAP sin_2
+
+# Test 318: sin_PI keys='PI$s'
+RESET
+NAME sin_PI
+KEYS PI$s
+SNAP sin_PI
+
+# Test 319: cos_X keys='X$c'
+RESET
+NAME cos_X
+KEYS X$c
+SNAP cos_X
+
+# Test 320: cos_2 keys='2$c'
+RESET
+NAME cos_2
+KEYS 2$c
+SNAP cos_2
+
+# Test 321: tan_X keys='X$T'
+RESET
+NAME tan_X
+KEYS X$T
+SNAP tan_X
+
+# Test 322: ln_X keys='X$n'
+RESET
+NAME ln_X
+KEYS X$n
+SNAP ln_X
+
+# Test 323: ln_e keys='e$n'
+RESET
+NAME ln_e
+KEYS e$n
+SNAP ln_e
+
+# Test 324: exp_X keys='X$X'
+RESET
+NAME exp_X
+KEYS X$X
+SNAP exp_X
+
+# Test 325: exp_neg_X keys='-X$X'
+RESET
+NAME exp_neg_X
+KEYS -X$X
+SNAP exp_neg_X
+
+# Test 326: log_X keys='X$g'
+RESET
+NAME log_X
+KEYS X$g
+SNAP log_X
+
+# Test 327: log_10 keys='10$g'
+RESET
+NAME log_10
+KEYS 10$g
+SNAP log_10
+
+# Test 328: absfn_X keys='X$a'
+RESET
+NAME absfn_X
+KEYS X$a
+SNAP absfn_X
+
+# Test 329: sin_X_plus_Y keys='X+Y$s'
+RESET
+NAME sin_X_plus_Y
+KEYS X+Y$s
+SNAP sin_X_plus_Y
+
+# Test 330: cos_X_plus_Y keys='X+Y$c'
+RESET
+NAME cos_X_plus_Y
+KEYS X+Y$c
+SNAP cos_X_plus_Y
+
+# Test 331: sin_X_div_2 keys='X/2$s'
+RESET
+NAME sin_X_div_2
+KEYS X/2$s
+SNAP sin_X_div_2
+
+# Test 332: cos_X_2 keys='X^2$c'
+RESET
+NAME cos_X_2
+KEYS X^2$c
+SNAP cos_X_2
+
+# Test 333: ln_X_plus_1 keys='X+1$n'
+RESET
+NAME ln_X_plus_1
+KEYS X+1$n
+SNAP ln_X_plus_1
+
+# Test 334: sin_5 keys='5$s'
+RESET
+NAME sin_5
+KEYS 5$s
+SNAP sin_5
+
+# Test 335: sin_neg_X keys='-X$s'
+RESET
+NAME sin_neg_X
+KEYS -X$s
+SNAP sin_neg_X
+
+# Test 336: ln_2 keys='2$n'
+RESET
+NAME ln_2
+KEYS 2$n
+SNAP ln_2
+
+# Test 337: exp_2X keys='2*X$X'
+RESET
+NAME exp_2X
+KEYS 2*X$X
+SNAP exp_2X
+
+# Test 338: sin_X_squared keys='X^2$s'
+RESET
+NAME sin_X_squared
+KEYS X^2$s
+SNAP sin_X_squared
+
+# Test 339: cos_X_squared keys='X^2$c'
+RESET
+NAME cos_X_squared
+KEYS X^2$c
+SNAP cos_X_squared
+
+# Test 340: tan_X_plus_PI keys='X+PI$T'
+RESET
+NAME tan_X_plus_PI
+KEYS X+PI$T
+SNAP tan_X_plus_PI
+
+# Test 341: log_PI keys='PI$g'
+RESET
+NAME log_PI
+KEYS PI$g
+SNAP log_PI
+
+# Test 342: ln_PI keys='PI$n'
+RESET
+NAME ln_PI
+KEYS PI$n
+SNAP ln_PI
+
+# Test 343: exp_pi_x keys='PI*X$X'
+RESET
+NAME exp_pi_x
+KEYS PI*X$X
+SNAP exp_pi_x
+
+# Test 344: sin_PI_2 keys='PI/2$s'
+RESET
+NAME sin_PI_2
+KEYS PI/2$s
+SNAP sin_PI_2
+
+# Test 345: cos_PI_2 keys='PI/2$c'
+RESET
+NAME cos_PI_2
+KEYS PI/2$c
+SNAP cos_PI_2
+
+# Test 346: sin_X_minus_1 keys='X-1$s'
+RESET
+NAME sin_X_minus_1
+KEYS X-1$s
+SNAP sin_X_minus_1
+
+# Test 347: ln_VARIABLE keys='VARIABLE$n'
+RESET
+NAME ln_VARIABLE
+KEYS VARIABLE$n
+SNAP ln_VARIABLE
+
+# Test 348: sin_then_paren_X keys='X$s('
+RESET
+NAME sin_then_paren_X
+KEYS X$s(
+SNAP sin_then_paren_X
+
+# Test 349: sin_X_times_2 keys='X*2$s'
+RESET
+NAME sin_X_times_2
+KEYS X*2$s
+SNAP sin_X_times_2
+
+# Test 350: ln_X_X keys='X*X$n'
+RESET
+NAME ln_X_X
+KEYS X*X$n
+SNAP ln_X_X
+
+# Test 351: integ_basic keys='$I0$rX$rX$rX'
+RESET
+NAME integ_basic
+KEYS $I0$rX$rX$rX
+SNAP integ_basic
+
+# Test 352: integ_0_to_1 keys='$I0$r1$rX$rX'
+RESET
+NAME integ_0_to_1
+KEYS $I0$r1$rX$rX
+SNAP integ_0_to_1
+
+# Test 353: integ_a_to_b keys='$Ia$rb$rX$rX'
+RESET
+NAME integ_a_to_b
+KEYS $Ia$rb$rX$rX
+SNAP integ_a_to_b
+
+# Test 354: integ_0_to_inf keys='$I0$rINF$rX$rX'
+RESET
+NAME integ_0_to_inf
+KEYS $I0$rINF$rX$rX
+SNAP integ_0_to_inf
+
+# Test 355: integ_doc keys='$I0$r1/X$rABS$r$rt'
+RESET
+NAME integ_doc
+KEYS $I0$r1/X$rABS$r$rt
+SNAP integ_doc
+
+# Test 356: integ_X2 keys='$I0$r1$rX^2$rX'
+RESET
+NAME integ_X2
+KEYS $I0$r1$rX^2$rX
+SNAP integ_X2
+
+# Test 357: integ_sin keys='$I0$rPI$rX$s$rX'
+RESET
+NAME integ_sin
+KEYS $I0$rPI$rX$s$rX
+SNAP integ_sin
+
+# Test 358: integ_cos keys='$I0$rPI$rX$c$rX'
+RESET
+NAME integ_cos
+KEYS $I0$rPI$rX$c$rX
+SNAP integ_cos
+
+# Test 359: integ_simple_2 keys='$I1$r2$rX$rX'
+RESET
+NAME integ_simple_2
+KEYS $I1$r2$rX$rX
+SNAP integ_simple_2
+
+# Test 360: integ_simple_3 keys='$I0$r10$rX$rX'
+RESET
+NAME integ_simple_3
+KEYS $I0$r10$rX$rX
+SNAP integ_simple_3
+
+# Test 361: integ_sub keys='$I0$r1$r2*X$rX'
+RESET
+NAME integ_sub
+KEYS $I0$r1$r2*X$rX
+SNAP integ_sub
+
+# Test 362: integ_div keys='$I1$r2$r1/X$rX'
+RESET
+NAME integ_div
+KEYS $I1$r2$r1/X$rX
+SNAP integ_div
+
+# Test 363: integ_pow keys='$I0$r1$rX^2$rX'
+RESET
+NAME integ_pow
+KEYS $I0$r1$rX^2$rX
+SNAP integ_pow
+
+# Test 364: integ_sqrt keys='$I0$r1$r@X$rX'
+RESET
+NAME integ_sqrt
+KEYS $I0$r1$r@X$rX
+SNAP integ_sqrt
+
+# Test 365: integ_abs keys='$I0$r1$rX|$rX'
+RESET
+NAME integ_abs
+KEYS $I0$r1$rX|$rX
+SNAP integ_abs
+
+# Test 366: integ_basic_t keys='$I0$rT$rX$rT'
+RESET
+NAME integ_basic_t
+KEYS $I0$rT$rX$rT
+SNAP integ_basic_t
+
+# Test 367: integ_constant keys='$I0$r1$r1$rX'
+RESET
+NAME integ_constant
+KEYS $I0$r1$r1$rX
+SNAP integ_constant
+
+# Test 368: integ_zero keys='$I0$r0$rX$rX'
+RESET
+NAME integ_zero
+KEYS $I0$r0$rX$rX
+SNAP integ_zero
+
+# Test 369: integ_neg keys='$I0$r1$r-X$rX'
+RESET
+NAME integ_neg
+KEYS $I0$r1$r-X$rX
+SNAP integ_neg
+
+# Test 370: integ_sum_inside keys='$I0$r1$rX+Y$rX'
+RESET
+NAME integ_sum_inside
+KEYS $I0$r1$rX+Y$rX
+SNAP integ_sum_inside
+
+# Test 371: integ_long_name keys='$Ia$rb$rABS$rt'
+RESET
+NAME integ_long_name
+KEYS $Ia$rb$rABS$rt
+SNAP integ_long_name
+
+# Test 372: integ_lo_X_hi_2X keys='$IX$r2*X$rX$rX'
+RESET
+NAME integ_lo_X_hi_2X
+KEYS $IX$r2*X$rX$rX
+SNAP integ_lo_X_hi_2X
+
+# Test 373: integ_F_of_t keys='$I0$r1$rF$rt'
+RESET
+NAME integ_F_of_t
+KEYS $I0$r1$rF$rt
+SNAP integ_F_of_t
+
+# Test 374: integ_lo_PI_hi_2PI keys='$IPI$r2*PI$rX$rX'
+RESET
+NAME integ_lo_PI_hi_2PI
+KEYS $IPI$r2*PI$rX$rX
+SNAP integ_lo_PI_hi_2PI
+
+# Test 375: integ_X_2 keys='$I0$rX$r2$rX'
+RESET
+NAME integ_X_2
+KEYS $I0$rX$r2$rX
+SNAP integ_X_2
+
+# Test 376: sum_basic keys='$Sk$r1$rn$rk'
+RESET
+NAME sum_basic
+KEYS $Sk$r1$rn$rk
+SNAP sum_basic
+
+# Test 377: sum_squared keys='$Sk$r1$rn$rk^2'
+RESET
+NAME sum_squared
+KEYS $Sk$r1$rn$rk^2
+SNAP sum_squared
+
+# Test 378: sum_cubed keys='$Sk$r1$rn$rk^3'
+RESET
+NAME sum_cubed
+KEYS $Sk$r1$rn$rk^3
+SNAP sum_cubed
+
+# Test 379: sum_geom keys='$Sk$r0$rn$rX^k'
+RESET
+NAME sum_geom
+KEYS $Sk$r0$rn$rX^k
+SNAP sum_geom
+
+# Test 380: sum_long keys='$Si$r1$rN$ri'
+RESET
+NAME sum_long
+KEYS $Si$r1$rN$ri
+SNAP sum_long
+
+# Test 381: sum_const keys='$Sk$r1$rn$r1'
+RESET
+NAME sum_const
+KEYS $Sk$r1$rn$r1
+SNAP sum_const
+
+# Test 382: sum_to_inf keys='$Sk$r0$rINF$rk'
+RESET
+NAME sum_to_inf
+KEYS $Sk$r0$rINF$rk
+SNAP sum_to_inf
+
+# Test 383: sum_div keys='$Sk$r1$rn$r1/k'
+RESET
+NAME sum_div
+KEYS $Sk$r1$rn$r1/k
+SNAP sum_div
+
+# Test 384: sum_X_k keys='$Sk$r1$rn$rX*k'
+RESET
+NAME sum_X_k
+KEYS $Sk$r1$rn$rX*k
+SNAP sum_X_k
+
+# Test 385: sum_negative keys='$Sk$r1$rn$r-k'
+RESET
+NAME sum_negative
+KEYS $Sk$r1$rn$r-k
+SNAP sum_negative
+
+# Test 386: sum_inv_k keys='$Si$r1$rn$r1/i'
+RESET
+NAME sum_inv_k
+KEYS $Si$r1$rn$r1/i
+SNAP sum_inv_k
+
+# Test 387: sum_basic_two keys='$Sk$r2$r5$rk'
+RESET
+NAME sum_basic_two
+KEYS $Sk$r2$r5$rk
+SNAP sum_basic_two
+
+# Test 388: sum_func keys='$Sk$r1$rn$rk$s'
+RESET
+NAME sum_func
+KEYS $Sk$r1$rn$rk$s
+SNAP sum_func
+
+# Test 389: sum_polynomial keys='$Sk$r0$rn$rk^2+1'
+RESET
+NAME sum_polynomial
+KEYS $Sk$r0$rn$rk^2+1
+SNAP sum_polynomial
+
+# Test 390: sum_double keys='$Sk$r1$rn$rk*X'
+RESET
+NAME sum_double
+KEYS $Sk$r1$rn$rk*X
+SNAP sum_double
+
+# Test 391: deriv_X_X keys='$PX$rX'
+RESET
+NAME deriv_X_X
+KEYS $PX$rX
+SNAP deriv_X_X
+
+# Test 392: deriv_X_X2 keys='$PX$rX^2'
+RESET
+NAME deriv_X_X2
+KEYS $PX$rX^2
+SNAP deriv_X_X2
+
+# Test 393: deriv_X_sin_X keys='$PX$rX$s'
+RESET
+NAME deriv_X_sin_X
+KEYS $PX$rX$s
+SNAP deriv_X_sin_X
+
+# Test 394: deriv_t_X_squared keys='$Pt$rX^2'
+RESET
+NAME deriv_t_X_squared
+KEYS $Pt$rX^2
+SNAP deriv_t_X_squared
+
+# Test 395: deriv_X_X_div_X keys='$PX$rX/X'
+RESET
+NAME deriv_X_X_div_X
+KEYS $PX$rX/X
+SNAP deriv_X_X_div_X
+
+# Test 396: deriv_X_e_x keys='$PX$re^X'
+RESET
+NAME deriv_X_e_x
+KEYS $PX$re^X
+SNAP deriv_X_e_x
+
+# Test 397: deriv_X_const keys='$PX$r1'
+RESET
+NAME deriv_X_const
+KEYS $PX$r1
+SNAP deriv_X_const
+
+# Test 398: deriv_X_PI keys='$PX$rPI'
+RESET
+NAME deriv_X_PI
+KEYS $PX$rPI
+SNAP deriv_X_PI
+
+# Test 399: deriv_X_X_plus_Y keys='$PX$rX+Y'
+RESET
+NAME deriv_X_X_plus_Y
+KEYS $PX$rX+Y
+SNAP deriv_X_X_plus_Y
+
+# Test 400: deriv_X_X_squared_plus_1 keys='$PX$rX^2+1'
+RESET
+NAME deriv_X_X_squared_plus_1
+KEYS $PX$rX^2+1
+SNAP deriv_X_X_squared_plus_1
+
+# Test 401: where_X_X_5 keys='X+1$WX$r5'
+RESET
+NAME where_X_X_5
+KEYS X+1$WX$r5
+SNAP where_X_X_5
+
+# Test 402: where_X2_X_2 keys='X^2$WX$r2'
+RESET
+NAME where_X2_X_2
+KEYS X^2$WX$r2
+SNAP where_X2_X_2
+
+# Test 403: where_X_PI keys='X*2$WX$rPI'
+RESET
+NAME where_X_PI
+KEYS X*2$WX$rPI
+SNAP where_X_PI
+
+# Test 404: where_a_b_c keys='A+B$WA$r1'
+RESET
+NAME where_a_b_c
+KEYS A+B$WA$r1
+SNAP where_a_b_c
+
+# Test 405: where_long keys='X+Y+Z$WX$r1'
+RESET
+NAME where_long
+KEYS X+Y+Z$WX$r1
+SNAP where_long
+
+# Test 406: where_div keys='X/Y$WX$r2'
+RESET
+NAME where_div
+KEYS X/Y$WX$r2
+SNAP where_div
+
+# Test 407: where_pow keys='X^2$WX$r3'
+RESET
+NAME where_pow
+KEYS X^2$WX$r3
+SNAP where_pow
+
+# Test 408: where_sin keys='X$s$WX$r0'
+RESET
+NAME where_sin
+KEYS X$s$WX$r0
+SNAP where_sin
+
+# Test 409: where_cos keys='X$c$WX$r0'
+RESET
+NAME where_cos
+KEYS X$c$WX$r0
+SNAP where_cos
+
+# Test 410: where_const_eq keys='5$WX$r5'
+RESET
+NAME where_const_eq
+KEYS 5$WX$r5
+SNAP where_const_eq
+
+# Test 411: complex_3_4 keys='3$Z4'
+RESET
+NAME complex_3_4
+KEYS 3$Z4
+SNAP complex_3_4
+
+# Test 412: complex_X_Y keys='X$ZY'
+RESET
+NAME complex_X_Y
+KEYS X$ZY
+SNAP complex_X_Y
+
+# Test 413: complex_0_1 keys='0$Z1'
+RESET
+NAME complex_0_1
+KEYS 0$Z1
+SNAP complex_0_1
+
+# Test 414: complex_neg_neg keys='-1$Z-1'
+RESET
+NAME complex_neg_neg
+KEYS -1$Z-1
+SNAP complex_neg_neg
+
+# Test 415: complex_decimal keys='1.5$Z2.5'
+RESET
+NAME complex_decimal
+KEYS 1.5$Z2.5
+SNAP complex_decimal
+
+# Test 416: complex_PI_Y keys='PI$ZY'
+RESET
+NAME complex_PI_Y
+KEYS PI$ZY
+SNAP complex_PI_Y
+
+# Test 417: complex_a_b keys='A$ZB'
+RESET
+NAME complex_a_b
+KEYS A$ZB
+SNAP complex_a_b
+
+# Test 418: complex_X_squared_Y keys='X^2$ZY'
+RESET
+NAME complex_X_squared_Y
+KEYS X^2$ZY
+SNAP complex_X_squared_Y
+
+# Test 419: complex_neg_X_Y keys='-X$ZY'
+RESET
+NAME complex_neg_X_Y
+KEYS -X$ZY
+SNAP complex_neg_X_Y
+
+# Test 420: complex_zero_zero keys='0$Z0'
+RESET
+NAME complex_zero_zero
+KEYS 0$Z0
+SNAP complex_zero_zero
+
+# Test 421: uf_F_x keys='F$FX'
+RESET
+NAME uf_F_x
+KEYS F$FX
+SNAP uf_F_x
+
+# Test 422: uf_G_X_Y keys='G$FX,Y'
+RESET
+NAME uf_G_X_Y
+KEYS G$FX,Y
+SNAP uf_G_X_Y
+
+# Test 423: uf_H_a_b_c keys='H$FA,B,R'
+RESET
+NAME uf_H_a_b_c
+KEYS H$FA,B,R
+SNAP uf_H_a_b_c
+
+# Test 424: uf_F_2 keys='F$F2'
+RESET
+NAME uf_F_2
+KEYS F$F2
+SNAP uf_F_2
+
+# Test 425: uf_g_X_Y_Z keys='g$FX,Y,Z'
+RESET
+NAME uf_g_X_Y_Z
+KEYS g$FX,Y,Z
+SNAP uf_g_X_Y_Z
+
+# Test 426: uf_F_neg_X keys='F$F-X'
+RESET
+NAME uf_F_neg_X
+KEYS F$F-X
+SNAP uf_F_neg_X
+
+# Test 427: uf_F_X_plus_Y keys='F$FX+Y'
+RESET
+NAME uf_F_X_plus_Y
+KEYS F$FX+Y
+SNAP uf_F_X_plus_Y
+
+# Test 428: uf_F_X_X keys='F$FX*X'
+RESET
+NAME uf_F_X_X
+KEYS F$FX*X
+SNAP uf_F_X_X
+
+# Test 429: uf_F_decimal keys='F$F3.14'
+RESET
+NAME uf_F_decimal
+KEYS F$F3.14
+SNAP uf_F_decimal
+
+# Test 430: uf_F_long_arg keys='F$FVARIABLE'
+RESET
+NAME uf_F_long_arg
+KEYS F$FVARIABLE
+SNAP uf_F_long_arg
+
+# Test 431: edit_bksp_one keys='5$b'
+RESET
+NAME edit_bksp_one
+KEYS 5$b
+SNAP edit_bksp_one
+
+# Test 432: edit_bksp_two keys='12$b'
+RESET
+NAME edit_bksp_two
+KEYS 12$b
+SNAP edit_bksp_two
+
+# Test 433: edit_bksp_three keys='123$b$b'
+RESET
+NAME edit_bksp_three
+KEYS 123$b$b
+SNAP edit_bksp_three
+
+# Test 434: edit_replace_after_bksp keys='5$bX'
+RESET
+NAME edit_replace_after_bksp
+KEYS 5$bX
+SNAP edit_replace_after_bksp
+
+# Test 435: edit_X_then_letter keys='Xy'
+RESET
+NAME edit_X_then_letter
+KEYS Xy
+SNAP edit_X_then_letter
+
+# Test 436: edit_long_name_then_bksp keys='ABCD$b'
+RESET
+NAME edit_long_name_then_bksp
+KEYS ABCD$b
+SNAP edit_long_name_then_bksp
+
+# Test 437: edit_5_op_3 keys='5+3'
+RESET
+NAME edit_5_op_3
+KEYS 5+3
+SNAP edit_5_op_3
+
+# Test 438: edit_arrow_left keys='5+3$l'
+RESET
+NAME edit_arrow_left
+KEYS 5+3$l
+SNAP edit_arrow_left
+
+# Test 439: edit_arrow_right keys='5+3$r'
+RESET
+NAME edit_arrow_right
+KEYS 5+3$r
+SNAP edit_arrow_right
+
+# Test 440: edit_arrow_up keys='5+3$u'
+RESET
+NAME edit_arrow_up
+KEYS 5+3$u
+SNAP edit_arrow_up
+
+# Test 441: edit_arrow_down keys='5+3$k'
+RESET
+NAME edit_arrow_down
+KEYS 5+3$k
+SNAP edit_arrow_down
+
+# Test 442: edit_two_arrows keys='5+3$l$l'
+RESET
+NAME edit_two_arrows
+KEYS 5+3$l$l
+SNAP edit_two_arrows
+
+# Test 443: edit_three_arrows keys='5+3$l$l$l'
+RESET
+NAME edit_three_arrows
+KEYS 5+3$l$l$l
+SNAP edit_three_arrows
+
+# Test 444: edit_inside_div keys='5/3$u'
+RESET
+NAME edit_inside_div
+KEYS 5/3$u
+SNAP edit_inside_div
+
+# Test 445: edit_inside_pow keys='X^2$u'
+RESET
+NAME edit_inside_pow
+KEYS X^2$u
+SNAP edit_inside_pow
+
+# Test 446: edit_double_bksp keys='12$b$b'
+RESET
+NAME edit_double_bksp
+KEYS 12$b$b
+SNAP edit_double_bksp
+
+# Test 447: edit_clr_after keys='5+3$K'
+RESET
+NAME edit_clr_after
+KEYS 5+3$K
+SNAP edit_clr_after
+
+# Test 448: edit_clr_all keys='5+3$L'
+RESET
+NAME edit_clr_all
+KEYS 5+3$L
+SNAP edit_clr_all
+
+# Test 449: edit_two_then_replace keys='12$bX'
+RESET
+NAME edit_two_then_replace
+KEYS 12$bX
+SNAP edit_two_then_replace
+
+# Test 450: edit_select_replace keys='X+5$l$lY'
+RESET
+NAME edit_select_replace
+KEYS X+5$l$lY
+SNAP edit_select_replace
+
+# Test 451: edit_5_3_two_arrows keys='5*3$u'
+RESET
+NAME edit_5_3_two_arrows
+KEYS 5*3$u
+SNAP edit_5_3_two_arrows
+
+# Test 452: edit_complex_seq keys='5+X*2-3'
+RESET
+NAME edit_complex_seq
+KEYS 5+X*2-3
+SNAP edit_complex_seq
+
+# Test 453: edit_replace_inside keys='5+3$lY'
+RESET
+NAME edit_replace_inside
+KEYS 5+3$lY
+SNAP edit_replace_inside
+
+# Test 454: edit_arrow_through_div keys='1/2$u'
+RESET
+NAME edit_arrow_through_div
+KEYS 1/2$u
+SNAP edit_arrow_through_div
+
+# Test 455: edit_arrow_inside_sqrt keys='@X$l'
+RESET
+NAME edit_arrow_inside_sqrt
+KEYS @X$l
+SNAP edit_arrow_inside_sqrt
+
+# Test 456: edit_arrow_inside_paren keys='X(+1$l'
+RESET
+NAME edit_arrow_inside_paren
+KEYS X(+1$l
+SNAP edit_arrow_inside_paren
+
+# Test 457: edit_after_func keys='X$s$l'
+RESET
+NAME edit_after_func
+KEYS X$s$l
+SNAP edit_after_func
+
+# Test 458: edit_typing_after_select keys='5+3$lY'
+RESET
+NAME edit_typing_after_select
+KEYS 5+3$lY
+SNAP edit_typing_after_select
+
+# Test 459: edit_letter_then_bksp keys='abc$b'
+RESET
+NAME edit_letter_then_bksp
+KEYS abc$b
+SNAP edit_letter_then_bksp
+
+# Test 460: edit_simple_overwrite keys='X$bY'
+RESET
+NAME edit_simple_overwrite
+KEYS X$bY
+SNAP edit_simple_overwrite
+
+# Test 461: nav_simple_right keys='5+3$r$r'
+RESET
+NAME nav_simple_right
+KEYS 5+3$r$r
+SNAP nav_simple_right
+
+# Test 462: nav_simple_left keys='5+3$l$l'
+RESET
+NAME nav_simple_left
+KEYS 5+3$l$l
+SNAP nav_simple_left
+
+# Test 463: nav_up_in_div keys='1/2$u$u'
+RESET
+NAME nav_up_in_div
+KEYS 1/2$u$u
+SNAP nav_up_in_div
+
+# Test 464: nav_down_in_div keys='1/2$k$k'
+RESET
+NAME nav_down_in_div
+KEYS 1/2$k$k
+SNAP nav_down_in_div
+
+# Test 465: nav_around_pow keys='X^2$u$k'
+RESET
+NAME nav_around_pow
+KEYS X^2$u$k
+SNAP nav_around_pow
+
+# Test 466: nav_around_sqrt keys='@X$u'
+RESET
+NAME nav_around_sqrt
+KEYS @X$u
+SNAP nav_around_sqrt
+
+# Test 467: nav_in_func keys='X$s$k'
+RESET
+NAME nav_in_func
+KEYS X$s$k
+SNAP nav_in_func
+
+# Test 468: nav_in_func_args keys='F$FX,Y$l'
+RESET
+NAME nav_in_func_args
+KEYS F$FX,Y$l
+SNAP nav_in_func_args
+
+# Test 469: nav_around_paren keys='X+Y($u'
+RESET
+NAME nav_around_paren
+KEYS X+Y($u
+SNAP nav_around_paren
+
+# Test 470: nav_through_complex keys='3$Z4$l$r'
+RESET
+NAME nav_through_complex
+KEYS 3$Z4$l$r
+SNAP nav_through_complex
+
+# Test 471: nav_in_integ keys='$I0$rX$rX$rX$l'
+RESET
+NAME nav_in_integ
+KEYS $I0$rX$rX$rX$l
+SNAP nav_in_integ
+
+# Test 472: nav_in_sum keys='$Sk$r1$rn$rk$l'
+RESET
+NAME nav_in_sum
+KEYS $Sk$r1$rn$rk$l
+SNAP nav_in_sum
+
+# Test 473: nav_through_long_expr keys='5+3*4$l'
+RESET
+NAME nav_through_long_expr
+KEYS 5+3*4$l
+SNAP nav_through_long_expr
+
+# Test 474: nav_after_left keys='5+3$l'
+RESET
+NAME nav_after_left
+KEYS 5+3$l
+SNAP nav_after_left
+
+# Test 475: nav_after_right keys='5+3$r'
+RESET
+NAME nav_after_right
+KEYS 5+3$r
+SNAP nav_after_right
+
+# Test 476: nav_after_two_lefts keys='5+3$l$l'
+RESET
+NAME nav_after_two_lefts
+KEYS 5+3$l$l
+SNAP nav_after_two_lefts
+
+# Test 477: nav_after_three_rights keys='5+3$r$r$r'
+RESET
+NAME nav_after_three_rights
+KEYS 5+3$r$r$r
+SNAP nav_after_three_rights
+
+# Test 478: nav_in_neg keys='-5$u'
+RESET
+NAME nav_in_neg
+KEYS -5$u
+SNAP nav_in_neg
+
+# Test 479: nav_back_to_root keys='X+Y+Z$u$u$u'
+RESET
+NAME nav_back_to_root
+KEYS X+Y+Z$u$u$u
+SNAP nav_back_to_root
+
+# Test 480: nav_first_arg keys='5+3$l$l$l'
+RESET
+NAME nav_first_arg
+KEYS 5+3$l$l$l
+SNAP nav_first_arg
+
+# Test 481: nav_last_arg keys='5+3*4$r$r$r'
+RESET
+NAME nav_last_arg
+KEYS 5+3*4$r$r$r
+SNAP nav_last_arg
+
+# Test 482: nav_nested_div_up keys='1/X+Y$u'
+RESET
+NAME nav_nested_div_up
+KEYS 1/X+Y$u
+SNAP nav_nested_div_up
+
+# Test 483: nav_after_paren_wrap keys='X+Y($u'
+RESET
+NAME nav_after_paren_wrap
+KEYS X+Y($u
+SNAP nav_after_paren_wrap
+
+# Test 484: nav_in_abs keys='X|$u'
+RESET
+NAME nav_in_abs
+KEYS X|$u
+SNAP nav_in_abs
+
+# Test 485: nav_in_complex keys='5$Z4$u'
+RESET
+NAME nav_in_complex
+KEYS 5$Z4$u
+SNAP nav_in_complex
+
+# Test 486: nav_in_two_arg_func keys='F$FX,Y$l'
+RESET
+NAME nav_in_two_arg_func
+KEYS F$FX,Y$l
+SNAP nav_in_two_arg_func
+
+# Test 487: nav_in_three_arg_func keys='F$FX,Y,Z$l'
+RESET
+NAME nav_in_three_arg_func
+KEYS F$FX,Y,Z$l
+SNAP nav_in_three_arg_func
+
+# Test 488: nav_after_userfunc keys='F$FX,Y$r'
+RESET
+NAME nav_after_userfunc
+KEYS F$FX,Y$r
+SNAP nav_after_userfunc
+
+# Test 489: nav_in_pow_after_arrows keys='X^2$u$k'
+RESET
+NAME nav_in_pow_after_arrows
+KEYS X^2$u$k
+SNAP nav_in_pow_after_arrows
+
+# Test 490: nav_complex_path keys='1+2*3$u$u$k'
+RESET
+NAME nav_complex_path
+KEYS 1+2*3$u$u$k
+SNAP nav_complex_path
+
+# Test 491: auto_2X keys='2X'
+RESET
+NAME auto_2X
+KEYS 2X
+SNAP auto_2X
+
+# Test 492: auto_3PI keys='3PI'
+RESET
+NAME auto_3PI
+KEYS 3PI
+SNAP auto_3PI
+
+# Test 493: auto_5L keys='5L'
+RESET
+NAME auto_5L
+KEYS 5L
+SNAP auto_5L
+
+# Test 494: auto_2X_again keys='2X'
+RESET
+NAME auto_2X_again
+KEYS 2X
+SNAP auto_2X_again
+
+# Test 495: auto_decimal keys='0.5X'
+RESET
+NAME auto_decimal
+KEYS 0.5X
+SNAP auto_decimal
+
+# Test 496: auto_3R keys='3R'
+RESET
+NAME auto_3R
+KEYS 3R
+SNAP auto_3R
+
+# Test 497: auto_2X_3 keys='2X*3'
+RESET
+NAME auto_2X_3
+KEYS 2X*3
+SNAP auto_2X_3
+
+# Test 498: auto_2L keys='2L'
+RESET
+NAME auto_2L
+KEYS 2L
+SNAP auto_2L
+
+# Test 499: auto_4_OMEGA keys='4OMEGA'
+RESET
+NAME auto_4_OMEGA
+KEYS 4OMEGA
+SNAP auto_4_OMEGA
+
+# Test 500: auto_X_then_2 keys='X2'
+RESET
+NAME auto_X_then_2
+KEYS X2
+SNAP auto_X_then_2
+
+# Test 501: auto_Xy keys='Xy'
+RESET
+NAME auto_Xy
+KEYS Xy
+SNAP auto_Xy
+
+# Test 502: auto_2X_plus_Y keys='2X+Y'
+RESET
+NAME auto_2X_plus_Y
+KEYS 2X+Y
+SNAP auto_2X_plus_Y
+
+# Test 503: auto_3X_squared keys='3X^2'
+RESET
+NAME auto_3X_squared
+KEYS 3X^2
+SNAP auto_3X_squared
+
+# Test 504: auto_2_minus_X keys='2-X'
+RESET
+NAME auto_2_minus_X
+KEYS 2-X
+SNAP auto_2_minus_X
+
+# Test 505: auto_3PI_R keys='3PI*R'
+RESET
+NAME auto_3PI_R
+KEYS 3PI*R
+SNAP auto_3PI_R
+
+# Test 506: doc_meta_kernel_integ keys='E$I0$r1/X$rABS$r$rt'
+RESET
+NAME doc_meta_kernel_integ
+KEYS E$I0$r1/X$rABS$r$rt
+SNAP doc_meta_kernel_integ
+
+# Test 507: doc_user_guide_arith keys='5*1+1/7.5$r/@3-2^3'
+RESET
+NAME doc_user_guide_arith
+KEYS 5*1+1/7.5$r/@3-2^3
+SNAP doc_user_guide_arith
+
+# Test 508: doc_user_guide_algebra keys='2*L*@1+X/R$r/R+y$r+2*L/b'
+RESET
+NAME doc_user_guide_algebra
+KEYS 2*L*@1+X/R$r/R+y$r+2*L/b
+SNAP doc_user_guide_algebra
+
+# Test 509: doc_user_guide_greek keys='2/@3$rL+e^-Mu*LNX+2*Mu*Y$r/THETA^1/3'
+RESET
+NAME doc_user_guide_greek
+KEYS 2/@3$rL+e^-Mu*LNX+2*Mu*Y$r/THETA^1/3
+SNAP doc_user_guide_greek
+
+# Test 510: doc_pythagorean keys='@A^2+B^2'
+RESET
+NAME doc_pythagorean
+KEYS @A^2+B^2
+SNAP doc_pythagorean
+
+# Test 511: doc_sin_cos_sq keys='X$s^2+X$c^2'
+RESET
+NAME doc_sin_cos_sq
+KEYS X$s^2+X$c^2
+SNAP doc_sin_cos_sq
+
+# Test 512: doc_quadratic keys='A*X^2+B*X+R'
+RESET
+NAME doc_quadratic
+KEYS A*X^2+B*X+R
+SNAP doc_quadratic
+
+# Test 513: doc_simple_geom keys='PI*R^2'
+RESET
+NAME doc_simple_geom
+KEYS PI*R^2
+SNAP doc_simple_geom
+
+# Test 514: doc_volume keys='4/3*PI*R^3'
+RESET
+NAME doc_volume
+KEYS 4/3*PI*R^3
+SNAP doc_volume
+
+# Test 515: doc_simple_log keys='X$n+Y$n'
+RESET
+NAME doc_simple_log
+KEYS X$n+Y$n
+SNAP doc_simple_log
+
+QUIT

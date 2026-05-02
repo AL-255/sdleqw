@@ -80,11 +80,14 @@ static void wrap_sel(eqw_t *e, expr *wrapper, int sel_kid_idx, int focus_kid)
     }
 }
 
-/* Same but the wrapper has no placeholder — it just consumes the selection. */
+/* Same but the wrapper has no placeholder — it just consumes the selection.
+   If the selection was a placeholder, stay in edit mode on it inside the
+   wrapper (so a subsequent char fills the inside, not replaces the wrapper). */
 static void wrap_sel_just_consume(eqw_t *e, expr_kind k, int focus_back)
 {
     expr *cur = e->sel;
     if (!cur) return;
+    int was_placeholder = (cur->kind == EX_PLACEHOLDER);
     expr *parent = (cur == e->root) ? NULL : cur->parent;
     int idx = (parent) ? expr_index_in_parent(cur) : -1;
     if (parent) {
@@ -102,15 +105,56 @@ static void wrap_sel_just_consume(eqw_t *e, expr_kind k, int focus_back)
         e->root = wrapper;
         wrapper->parent = NULL;
     }
-    e->sel = focus_back ? wrapper->kids[0] : wrapper;
-    e->edit = NULL;
-    e->mode = EQW_MODE_SEL;
+    if (was_placeholder) {
+        e->sel = wrapper->kids[0];
+        e->edit = e->sel;
+        e->mode = EQW_MODE_EDIT;
+    } else {
+        e->sel = focus_back ? wrapper->kids[0] : wrapper;
+        e->edit = NULL;
+        e->mode = EQW_MODE_SEL;
+    }
 }
 
 /* ---------- character entry ---------- */
 
+/* Forward decl for auto-multiply. */
+static void op_binary(eqw_t *e, expr_kind k);
+
+/* True iff we're editing an atomic NUM or NAME token. */
+static int editing_atomic(const eqw_t *e)
+{
+    return e->mode == EQW_MODE_EDIT && e->edit &&
+           (e->edit->kind == EX_NUM || e->edit->kind == EX_NAME);
+}
+
+/* Per Meta Kernel doc 8.2.4: a NUM followed by an alpha character (or a
+   prefix function, or a sqrt, etc.) auto-inserts an implicit multiply.
+   Similarly a NAME followed by a prefix-fn auto-multiplies. After this
+   returns 1, we're in edit mode on a fresh placeholder. */
+static int auto_imul_for_kind(eqw_t *e, int trigger)
+{
+    /* trigger == 'A' for an alpha char, 'F' for a prefix-fn (incl. sqrt). */
+    if (e->mode != EQW_MODE_EDIT || !e->edit) return 0;
+    if (trigger == 'A' && e->edit->kind == EX_NUM) {
+        op_binary(e, EX_MUL);
+        return 1;
+    }
+    if (trigger == 'F' && (e->edit->kind == EX_NUM || e->edit->kind == EX_NAME)) {
+        op_binary(e, EX_MUL);
+        return 1;
+    }
+    return 0;
+}
+
 static void apply_char(eqw_t *e, int c)
 {
+    /* Auto-multiply: editing a NUM, alpha char arrives -> commit and split. */
+    if (e->mode == EQW_MODE_EDIT && e->edit && e->edit->kind == EX_NUM &&
+        isalpha(c)) {
+        auto_imul_for_kind(e, 'A');
+        /* now in EDIT on a fresh placeholder; fall through to insert. */
+    }
     /* In selection mode: replace selection with a fresh NUM/NAME containing c.
        In edit mode: append c to the current edit node's text. If the edit
        node is a placeholder, convert it. */
@@ -689,16 +733,30 @@ static void draw_frame(bitmap_t *bm)
     (void)bm;
 }
 
+#define MENU_H 7
+
+/* Pixel-perfect HP menu bitmap (131 cols × 7 rows) extracted from x50ng. */
+extern const uint8_t hp_menu_bits[7][17];
+
+static void draw_soft_menu(bitmap_t *bm)
+{
+    int y0 = bm->h - MENU_H;
+    for (int y = 0; y < MENU_H; y++) {
+        for (int x = 0; x < 131 && x < bm->w; x++) {
+            int byte = x / 8;
+            int bit = x % 8;
+            int v = (hp_menu_bits[y][byte] >> bit) & 1;
+            bm_set(bm, x, y0 + y, v);
+        }
+    }
+}
+
 static void draw_status_strip(eqw_t *e, bitmap_t *bm)
 {
     /* Top row, left: short error/status text (only when set). */
     if (e->status[0]) {
         font_draw_stack(bm, 1, 0, e->status, 1);
     }
-    /* Top row, right: mode indicator in mini font. */
-    const char *mode = eqw_mode_name(e);
-    int mw = font_measure_mini(mode);
-    font_draw_mini(bm, bm->w - mw - 1, 0, mode, 1);
 }
 
 void eqw_render(eqw_t *e, bitmap_t *bm, int caret_visible)
@@ -716,6 +774,13 @@ void eqw_render(eqw_t *e, bitmap_t *bm, int caret_visible)
     ctx.cursor_x = e->cursor_x;
     ctx.cursor_y = e->cursor_y;
 
-    render_eqw(&ctx, bm, e->root);
+    /* Render in the area ABOVE the menu strip. HP's EQW vertically centers
+       in the (LCD_H - MENU_H) = 71-row upper area; horizontally centers
+       around column 62 (slightly left-of-center). Match those. */
+    bitmap_t upper = *bm;
+    upper.h = bm->h - MENU_H;
+    upper.w = 125;  /* HP's effective horizontal extent for centering */
+    render_eqw(&ctx, &upper, e->root);
     draw_status_strip(e, bm);
+    draw_soft_menu(bm);
 }

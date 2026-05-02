@@ -7,6 +7,8 @@ SDL_LIBS   := $(shell pkg-config --libs sdl2)
 SRCS := \
   src/bitmap.c \
   src/font.c \
+  src/hp_font.c \
+  src/hp_menu.c \
   src/expr.c \
   src/render.c \
   src/eqw.c \

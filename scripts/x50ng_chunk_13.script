@@ -1,0 +1,473 @@
+# chunk 13 — tests 429..461
+WAIT 100
+SNAP boot
+
+# Test 429: uf_F_decimal keys='F$F3.14'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP ALPHA
+TAP F
+TAP LEFTSHIFT
+TAP Z
+TAP 3
+TAP PERIOD
+TAP 1
+TAP 4
+WAIT 20
+SNAP uf_F_decimal
+TAP ON
+WAIT 15
+
+# Test 430: uf_F_long_arg keys='F$FVARIABLE'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP ALPHA
+TAP F
+TAP LEFTSHIFT
+TAP Z
+TAP ALPHA
+TAP V
+TAP ALPHA
+TAP A
+TAP ALPHA
+TAP R
+TAP ALPHA
+TAP I
+TAP ALPHA
+TAP A
+TAP ALPHA
+TAP B
+TAP ALPHA
+TAP L
+TAP ALPHA
+TAP E
+WAIT 20
+SNAP uf_F_long_arg
+TAP ON
+WAIT 15
+
+# Test 431: edit_bksp_one keys='5$b'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP BACKSPACE
+WAIT 20
+SNAP edit_bksp_one
+TAP ON
+WAIT 15
+
+# Test 432: edit_bksp_two keys='12$b'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 1
+TAP 2
+TAP BACKSPACE
+WAIT 20
+SNAP edit_bksp_two
+TAP ON
+WAIT 15
+
+# Test 433: edit_bksp_three keys='123$b$b'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 1
+TAP 2
+TAP 3
+TAP BACKSPACE
+TAP BACKSPACE
+WAIT 20
+SNAP edit_bksp_three
+TAP ON
+WAIT 15
+
+# Test 434: edit_replace_after_bksp keys='5$bX'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP BACKSPACE
+TAP X
+WAIT 20
+SNAP edit_replace_after_bksp
+TAP ON
+WAIT 15
+
+# Test 435: edit_X_then_letter keys='Xy'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP ALPHA
+TAP Y
+WAIT 20
+SNAP edit_X_then_letter
+TAP ON
+WAIT 15
+
+# Test 436: edit_long_name_then_bksp keys='ABCD$b'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP ALPHA
+TAP A
+TAP ALPHA
+TAP B
+TAP ALPHA
+TAP C
+TAP ALPHA
+TAP D
+TAP BACKSPACE
+WAIT 20
+SNAP edit_long_name_then_bksp
+TAP ON
+WAIT 15
+
+# Test 437: edit_5_op_3 keys='5+3'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+WAIT 20
+SNAP edit_5_op_3
+TAP ON
+WAIT 15
+
+# Test 438: edit_arrow_left keys='5+3$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP LEFT
+WAIT 20
+SNAP edit_arrow_left
+TAP ON
+WAIT 15
+
+# Test 439: edit_arrow_right keys='5+3$r'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP RIGHT
+WAIT 20
+SNAP edit_arrow_right
+TAP ON
+WAIT 15
+
+# Test 440: edit_arrow_up keys='5+3$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP UP
+WAIT 20
+SNAP edit_arrow_up
+TAP ON
+WAIT 15
+
+# Test 441: edit_arrow_down keys='5+3$k'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP DOWN
+WAIT 20
+SNAP edit_arrow_down
+TAP ON
+WAIT 15
+
+# Test 442: edit_two_arrows keys='5+3$l$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP LEFT
+TAP LEFT
+WAIT 20
+SNAP edit_two_arrows
+TAP ON
+WAIT 15
+
+# Test 443: edit_three_arrows keys='5+3$l$l$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP LEFT
+TAP LEFT
+TAP LEFT
+WAIT 20
+SNAP edit_three_arrows
+TAP ON
+WAIT 15
+
+# Test 444: edit_inside_div keys='5/3$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP Z
+TAP 3
+TAP UP
+WAIT 20
+SNAP edit_inside_div
+TAP ON
+WAIT 15
+
+# Test 445: edit_inside_pow keys='X^2$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP Q
+TAP 2
+TAP UP
+WAIT 20
+SNAP edit_inside_pow
+TAP ON
+WAIT 15
+
+# Test 446: edit_double_bksp keys='12$b$b'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 1
+TAP 2
+TAP BACKSPACE
+TAP BACKSPACE
+WAIT 20
+SNAP edit_double_bksp
+TAP ON
+WAIT 15
+
+# Test 447: edit_clr_after keys='5+3$K'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP RIGHTSHIFT
+TAP BACKSPACE
+WAIT 20
+SNAP edit_clr_after
+TAP ON
+WAIT 15
+
+# Test 448: edit_clr_all keys='5+3$L'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP RIGHTSHIFT
+TAP BACKSPACE
+WAIT 20
+SNAP edit_clr_all
+TAP ON
+WAIT 15
+
+# Test 449: edit_two_then_replace keys='12$bX'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 1
+TAP 2
+TAP BACKSPACE
+TAP X
+WAIT 20
+SNAP edit_two_then_replace
+TAP ON
+WAIT 15
+
+# Test 450: edit_select_replace keys='X+5$l$lY'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP PLUS
+TAP 5
+TAP LEFT
+TAP LEFT
+TAP ALPHA
+TAP Y
+WAIT 20
+SNAP edit_select_replace
+TAP ON
+WAIT 15
+
+# Test 451: edit_5_3_two_arrows keys='5*3$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP MULTIPLY
+TAP 3
+TAP UP
+WAIT 20
+SNAP edit_5_3_two_arrows
+TAP ON
+WAIT 15
+
+# Test 452: edit_complex_seq keys='5+X*2-3'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP X
+TAP MULTIPLY
+TAP 2
+TAP MINUS
+TAP 3
+WAIT 20
+SNAP edit_complex_seq
+TAP ON
+WAIT 15
+
+# Test 453: edit_replace_inside keys='5+3$lY'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP LEFT
+TAP ALPHA
+TAP Y
+WAIT 20
+SNAP edit_replace_inside
+TAP ON
+WAIT 15
+
+# Test 454: edit_arrow_through_div keys='1/2$u'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 1
+TAP Z
+TAP 2
+TAP UP
+WAIT 20
+SNAP edit_arrow_through_div
+TAP ON
+WAIT 15
+
+# Test 455: edit_arrow_inside_sqrt keys='@X$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP R
+TAP X
+TAP LEFT
+WAIT 20
+SNAP edit_arrow_inside_sqrt
+TAP ON
+WAIT 15
+
+# Test 456: edit_arrow_inside_paren keys='X(+1$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP LEFTSHIFT
+TAP Z
+TAP PLUS
+TAP 1
+TAP LEFT
+WAIT 20
+SNAP edit_arrow_inside_paren
+TAP ON
+WAIT 15
+
+# Test 457: edit_after_func keys='X$s$l'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP S
+TAP LEFT
+WAIT 20
+SNAP edit_after_func
+TAP ON
+WAIT 15
+
+# Test 458: edit_typing_after_select keys='5+3$lY'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP LEFT
+TAP ALPHA
+TAP Y
+WAIT 20
+SNAP edit_typing_after_select
+TAP ON
+WAIT 15
+
+# Test 459: edit_letter_then_bksp keys='abc$b'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP ALPHA
+TAP A
+TAP ALPHA
+TAP B
+TAP ALPHA
+TAP C
+TAP BACKSPACE
+WAIT 20
+SNAP edit_letter_then_bksp
+TAP ON
+WAIT 15
+
+# Test 460: edit_simple_overwrite keys='X$bY'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP X
+TAP BACKSPACE
+TAP ALPHA
+TAP Y
+WAIT 20
+SNAP edit_simple_overwrite
+TAP ON
+WAIT 15
+
+# Test 461: nav_simple_right keys='5+3$r$r'
+TAP RIGHTSHIFT
+TAP O
+WAIT 25
+TAP 5
+TAP PLUS
+TAP 3
+TAP RIGHT
+TAP RIGHT
+WAIT 20
+SNAP nav_simple_right
+TAP ON
+WAIT 15
+
+QUIT

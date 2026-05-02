@@ -1,4 +1,5 @@
 #include "font.h"
+#include "hp_font.h"
 #include <string.h>
 
 /* Row macros: bit 0 = leftmost pixel. */
@@ -615,6 +616,13 @@ const glyph_t *font_stack(int ch)
 {
     static glyph_t buf;
     unsigned u = (unsigned)ch & 0xff;
+    /* Prefer HP-extracted glyph if present (variable width). */
+    if (u < 128 && hp_glyph_table[u].rows) {
+        const hp_glyph_t *h = &hp_glyph_table[u];
+        buf.w = h->w; buf.h = 7; buf.advance = h->advance;
+        buf.baseline = 5; buf.axis = 3; buf.rows = h->rows;
+        return &buf;
+    }
     const gent *g = &stack_table[u];
     if (!g->rows) return &fallback_stack;
     buf.w = g->w; buf.h = g->h; buf.advance = g->advance;

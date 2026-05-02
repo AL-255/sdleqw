@@ -1,0 +1,152 @@
+# complex_sdleqw.script — auto-generated
+# Quadratic formula numerator x = (-b + sqrt(b^2-4ac)) / (2a)
+RESET
+NAME quad_formula
+KEYS -b+@b^2-4ac$r$r/2a
+SNAP quad_formula
+
+# c = sqrt(a^2 + b^2)
+RESET
+NAME pythagoras
+KEYS @a^2+b^2
+SNAP pythagoras
+
+# (x+y)^n
+RESET
+NAME binomial
+KEYS x+y(^n
+SNAP binomial
+
+# e^(i*pi) + 1
+RESET
+NAME euler_id
+KEYS e^i*PI$r+1
+SNAP euler_id
+
+# cos(x)^2 - sin(x)^2
+RESET
+NAME cos_2x_identity
+KEYS X$c^2-X$s^2
+SNAP cos_2x_identity
+
+# Sum k=1..n k^2
+RESET
+NAME sum_squares
+KEYS $Sk$r1$rn$rk^2
+SNAP sum_squares
+
+# Sum_{k=0}^∞ x^k
+RESET
+NAME geom_series
+KEYS $Sk$r0$rINF$rx^k
+SNAP geom_series
+
+# Stirling's approximation
+RESET
+NAME stirling
+KEYS @2*PI*n$r*n/e$r^n
+SNAP stirling
+
+# Normal PDF
+RESET
+NAME normal_pdf
+KEYS 1/@2*PI$r*e^-x^2/2
+SNAP normal_pdf
+
+# Bayes' rule
+RESET
+NAME bayes
+KEYS P$FA$WB$r/P$FB$rP$FA$rP$FB
+SNAP bayes
+
+# ∫_0^1 x^2 dx
+RESET
+NAME def_integ_x2
+KEYS $I0$r1$rx^2$rx
+SNAP def_integ_x2
+
+# ∫ sin(x) dx
+RESET
+NAME indef_integ_sin
+KEYS $I$r$rx$s$rx
+SNAP indef_integ_sin
+
+# sin(x)/x
+RESET
+NAME limit_sinx_x
+KEYS x$s/x
+SNAP limit_sinx_x
+
+# (Σ xy)² ≤ Σx²·Σy² (LHS only)
+RESET
+NAME cauchy_schwarz
+KEYS $Sk$r1$rn$rx*y$r^2
+SNAP cauchy_schwarz
+
+# ∂u/∂t = a²·∂²u/∂x²
+RESET
+NAME heat_eq
+KEYS $Pt$ru/$Pt$ru
+SNAP heat_eq
+
+# A = P(1 + r/n)^(nt)
+RESET
+NAME compound_interest
+KEYS P*1+r/n$r$r^n*t
+SNAP compound_interest
+
+# ad - bc
+RESET
+NAME det_2x2
+KEYS ad-bc
+SNAP det_2x2
+
+# cos(theta)
+RESET
+NAME rot_cos
+KEYS THETA$c
+SNAP rot_cos
+
+# (4/3)π r³
+RESET
+NAME sphere_vol
+KEYS 4/3*PI*r^3
+SNAP sphere_vol
+
+# ½ m v²
+RESET
+NAME kinetic_E
+KEYS 1/2*m*v^2
+SNAP kinetic_E
+
+# −ℏ²/(2m) d²ψ/dx²
+RESET
+NAME schroedinger_kinetic
+KEYS -h^2/2*m$r*$Px$rPSI
+SNAP schroedinger_kinetic
+
+# F = k q₁q₂/r²
+RESET
+NAME coulomb
+KEYS k*Q1*Q2/r^2
+SNAP coulomb
+
+# G m1 m2 / r²
+RESET
+NAME newton_grav
+KEYS G*M1*M2/r^2
+SNAP newton_grav
+
+# Sigmoid function
+RESET
+NAME sigmoid
+KEYS 1/1+e^-x
+SNAP sigmoid
+
+# ½ base × height
+RESET
+NAME tri_area
+KEYS 1/2*b*h
+SNAP tri_area
+
+QUIT
