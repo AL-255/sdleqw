@@ -70,7 +70,7 @@ def add(c, g):
 # Solo extractions
 solo = []
 for d in "0123456789": solo.append((f"num_{d}", d))
-for c in "ABEFGHJKLMNORTYZ": solo.append((f"name_{c}", c))
+for c in "ABCDEFGHIJKLMNOPQRSTUVWYZ": solo.append((f"name_{c}", c))
 for c in "abefghjklmnortyz": solo.append((f"name_{c}", c))
 solo.append(("name_X", "X"))
 solo.append(("name_x", "x"))

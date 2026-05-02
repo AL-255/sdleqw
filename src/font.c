@@ -252,9 +252,9 @@ G7(fs_tilde,  R5(0,0,0,0,0), R5(0,1,0,0,1), R5(1,0,1,0,1), R5(1,0,0,1,0),
 /* ============================================================
  * Special math glyphs (5-wide, 7-tall slot for stack font)
  * ============================================================ */
-/* centered dot (multiply) */
-G7(fs_cdot, R5(0,0,0,0,0), R5(0,0,0,0,0), R5(0,0,0,0,0), R5(0,0,1,0,0),
-            R5(0,0,0,0,0), R5(0,0,0,0,0), R5(0,0,0,0,0));
+/* centered dot (multiply): 2 pixels tall (HP convention) */
+G7(fs_cdot, R5(0,0,0,0,0), R5(0,0,0,0,0), R5(0,0,0,0,0), R5(1,0,0,0,0),
+            R5(1,0,0,0,0), R5(0,0,0,0,0), R5(0,0,0,0,0));
 /* pi */
 G7(fs_pi,   R5(0,0,0,0,0), R5(0,0,0,0,0), R5(1,1,1,1,1), R5(0,1,0,1,0),
             R5(0,1,0,1,0), R5(0,1,0,1,0), R5(0,1,0,1,1));
@@ -418,7 +418,7 @@ static const gent stack_table[256] = {
     ['~']  = GENT(5,7,6,5,3, fs_tilde),
     [127]  = GENT(5,7,6,5,3, fs_blank),
 
-    [GL_DOT]      = GENT(3,7,4,5,3, fs_cdot),
+    [GL_DOT]      = GENT(1,7,2,5,3, fs_cdot),
     [GL_PI]       = GENT(5,7,6,5,3, fs_pi),
     [GL_THETA]    = GENT(5,7,6,5,3, fs_theta),
     [GL_LAMBDA]   = GENT(5,7,6,5,3, fs_lambda),
@@ -641,13 +641,28 @@ const glyph_t *font_mini(int ch)
     return &buf;
 }
 
+/* HP advance rule: distance from one glyph's left to the next glyph's left =
+   max(prev.w + 1, 5) + (next.w < 4 ? 1 : 0). The `+1 if narrow next` extra
+   gap accounts for the visual gap HP gives narrow glyphs ("1", "I", "."). */
+static int hp_advance(int prev_w, int next_w)
+{
+    int a = prev_w + 1;
+    if (a < 5) a = 5;
+    if (next_w > 0 && next_w < 4) a += 1;
+    return a;
+}
+
 int font_draw_stack(bitmap_t *bm, int x, int y, const char *s, int v)
 {
     int x0 = x;
     while (*s) {
-        const glyph_t *g = font_stack((unsigned char)*s++);
-        bm_blit_glyph(bm, x, y, g->rows, g->w, g->h, v);
-        x += g->advance;
+        glyph_t g = *font_stack((unsigned char)*s);  /* copy to avoid aliasing */
+        bm_blit_glyph(bm, x, y, g.rows, g.w, g.h, v);
+        const char *peek = s + 1;
+        int next_w = *peek ? font_stack((unsigned char)*peek)->w : 0;
+        if (*peek) x += hp_advance(g.w, next_w);
+        else x += g.w;
+        s++;
     }
     return x - x0;
 }
@@ -666,7 +681,14 @@ int font_draw_mini(bitmap_t *bm, int x, int y, const char *s, int v)
 int font_measure_stack(const char *s)
 {
     int w = 0;
-    while (*s) w += font_stack((unsigned char)*s++)->advance;
+    while (*s) {
+        glyph_t g = *font_stack((unsigned char)*s);  /* copy to avoid aliasing */
+        const char *peek = s + 1;
+        int next_w = *peek ? font_stack((unsigned char)*peek)->w : 0;
+        if (*peek) w += hp_advance(g.w, next_w);
+        else w += g.w;
+        s++;
+    }
     return w;
 }
 
@@ -689,13 +711,8 @@ void glyph_draw_paren_l(bitmap_t *bm, int x, int y_top, int height, int v)
         bm_blit_glyph(bm, x, y_top + (height - g->h) / 2, g->rows, g->w, g->h, v);
         return;
     }
-    /* Curved tall paren in 3-px slot: two tips + vertical body */
-    int top = y_top, bot = y_top + height - 1;
-    bm_set(bm, x + 1, top, v);
-    bm_set(bm, x, top + 1, v);
-    for (int y = top + 2; y < bot - 1; y++) bm_set(bm, x, y, v);
-    bm_set(bm, x, bot - 1, v);
-    bm_set(bm, x + 1, bot, v);
+    /* HP: tall paren is just a vertical line. */
+    bm_vline(bm, x, y_top, height, v);
 }
 
 void glyph_draw_paren_r(bitmap_t *bm, int x, int y_top, int height, int v)
@@ -705,18 +722,13 @@ void glyph_draw_paren_r(bitmap_t *bm, int x, int y_top, int height, int v)
         bm_blit_glyph(bm, x, y_top + (height - g->h) / 2, g->rows, g->w, g->h, v);
         return;
     }
-    int top = y_top, bot = y_top + height - 1;
-    bm_set(bm, x, top, v);
-    bm_set(bm, x + 1, top + 1, v);
-    for (int y = top + 2; y < bot - 1; y++) bm_set(bm, x + 1, y, v);
-    bm_set(bm, x + 1, bot - 1, v);
-    bm_set(bm, x, bot, v);
+    bm_vline(bm, x, y_top, height, v);
 }
 
 int glyph_paren_width(int height)
 {
     if (height <= STACK_FONT_H) return font_stack('(')->advance;
-    return 3;
+    return 2;  /* HP tall paren: 1 col + 1 col gap */
 }
 
 void glyph_draw_absbar(bitmap_t *bm, int x, int y_top, int height, int v)
@@ -725,16 +737,21 @@ void glyph_draw_absbar(bitmap_t *bm, int x, int y_top, int height, int v)
 }
 int glyph_absbar_width(int height) { (void)height; return 2; }
 
+/* HP-style sqrt: tail (2 px diagonal) + tall left vertical.
+   x = leftmost column of the sqrt symbol (= where the tail starts).
+   The vertical hook is at x+2.
+   y_top is the top of the sqrt (= vinculum row). */
 void glyph_draw_sqrt_hook(bitmap_t *bm, int x, int y_top, int height, int v)
 {
-    /* Down-stroke plus a small tick */
     int bot = y_top + height - 1;
-    bm_set(bm, x,     bot - 1, v);
-    bm_set(bm, x + 1, bot,     v);
-    for (int y = y_top + height/3; y < bot; y++) bm_set(bm, x + 2, y, v);
-    bm_set(bm, x + 3, y_top + height/3 - 1, v);
+    /* Tail: 2 px diagonal going down-right toward the vertical, near the
+       bottom of the body (one row above the bottom and just at it). */
+    bm_set(bm, x,     bot - 2, v);
+    bm_set(bm, x + 1, bot - 1, v);
+    /* Tall left vertical at x+2, full sqrt height. */
+    for (int y = y_top; y <= bot; y++) bm_set(bm, x + 2, y, v);
 }
-int glyph_sqrt_hook_width(int height) { (void)height; return 4; }
+int glyph_sqrt_hook_width(int height) { (void)height; return 3; }
 
 void glyph_draw_integral(bitmap_t *bm, int x, int y_top, int height, int v)
 {
@@ -752,29 +769,33 @@ void glyph_draw_integral(bitmap_t *bm, int x, int y_top, int height, int v)
 }
 int glyph_int_width(int height) { (void)height; return 4; }
 
+/* HP-style Σ: square, with full top and bottom horizontals, corners, and
+   diagonal lines going to the apex on the left side. Right side is open. */
 void glyph_draw_sigma(bitmap_t *bm, int x, int y_top, int height, int v)
 {
     int top = y_top, bot = y_top + height - 1;
-    int w = 5;
-    /* top */
-    bm_hline(bm, x, top, w, v);
-    /* top diagonal down to middle */
-    int midy = (top + bot) / 2;
-    int midx = x + (w / 2);
-    int dy = midy - top, dx = midx - x;
-    int n = dy > dx ? dy : dx;
-    for (int i = 1; i <= n; i++) {
-        int xi = x + (dx * i) / n;
-        int yi = top + (dy * i) / n;
-        bm_set(bm, xi, yi, v);
+    int width = height;          /* HP convention: sigma is square */
+    int right = x + width - 1;
+    /* Top and bottom horizontal lines (full width). */
+    bm_hline(bm, x, top, width, v);
+    bm_hline(bm, x, bot,  width, v);
+    /* Corners (just below/above the horizontals on the right side). */
+    bm_set(bm, right, top + 1, v);
+    bm_set(bm, right, bot - 1, v);
+    /* Apex y = middle. */
+    int mid = (top + bot) / 2;
+    /* Diagonal from (x+1, top+1) going down-right to apex. */
+    int rows_above = mid - top - 1;        /* number of diagonal cells */
+    for (int r = 0; r < rows_above; r++) {
+        bm_set(bm, x + 1 + r, top + 1 + r, v);
     }
-    /* bottom diagonal back out */
-    for (int i = 1; i <= n; i++) {
-        int xi = midx - (dx * i) / n;
-        int yi = midy + (dy * i) / n;
-        bm_set(bm, xi, yi, v);
+    /* Apex pixel. */
+    int apex_x = x + 1 + rows_above;
+    bm_set(bm, apex_x, mid, v);
+    /* Diagonal back from apex to (x+1, bot-1). */
+    int rows_below = bot - mid - 1;
+    for (int r = 0; r < rows_below; r++) {
+        bm_set(bm, apex_x - 1 - r, mid + 1 + r, v);
     }
-    /* bottom */
-    bm_hline(bm, x, bot, w, v);
 }
-int glyph_sigma_width(int height) { (void)height; return 5; }
+int glyph_sigma_width(int height) { return height; }

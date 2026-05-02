@@ -149,6 +149,10 @@ static int auto_imul_for_kind(eqw_t *e, int trigger)
 
 static void apply_char(eqw_t *e, int c)
 {
+    /* HP alpha mode produces uppercase letters by default. To match that
+       visually (since our test generator sends lowercase too), normalize
+       letters to uppercase here. */
+    if (isalpha(c)) c = toupper(c);
     /* Auto-multiply: editing a NUM, alpha char arrives -> commit and split. */
     if (e->mode == EQW_MODE_EDIT && e->edit && e->edit->kind == EX_NUM &&
         isalpha(c)) {
@@ -223,7 +227,38 @@ static void op_binary(eqw_t *e, expr_kind k)
 static void op_pow(eqw_t *e)            { op_binary(e, EX_POW); }
 static void op_div(eqw_t *e)            { op_binary(e, EX_DIV); }
 static void op_add(eqw_t *e)            { op_binary(e, EX_ADD); }
-static void op_sub(eqw_t *e)            { op_binary(e, EX_SUB); }
+static void op_sub(eqw_t *e)
+{
+    /* HP behavior: pressing - on an empty placeholder creates unary NEG, not
+       binary SUB. Detect by checking if the current selection is a fresh
+       placeholder. */
+    if (e->sel && e->sel->kind == EX_PLACEHOLDER) {
+        /* Wrap placeholder in NEG containing a placeholder body. */
+        expr *cur = e->sel;
+        expr *parent = (cur == e->root) ? NULL : cur->parent;
+        int idx = parent ? expr_index_in_parent(cur) : -1;
+        if (parent) {
+            parent->kids[idx] = NULL;
+            cur->parent = NULL;
+        } else {
+            e->root = NULL;
+        }
+        expr *neg = expr_new(EX_NEG);
+        expr_add_kid(neg, cur);
+        if (parent) {
+            parent->kids[idx] = neg;
+            neg->parent = parent;
+        } else {
+            e->root = neg;
+            neg->parent = NULL;
+        }
+        e->sel = cur;     /* the placeholder inside NEG */
+        e->edit = cur;
+        e->mode = EQW_MODE_EDIT;
+        return;
+    }
+    op_binary(e, EX_SUB);
+}
 static void op_mul(eqw_t *e)            { op_binary(e, EX_MUL); }
 
 static void op_sqrt(eqw_t *e)
@@ -314,12 +349,29 @@ static void op_cmplx(eqw_t *e)
 
 static void op_func_apply(eqw_t *e, const char *name)
 {
+    /* Per Meta Kernel doc 8.2.4: NUM/NAME followed by a prefix function
+       triggers auto-implicit-multiply. The "7 SIN" example produces 7·SIN(?). */
+    int was_atom = (e->mode == EQW_MODE_EDIT && e->edit &&
+                    (e->edit->kind == EX_NUM || e->edit->kind == EX_NAME));
+    if (was_atom) {
+        op_binary(e, EX_MUL);
+        /* Now sel = placeholder, edit = placeholder, mode = EDIT, after the
+           NUM/NAME we just committed. Fall through to put a FUNC there. */
+    }
     if (e->mode == EQW_MODE_EDIT) commit_edit(e);
     if (!e->sel) return;
     expr *wrap = expr_new(EX_FUNC);
     expr_text_set(wrap, name);
     expr_add_kid(wrap, expr_placeholder());
-    wrap_sel(e, wrap, 0, -1);
+    if (e->sel->kind == EX_PLACEHOLDER) {
+        /* Replace the placeholder with the FUNC and focus on its argument. */
+        replace_node(e, e->sel, wrap);
+        e->sel = wrap->kids[0];
+        e->edit = e->sel;
+        e->mode = EQW_MODE_EDIT;
+    } else {
+        wrap_sel(e, wrap, 0, -1);
+    }
 }
 
 static void op_userfunc(eqw_t *e)
@@ -774,12 +826,10 @@ void eqw_render(eqw_t *e, bitmap_t *bm, int caret_visible)
     ctx.cursor_x = e->cursor_x;
     ctx.cursor_y = e->cursor_y;
 
-    /* Render in the area ABOVE the menu strip. HP's EQW vertically centers
-       in the (LCD_H - MENU_H) = 71-row upper area; horizontally centers
-       around column 62 (slightly left-of-center). Match those. */
+    /* Render in the area ABOVE the menu strip. */
     bitmap_t upper = *bm;
-    upper.h = bm->h - MENU_H;
-    upper.w = 125;  /* HP's effective horizontal extent for centering */
+    upper.h = bm->h - MENU_H - 1;  /* = 72 for 80-row LCD */
+    upper.w = bm->w;               /* full LCD width; centering inside */
     render_eqw(&ctx, &upper, e->root);
     draw_status_strip(e, bm);
     draw_soft_menu(bm);
