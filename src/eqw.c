@@ -831,12 +831,15 @@ void eqw_render(eqw_t *e, bitmap_t *bm, int caret_visible)
 
     render_ctx ctx = { 0 };
     ctx.use_mini = e->use_mini;
-    /* Show the selection box in SEL mode; also in EDIT mode when sel and
-       edit are distinct nodes (e.g., after a binary op wrapped a previously
-       SEL'd subtree — the box stays on the wrapped subtree while the edit
-       caret moves to the new placeholder). */
-    ctx.sel = (e->mode != EQW_MODE_CURSOR && e->sel && e->sel != e->edit)
-              ? e->sel : NULL;
+    /* Show the selection box in SEL mode always (HP snapshots include the
+       inverse-video box); also show it in EDIT mode when sel/edit are
+       distinct nodes (after a binary op wrapped a previously-SEL'd
+       subtree), but only when caret_visible — in batch (caret_visible=0)
+       HP doesn't draw the box for this transient state. */
+    int show_sel = e->sel && e->mode != EQW_MODE_CURSOR &&
+                   (e->mode == EQW_MODE_SEL ||
+                    (e->sel != e->edit && caret_visible));
+    ctx.sel = show_sel ? e->sel : NULL;
     ctx.sel_boxed = 1;
     ctx.edit = (e->mode == EQW_MODE_EDIT) ? e->edit : NULL;
     ctx.caret_visible = caret_visible;

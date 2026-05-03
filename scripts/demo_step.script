@@ -1,0 +1,56 @@
+# demo_step.script — per-keystroke snapshots for ABX comparison.
+# Demo: arith — 5*(1+1/7.5)/(sqrt(3)-2^3), keys = 5*1+1/7.5$r/@3-2^3
+RESET
+NAME demo_arith_00_init
+SNAP demo_arith_00_init
+
+KEYS 5
+SNAP demo_arith_01_5
+
+KEYS *
+SNAP demo_arith_02_mul
+
+KEYS 1
+SNAP demo_arith_03_1
+
+KEYS +
+SNAP demo_arith_04_plus
+
+KEYS 1
+SNAP demo_arith_05_1
+
+KEYS /
+SNAP demo_arith_06_div
+
+KEYS 7
+SNAP demo_arith_07_7
+
+KEYS .
+SNAP demo_arith_08_period
+
+KEYS 5
+SNAP demo_arith_09_5
+
+KEYS $r
+SNAP demo_arith_10_right
+
+KEYS /
+SNAP demo_arith_11_div
+
+KEYS @
+SNAP demo_arith_12_sqrt
+
+KEYS 3
+SNAP demo_arith_13_3
+
+KEYS -
+SNAP demo_arith_14_minus
+
+KEYS 2
+SNAP demo_arith_15_2
+
+KEYS ^
+SNAP demo_arith_16_pow
+
+KEYS 3
+SNAP demo_arith_17_3

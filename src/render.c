@@ -277,14 +277,36 @@ void render_layout(render_ctx *ctx, expr *e)
              mode) collapses the bar to its natural width.  For structured
              dens (DIV/PAREN/etc.) the cursor lives INSIDE so no extra
              reserve.
-           - Minimum 13 cols. */
+           - Minimum 13 cols when the denominator has content; when the
+             denominator is an empty placeholder HP collapses the bar to
+             just-enough for the cursor (no min-13 floor). */
         int nw = n->w + 2;
         int dw = d->w + 2;
         int den_atom = (d->kind == EX_NUM || d->kind == EX_NAME);
         int den_edited = ctx && ctx->edit == d;
-        if (den_atom && d->w > 5 && den_edited) dw = d->w + 9;
+        /* edit_in_div: the edit cursor is anywhere within this DIV
+           subtree.  HP forces a min-13 bar only while the user is
+           inside; navigating away (SEL mode) collapses the bar to its
+           natural content width. */
+        int edit_in_div = 0;
+        if (ctx && ctx->edit) {
+            for (expr *p = ctx->edit; p; p = p->parent) {
+                if (p == e) { edit_in_div = 1; break; }
+            }
+        }
+        if (den_atom && d->w > 5 && den_edited) {
+            /* HP cursor reserve depends on the trailing glyph: narrow-
+               ending atoms get +10, normal-ending atoms get +8. */
+            int last_w = 5;
+            if (d->text && d->text[0]) {
+                last_w = font_stack((unsigned char)d->text[strlen(d->text) - 1])->w;
+            }
+            int extra = (last_w < 4) ? 10 : 8;
+            dw = d->w + extra;
+        }
         int content = nw > dw ? nw : dw;
-        e->w = content > 13 ? content : 13;
+        int den_empty = (d->kind == EX_PLACEHOLDER);
+        e->w = (edit_in_div && !den_empty && content < 13) ? 13 : content;
         /* HP layout: num + 1-row gap + bar + 1-row gap + den */
         e->h = n->h + 3 + d->h;
         e->axis = n->h + 1;
@@ -332,19 +354,36 @@ void render_layout(render_ctx *ctx, expr *e)
         /* HP geometry: tail(2) + vertical(1) + left_gap(1) + body + right_pad
            where right_pad depends on body kind: 8 cols for atomic / linear
            bodies (cursor reserve), 2 cols for structured bodies whose own
-           cursor lives inside (DIV, INTEG, SUM, etc.). */
+           cursor lives inside (DIV, INTEG, SUM, etc.) and for bodies
+           whose rightmost element is an empty placeholder (the
+           placeholder slot serves as cursor space). */
         int hw = glyph_sqrt_hook_width(e->kids[0]->h);
         int rpad;
-        switch (e->kids[0]->kind) {
+        const expr *body = e->kids[0];
+        const expr *rmost = body;
+        while (rmost) {
+            switch (rmost->kind) {
+            case EX_ADD: case EX_SUB: case EX_MUL: case EX_IMUL: case EX_EQ:
+            case EX_POW:
+                rmost = rmost->kids[1]; continue;
+            case EX_NEG:
+                rmost = rmost->kids[0]; continue;
+            default: break;
+            }
+            break;
+        }
+        int rmost_is_ph = rmost && rmost->kind == EX_PLACEHOLDER;
+        switch (body->kind) {
         case EX_DIV: case EX_INTEG: case EX_SUM:
         case EX_DERIV: case EX_WHERE:
+        case EX_PLACEHOLDER:
             rpad = 2; break;
         default:
-            rpad = 8; break;
+            rpad = rmost_is_ph ? 2 : 8; break;
         }
-        e->w = hw + 1 + e->kids[0]->w + rpad;
-        e->h = e->kids[0]->h + 3;
-        e->axis = e->kids[0]->axis + 2;
+        e->w = hw + 1 + body->w + rpad;
+        e->h = body->h + 3;
+        e->axis = body->axis + 2;
         break;
     }
 
@@ -517,7 +556,9 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
 
     case EX_PLACEHOLDER:
         /* HP shows no visible placeholder rect — just reserves layout width.
-           The blinking edit caret (if visible) takes care of indicating it. */
+           The blinking edit caret (if visible) takes care of indicating it.
+           HP's batch snapshots are non-deterministic in caret timing, so
+           we leave the placeholder unmarked rather than guessing. */
         break;
 
     case EX_NEG: {
@@ -622,7 +663,14 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
         if (n_off < 0) n_off = 0;
         int n_x = x + n_off;
         int d_adv = d->w + trailing_pad(d);
-        int d_off = (e->w - d_adv - 4) / 2;
+        /* For atomic den (NUM/NAME), HP reserves 4 cols on the right for
+           the cursor when centering on the bar.  For structured den
+           (DIV/SQRT/INTEG/etc.) the cursor lives inside the den, so
+           center without the cursor reserve. */
+        int d_atomic_centering = (d->kind == EX_NUM || d->kind == EX_NAME ||
+                                  d->kind == EX_PLACEHOLDER);
+        int d_off = d_atomic_centering ? (e->w - d_adv - 4) / 2
+                                       : (e->w - d_adv) / 2;
         if (d_off < 1) d_off = 1;
         int d_x = x + d_off;
         place_and_draw(ctx, bm, n, n_x, y);
@@ -923,6 +971,22 @@ void render_eqw(render_ctx *ctx, bitmap_t *bm, expr *root)
                     reserve = -5;
                 }
                 break;
+            case EX_PLACEHOLDER:
+                /* Trailing empty placeholder — HP centers the visible
+                   content as if the trailing placeholder slot were
+                   collapsed to 1 col (just the cursor).  Layout reserved
+                   5 cols for the placeholder; subtract the 4 extra cols
+                   from the cursor reserve to shift the center 2 cols
+                   right, matching HP. */
+                reserve -= 4;
+                break;
+            case EX_DIV: case EX_INTEG: case EX_SUM:
+                /* Cursor lives inside the structure (denominator slot,
+                   integrand, etc.).  No extra right-side reserve. */
+                if (root->kind != rmost->kind) {
+                    reserve = 0;
+                }
+                break;
             default: break;
             }
         }
@@ -935,11 +999,14 @@ void render_eqw(render_ctx *ctx, bitmap_t *bm, expr *root)
     if (x < 0) x = 0;
     place_and_draw(ctx, bm, root, x, y);
 
-    /* Selection box: a 1-px border with 1-px gap around the selected
-       sub-expression (per Meta Kernel §8.1.2 / §8.8.1).  HP's actual LCD
-       uses inverse-video — invisible after binary thresholding — so we
-       skip drawing the box only when rendering for headless snapshots
-       (caret_visible == 0). */
+    /* Selection box: HP renders selection as inverse video.  After
+       binary thresholding the box appears as a filled-black region with
+       text-shaped white "holes".  HP's snapshot timing is non-
+       deterministic — sometimes the snap catches the box-on phase,
+       sometimes box-off.  We mirror that randomness by only drawing the
+       box when caret_visible=1 (interactive blink-on phase).  Batch
+       snapshots use caret_visible=0 to roughly match HP's mostly-off
+       timing. */
     if (ctx->sel && ctx->caret_visible) {
         int bx = ctx->sel->x - 2;
         int by = ctx->sel->y - 1;
@@ -949,7 +1016,7 @@ void render_eqw(render_ctx *ctx, bitmap_t *bm, expr *root)
         if (by < 0) { bh += by; by = 0; }
         if (bx + bw > bm->w) bw = bm->w - bx;
         if (by + bh > bm->h) bh = bm->h - by;
-        bm_rect(bm, bx, by, bw, bh, 1);
+        bm_invert_rect(bm, bx, by, bw, bh);
     }
 
     /* edit caret */
