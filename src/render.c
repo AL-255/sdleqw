@@ -119,6 +119,54 @@ static int trailing_pad(const expr *e)
     return 0;
 }
 
+/* Width of the visually leftmost atomic glyph in expr e (for inter-operand
+   advance gaps).  Falls back to e->w when the leftmost token isn't a single
+   glyph (e.g. a sub-expression with parens / vinculum on the outside). */
+static int first_glyph_w(const expr *e)
+{
+    if (!e) return 0;
+    switch (e->kind) {
+    case EX_NUM:
+    case EX_NAME:
+        if (e->text && e->text[0])
+            return font_stack((unsigned char)e->text[0])->w;
+        return e->w;
+    case EX_ADD: case EX_SUB: case EX_MUL: case EX_IMUL: case EX_EQ:
+        return first_glyph_w(e->kids[0]);
+    case EX_POW:
+        return first_glyph_w(e->kids[0]);
+    case EX_NEG:
+        return 5;  /* leading '-' */
+    case EX_FUNC: case EX_USERFUNC:
+        if (e->text && e->text[0])
+            return font_stack((unsigned char)e->text[0])->w;
+        return 5;
+    default:
+        return e->w;
+    }
+}
+
+/* Width of the rightmost atomic glyph in expr e. */
+static int last_glyph_w(const expr *e)
+{
+    if (!e) return 0;
+    switch (e->kind) {
+    case EX_NUM:
+    case EX_NAME:
+        if (e->text && e->text[0])
+            return font_stack((unsigned char)e->text[strlen(e->text) - 1])->w;
+        return e->w;
+    case EX_ADD: case EX_SUB: case EX_MUL: case EX_IMUL: case EX_EQ:
+        return last_glyph_w(e->kids[1]);
+    case EX_POW:
+        return last_glyph_w(e->kids[1]);
+    case EX_NEG:
+        return last_glyph_w(e->kids[0]);
+    default:
+        return e->w;
+    }
+}
+
 /* ------------- LAYOUT ------------- */
 
 static void layout_text(render_ctx *ctx, expr *e)
@@ -159,7 +207,9 @@ void render_layout(render_ctx *ctx, expr *e)
         break;
 
     case EX_PLACEHOLDER:
-        e->w = 4; e->h = 4; e->axis = 2;
+        /* HP reserves full stack-font extent for an empty placeholder so
+           surrounding parens/sqrt scale to a normal-line height. */
+        e->w = 5; e->h = STACK_FONT_H; e->axis = STACK_FONT_AXIS;
         break;
 
     case EX_NEG: {
@@ -185,10 +235,26 @@ void render_layout(render_ctx *ctx, expr *e)
         int pa  = wpa ? 2 * paren_w_for(ah) : 0;
         int pb  = wpb ? 2 * paren_w_for(bh) : 0;
         int op_w = (e->kind == EX_IMUL || e->kind == EX_MUL) ? 1 : 5;
-        /* HP gap rule: gap = max(1, op_w - operand.w). Wider gap when the
-           operand is narrower than the operator. */
-        int gap_a = op_w - aw; if (gap_a < 1) gap_a = 1;
-        int gap_b = op_w - bw; if (gap_b < 1) gap_b = 1;
+        /* Inter-operand gap.  For +/- and = operators, HP uses
+           font_hp_advance(last_glyph_w(a), op_w) so a narrow trailing
+           glyph (like the "I" in "PI") gets the +1 gap.  Multiplication
+           dot uses gap_a=1, gap_b=2 (HP places one extra col after the
+           cdot before the next operand). */
+        int last_a_w  = wpa ? 5 : last_glyph_w(a);
+        int first_b_w = wpb ? 5 : first_glyph_w(b);
+        int gap_a, gap_b;
+        if (op_w == 1) {
+            /* MUL cdot: gap_a = 1 always; gap_b = 1, +1 when next operand
+               starts with a narrow glyph (w < 4) — same +1-narrow bonus
+               as the rest of HP's spacing. */
+            gap_a = 1;
+            gap_b = 1 + (first_b_w > 0 && first_b_w < 4 ? 1 : 0);
+        } else {
+            gap_a = font_hp_advance(last_a_w, op_w) - last_a_w;
+            gap_b = font_hp_advance(op_w, first_b_w) - op_w;
+            if (gap_a < 1) gap_a = 1;
+            if (gap_b < 1) gap_b = 1;
+        }
         e->w = aw + pa + gap_a + op_w + gap_b + bw + pb;
         int above = aa > ba ? aa : ba;
         int below_a = ah - aa, below_b = bh - ba;
@@ -205,16 +271,19 @@ void render_layout(render_ctx *ctx, expr *e)
         expr *n = e->kids[0], *d = e->kids[1];
         /* HP bar width:
            - At least num.w + 2 (1-col padding each side)
-           - At least den.w + 9 when den is "wide" (multi-char), so the
-             cursor reserve fits to its right.
+           - At least den.w + 9 when den is the *currently-edited* atom
+             wider than 5, to fit the cursor reserve to its right.  The
+             reserve only applies while editing; navigating away (SEL
+             mode) collapses the bar to its natural width.  For structured
+             dens (DIV/PAREN/etc.) the cursor lives INSIDE so no extra
+             reserve.
            - Minimum 13 cols. */
         int nw = n->w + 2;
-        int dw = d->w + 9;
+        int dw = d->w + 2;
+        int den_atom = (d->kind == EX_NUM || d->kind == EX_NAME);
+        int den_edited = ctx && ctx->edit == d;
+        if (den_atom && d->w > 5 && den_edited) dw = d->w + 9;
         int content = nw > dw ? nw : dw;
-        if (d->w <= 5) {
-            /* Single char-ish den fits in min bar without widening. */
-            content = nw;
-        }
         e->w = content > 13 ? content : 13;
         /* HP layout: num + 1-row gap + bar + 1-row gap + den */
         e->h = n->h + 3 + d->h;
@@ -228,9 +297,14 @@ void render_layout(render_ctx *ctx, expr *e)
         expr *base = e->kids[0], *ex = e->kids[1];
         int wpb = needs_parens(EX_POW, 0, base->kind);
         int pb  = wpb ? 2 * paren_w_for(base->h) : 0;
-        /* HP: exp's bottom row OVERLAPS the base's top row (they share 1 row). */
+        int wpe = needs_parens(EX_POW, 1, ex->kind);
+        int pe  = wpe ? 2 * paren_w_for(ex->h) : 0;
+        int last_base_w = wpb ? 5 : last_glyph_w(base);
+        int first_ex_w  = wpe ? 5 : first_glyph_w(ex);
+        int gap = font_hp_advance(last_base_w, first_ex_w) - last_base_w;
+        if (gap < 1) gap = 1;
         int raise = ex->h - 1;
-        e->w = base->w + pb + 1 + ex->w;
+        e->w = base->w + pb + gap + pe + ex->w;
         e->h = base->h + raise;
         e->axis = base->axis + raise;
         break;
@@ -255,11 +329,22 @@ void render_layout(render_ctx *ctx, expr *e)
 
     case EX_SQRT: {
         render_layout(ctx, e->kids[0]);
-        /* HP geometry: tail(2) + vertical(1) + left_gap(1) + body + right_pad(8) */
+        /* HP geometry: tail(2) + vertical(1) + left_gap(1) + body + right_pad
+           where right_pad depends on body kind: 8 cols for atomic / linear
+           bodies (cursor reserve), 2 cols for structured bodies whose own
+           cursor lives inside (DIV, INTEG, SUM, etc.). */
         int hw = glyph_sqrt_hook_width(e->kids[0]->h);
-        e->w = hw + 1 + e->kids[0]->w + 8;
-        e->h = e->kids[0]->h + 3;       /* vinculum + 1 gap + body + 1 row tail */
-        e->axis = e->kids[0]->axis + 2; /* axis still aligned to body */
+        int rpad;
+        switch (e->kids[0]->kind) {
+        case EX_DIV: case EX_INTEG: case EX_SUM:
+        case EX_DERIV: case EX_WHERE:
+            rpad = 2; break;
+        default:
+            rpad = 8; break;
+        }
+        e->w = hw + 1 + e->kids[0]->w + rpad;
+        e->h = e->kids[0]->h + 3;
+        e->axis = e->kids[0]->axis + 2;
         break;
     }
 
@@ -312,13 +397,6 @@ void render_layout(render_ctx *ctx, expr *e)
     }
 
     case EX_INTEG: {
-        /* lo, hi, body, var. Layout:
-                hi
-            (   |   ) body dvar
-                |
-                lo
-           hi sits above the integral, lo below. The integral glyph spans
-           a vertical region tall enough for the body. */
         int saved = ctx->use_mini; ctx->use_mini = 1;
         render_layout(ctx, e->kids[0]); /* lo */
         render_layout(ctx, e->kids[1]); /* hi */
@@ -332,31 +410,42 @@ void render_layout(render_ctx *ctx, expr *e)
         int int_w = glyph_int_width(integ_glyph_h);
         e->w = int_w + 1 + lim_w + 1 + body->w + 1 + 5 + 1 + var->w;
         e->h = hi->h + integ_glyph_h + lo->h;
-        /* axis at vertical middle of integral glyph */
         e->axis = hi->h + integ_glyph_h / 2;
         break;
     }
 
     case EX_SUM: {
-        int saved = ctx->use_mini; ctx->use_mini = 1;
+        /* HP renders sum's var/lo/hi at full stack-font size. */
         render_layout(ctx, e->kids[0]); /* var */
         render_layout(ctx, e->kids[1]); /* lo */
         render_layout(ctx, e->kids[2]); /* hi */
-        ctx->use_mini = saved;
         render_layout(ctx, e->kids[3]); /* body */
         expr *var = e->kids[0], *lo = e->kids[1], *hi = e->kids[2], *body = e->kids[3];
-        int low_w = var->w + 5 + lo->w;
+        /* Compute "var=lo" width using HP advance rules.  For atomic
+           var/lo we measure the concatenated string; otherwise approximate. */
+        int low_w;
+        if ((var->kind == EX_NUM || var->kind == EX_NAME) &&
+            (lo->kind == EX_NUM || lo->kind == EX_NAME)) {
+            char buf[80];
+            snprintf(buf, sizeof(buf), "%s=%s",
+                     var->text ? var->text : "",
+                     lo->text ? lo->text : "");
+            low_w = font_measure_stack(buf);
+        } else {
+            low_w = var->w + 7 + lo->w;
+        }
         int top_w = hi->w;
-        /* HP: sigma is square, height = body.h + 6 (so body fits centered). */
+        /* HP: sigma is square, height = body.h + 6. */
         int sigma_h = body->h + 6;
         if (sigma_h < 13) sigma_h = 13;
-        int sigma_w = sigma_h;     /* HP sigma is square */
+        int sigma_w = sigma_h;
         int sub_w = low_w > top_w ? low_w : top_w;
         if (sub_w < sigma_w) sub_w = sigma_w;
-        e->w = sub_w + 1 + body->w;
-        /* Total: hi above + sigma + lo below */
-        e->h = hi->h + sigma_h + var->h;
-        e->axis = hi->h + sigma_h / 2;
+        /* HP: 3 cols of gap between sigma's right edge and body. */
+        e->w = sub_w + 3 + body->w;
+        /* HP layout: hi + 1-row gap + sigma + 1-row gap + var=lo */
+        e->h = hi->h + 1 + sigma_h + 1 + var->h;
+        e->axis = hi->h + 1 + sigma_h / 2;
         break;
     }
 
@@ -457,8 +546,20 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
         int cx = x;
         int axis_y = y + e->axis;
         int op_w = (e->kind == EX_MUL || e->kind == EX_IMUL) ? 1 : 5;
-        int gap_a = op_w - a->w; if (gap_a < 1) gap_a = 1;
-        int gap_b = op_w - b->w; if (gap_b < 1) gap_b = 1;
+        int wpa = needs_parens(e->kind, 0, a->kind);
+        int wpb = needs_parens(e->kind, 1, b->kind);
+        int last_a_w  = wpa ? 5 : last_glyph_w(a);
+        int first_b_w = wpb ? 5 : first_glyph_w(b);
+        int gap_a, gap_b;
+        if (op_w == 1) {
+            gap_a = 1;
+            gap_b = 1 + (first_b_w > 0 && first_b_w < 4 ? 1 : 0);
+        } else {
+            gap_a = font_hp_advance(last_a_w, op_w) - last_a_w;
+            gap_b = font_hp_advance(op_w, first_b_w) - op_w;
+            if (gap_a < 1) gap_a = 1;
+            if (gap_b < 1) gap_b = 1;
+        }
         if (needs_parens(e->kind, 0, a->kind)) {
             int pw = paren_w_for(a->h);
             int py = axis_y - a->axis;
@@ -473,18 +574,19 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
             cx += a->w;
         }
         cx += gap_a;
-        int op_ch = '+';
-        switch (e->kind) {
-        case EX_ADD: op_ch = '+'; break;
-        case EX_SUB: op_ch = '-'; break;
-        case EX_MUL: op_ch = GL_DOT; break;
-        case EX_IMUL: op_ch = GL_DOT; break;
-        case EX_EQ:  op_ch = '='; break;
-        default: break;
+        if (e->kind != EX_IMUL) {
+            int op_ch = '+';
+            switch (e->kind) {
+            case EX_ADD: op_ch = '+'; break;
+            case EX_SUB: op_ch = '-'; break;
+            case EX_MUL: op_ch = GL_DOT; break;
+            case EX_EQ:  op_ch = '='; break;
+            default: break;
+            }
+            const glyph_t *gop = font_stack(op_ch);
+            int op_y = axis_y - gop->axis;
+            bm_blit_glyph(bm, cx, op_y, gop->rows, gop->w, gop->h, 1);
         }
-        const glyph_t *gop = font_stack(op_ch);
-        int op_y = axis_y - gop->axis;
-        bm_blit_glyph(bm, cx, op_y, gop->rows, gop->w, gop->h, 1);
         cx += op_w + gap_b;
         if (needs_parens(e->kind, 1, b->kind)) {
             int pw = paren_w_for(b->h);
@@ -502,18 +604,27 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
 
     case EX_DIV: {
         expr *n = e->kids[0], *d = e->kids[1];
-        /* HP places the numerator centered above the bar.  For the
-           denominator, the bar reserves 5 right-side cols for the
-           cursor.  When bar.w >= den.w + 10 (num dominates), den is
-           centered within (bar.w - 5); otherwise den left-aligns at
-           bar.x + 1 (den dominates the bar minimum). */
-        int n_x = x + (e->w - n->w + 1) / 2;
-        int d_x;
-        if (e->w - d->w >= 10) {
-            d_x = x + (e->w - d->w - 5) / 2;
+        /* HP centers numerator's visual width on the bar.  For atomic
+           NUM/NAME, HP rounds *toward the wider end of the glyph string*
+           so that the visual mass sits near the bar center.  For
+           structured nums HP floor-aligns. */
+        int n_off;
+        if ((n->kind == EX_NUM || n->kind == EX_NAME) && n->text && n->text[0]) {
+            int round_up = 0;
+            const char *t = n->text;
+            int first_w = font_stack((unsigned char)t[0])->w;
+            int last_w  = font_stack((unsigned char)t[strlen(t) - 1])->w;
+            if (last_w >= first_w) round_up = 1;
+            n_off = round_up ? (e->w - n->w + 1) / 2 : (e->w - n->w) / 2;
         } else {
-            d_x = x + 1;
+            n_off = (e->w - n->w) / 2;
         }
+        if (n_off < 0) n_off = 0;
+        int n_x = x + n_off;
+        int d_adv = d->w + trailing_pad(d);
+        int d_off = (e->w - d_adv - 4) / 2;
+        if (d_off < 1) d_off = 1;
+        int d_x = x + d_off;
         place_and_draw(ctx, bm, n, n_x, y);
         bm_hline(bm, x, y + n->h + 1, e->w, 1);
         place_and_draw(ctx, bm, d, d_x, y + n->h + 3);
@@ -525,7 +636,12 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
         int raise = ex->h - 1;
         int base_y = y + raise;
         int cx = x;
-        if (needs_parens(EX_POW, 0, base->kind)) {
+        int wpb = needs_parens(EX_POW, 0, base->kind);
+        int last_base_w = wpb ? 5 : last_glyph_w(base);
+        int first_ex_w  = first_glyph_w(ex);
+        int gap = font_hp_advance(last_base_w, first_ex_w) - last_base_w;
+        if (gap < 1) gap = 1;
+        if (wpb) {
             int pw = paren_w_for(base->h);
             glyph_draw_paren_l(bm, cx, base_y, base->h, 1);
             cx += pw;
@@ -537,7 +653,7 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
             place_and_draw(ctx, bm, base, cx, base_y);
             cx += base->w;
         }
-        cx += 1;
+        cx += gap;
         if (needs_parens(EX_POW, 1, ex->kind)) {
             int pw = paren_w_for(ex->h);
             glyph_draw_paren_l(bm, cx, y, ex->h, 1);
@@ -646,7 +762,6 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
         int integ_y = y + hi->h;
         glyph_draw_integral(bm, x, integ_y, integ_glyph_h, 1);
         int saved = ctx->use_mini; ctx->use_mini = 1;
-        /* hi sits above the integral, lo below, both indented to the right. */
         place_and_draw(ctx, bm, hi, x + 1, y);
         place_and_draw(ctx, bm, lo, x, y + hi->h + integ_glyph_h);
         ctx->use_mini = saved;
@@ -666,29 +781,46 @@ static void place_and_draw(render_ctx *ctx, bitmap_t *bm, expr *e, int x, int y)
         int sigma_h = body->h + 6;
         if (sigma_h < 13) sigma_h = 13;
         int sigma_w = sigma_h;
-        int low_w = var->w + 5 + lo->w;
+        int atomic_lo = (var->kind == EX_NUM || var->kind == EX_NAME) &&
+                        (lo->kind == EX_NUM || lo->kind == EX_NAME);
+        int low_w;
+        if (atomic_lo) {
+            char buf[80];
+            snprintf(buf, sizeof(buf), "%s=%s",
+                     var->text ? var->text : "",
+                     lo->text ? lo->text : "");
+            low_w = font_measure_stack(buf);
+        } else {
+            low_w = var->w + 7 + lo->w;
+        }
         int top_w = hi->w;
         int sub_w = low_w > top_w ? low_w : top_w;
         if (sub_w < sigma_w) sub_w = sigma_w;
-        int saved = ctx->use_mini; ctx->use_mini = 1;
         /* hi at top, centered horizontally above sigma */
         place_and_draw(ctx, bm, hi, x + (sub_w - hi->w) / 2, y);
-        /* sigma in the middle (after hi) */
-        int sigma_y = y + hi->h;
+        /* sigma in the middle (after hi + 1 gap row) */
+        int sigma_y = y + hi->h + 1;
         int sigma_x = x + (sub_w - sigma_w) / 2;
         glyph_draw_sigma(bm, sigma_x, sigma_y, sigma_h, 1);
-        /* var=lo at the bottom, below sigma */
+        /* var=lo at the bottom (after sigma + 1 gap row) */
         int low_x = x + (sub_w - low_w) / 2;
-        int low_y = y + hi->h + sigma_h;
-        place_and_draw(ctx, bm, var, low_x, low_y);
-        const glyph_t *geq = font_mini('=');
-        bm_blit_glyph(bm, low_x + var->w + 1,
-                      low_y + var->axis - geq->axis,
-                      geq->rows, geq->w, geq->h, 1);
-        place_and_draw(ctx, bm, lo, low_x + var->w + 5, low_y);
-        ctx->use_mini = saved;
+        int low_y = y + hi->h + 1 + sigma_h + 1;
+        if (atomic_lo) {
+            char buf[80];
+            snprintf(buf, sizeof(buf), "%s=%s",
+                     var->text ? var->text : "",
+                     lo->text ? lo->text : "");
+            font_draw_stack(bm, low_x, low_y, buf, 1);
+        } else {
+            place_and_draw(ctx, bm, var, low_x, low_y);
+            const glyph_t *geq = font_stack('=');
+            bm_blit_glyph(bm, low_x + var->w + 1,
+                          low_y + var->axis - geq->axis,
+                          geq->rows, geq->w, geq->h, 1);
+            place_and_draw(ctx, bm, lo, low_x + var->w + 7, low_y);
+        }
         /* body to right of sigma, vertically centered with sigma */
-        place_and_draw(ctx, bm, body, x + sub_w + 1, y + e->axis - body->axis);
+        place_and_draw(ctx, bm, body, x + sub_w + 3, y + e->axis - body->axis);
         break;
     }
 
@@ -734,9 +866,67 @@ void render_eqw(render_ctx *ctx, bitmap_t *bm, expr *root)
        Per HP: leftmost = floor((127 - measure_with_last_advance) / 2),
        which is equivalent to (131 - root.w - 4 - trailing_pad) / 2 if
        root.w is computed without including the last glyph's trailing pad. */
+    /* When the root's cursor lives INSIDE its own body (DIV, SQRT, parens,
+       function args, etc.), no extra cursor reserve is needed at the root.
+       For atomic / linear roots (NUM, NAME, ADD/SUB/MUL/EQ, POW, NEG), the
+       cursor lands to the right of the root, so reserve a column block. */
     int reserve;
-    if (root->kind == EX_DIV) reserve = 0;
-    else                      reserve = 4 + trailing_pad(root);
+    switch (root->kind) {
+    case EX_DIV: case EX_SQRT: case EX_NTHROOT: case EX_PAREN: case EX_ABS:
+    case EX_FUNC: case EX_USERFUNC:
+    case EX_INTEG: case EX_SUM: case EX_DERIV: case EX_WHERE:
+    case EX_CMPLX:
+        reserve = 0; break;
+    default:
+        reserve = 4 + trailing_pad(root); break;
+    }
+    /* Walk the rightmost binary chain.  If we end at a paren-trailing
+       structure, the layout has 3 cols of slack past the visible ')'
+       (paren advance 6 vs visible ink 2 + 1 col gap).  Subtract that
+       slack when centering and use no extra reserve, matching HP. */
+    {
+        const expr *rmost = root;
+        int saw_paren_wrap = 0;
+        while (rmost) {
+            const expr *next = NULL;
+            int idx = -1;
+            switch (rmost->kind) {
+            case EX_ADD: case EX_SUB: case EX_MUL: case EX_IMUL: case EX_EQ:
+            case EX_POW:
+                next = rmost->kids[1]; idx = 1; break;
+            case EX_NEG:
+                next = rmost->kids[0]; idx = 0; break;
+            default: break;
+            }
+            if (!next) break;
+            /* If `next` is wrapped in parens by its parent (rmost), the
+               visible right of the equation is the closing paren. */
+            if (needs_parens(rmost->kind, idx, next->kind)) saw_paren_wrap = 1;
+            rmost = next;
+        }
+        if (saw_paren_wrap) {
+            /* Visual ends with a paren ')' — same offset as paren-trailing. */
+            if (root->kind != EX_PAREN && root->kind != EX_ABS) {
+                reserve = -3;
+            }
+        } else if (rmost) {
+            switch (rmost->kind) {
+            case EX_PAREN: case EX_ABS:
+            case EX_FUNC: case EX_USERFUNC:
+            case EX_DERIV: case EX_CMPLX:
+                if (root->kind != rmost->kind) {
+                    reserve = -3;
+                }
+                break;
+            case EX_SQRT: case EX_NTHROOT:
+                if (root->kind != rmost->kind) {
+                    reserve = -5;
+                }
+                break;
+            default: break;
+            }
+        }
+    }
     int x = (bm->w - root->w - reserve) / 2;
     int y = (bm->h - root->h) / 2;
     if (x < 1) x = 1;
@@ -745,10 +935,12 @@ void render_eqw(render_ctx *ctx, bitmap_t *bm, expr *root)
     if (x < 0) x = 0;
     place_and_draw(ctx, bm, root, x, y);
 
-    /* selection overlay: a 1-px box around the selected sub-expression with
-       a 1-px gap inside so it doesn't crowd the glyphs (matches the boxed
-       selection style shown in Meta Kernel §8.1.2 / §8.8.1). */
-    if (ctx->sel) {
+    /* Selection box: a 1-px border with 1-px gap around the selected
+       sub-expression (per Meta Kernel §8.1.2 / §8.8.1).  HP's actual LCD
+       uses inverse-video — invisible after binary thresholding — so we
+       skip drawing the box only when rendering for headless snapshots
+       (caret_visible == 0). */
+    if (ctx->sel && ctx->caret_visible) {
         int bx = ctx->sel->x - 2;
         int by = ctx->sel->y - 1;
         int bw = ctx->sel->w + 4;

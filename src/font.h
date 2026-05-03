@@ -52,6 +52,10 @@ int font_draw_mini (bitmap_t *bm, int x, int y, const char *s, int v);
 int font_measure_stack(const char *s);
 int font_measure_mini (const char *s);
 
+/* HP advance rule: column step from a glyph of width prev_w to next of
+   width next_w (next_w == 0 means no following glyph). */
+int font_hp_advance(int prev_w, int next_w);
+
 /* Heights as constants for layout. */
 #define STACK_FONT_H 7
 #define MINI_FONT_H  6

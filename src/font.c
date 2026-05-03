@@ -276,9 +276,9 @@ G7(fs_eps,  R5(0,0,0,0,0), R5(0,0,0,0,0), R5(0,1,1,1,1), R5(0,1,0,0,0),
 /* infinity */
 G7(fs_inf,  R5(0,0,0,0,0), R5(0,0,0,0,0), R5(0,1,0,1,0), R5(1,0,1,0,1),
             R5(0,1,0,1,0), R5(0,0,0,0,0), R5(0,0,0,0,0));
-/* partial sign */
-G7(fs_partial, R5(0,1,1,1,0), R5(1,0,0,0,1), R5(0,0,0,0,1), R5(0,1,1,0,1),
-               R5(1,0,0,1,1), R5(1,0,0,0,1), R5(0,1,1,1,0));
+/* partial sign — HP shape: descender curl from upper-right to bowl */
+G7(fs_partial, R5(0,1,0,0,0), R5(0,0,1,0,0), R5(0,0,0,1,0), R5(0,1,1,1,1),
+               R5(1,0,0,0,1), R5(1,0,0,0,1), R5(0,1,1,1,0));
 /* leq, geq, neq */
 G7(fs_leq,  R5(0,0,0,1,0), R5(0,0,1,0,0), R5(0,1,0,0,0), R5(0,0,1,0,0),
             R5(0,0,0,1,0), R5(0,0,0,0,0), R5(1,1,1,1,1));
@@ -651,6 +651,8 @@ static int hp_advance(int prev_w, int next_w)
     if (next_w > 0 && next_w < 4) a += 1;
     return a;
 }
+
+int font_hp_advance(int prev_w, int next_w) { return hp_advance(prev_w, next_w); }
 
 int font_draw_stack(bitmap_t *bm, int x, int y, const char *s, int v)
 {

@@ -121,13 +121,6 @@ static void wrap_sel_just_consume(eqw_t *e, expr_kind k, int focus_back)
 /* Forward decl for auto-multiply. */
 static void op_binary(eqw_t *e, expr_kind k);
 
-/* True iff we're editing an atomic NUM or NAME token. */
-static int editing_atomic(const eqw_t *e)
-{
-    return e->mode == EQW_MODE_EDIT && e->edit &&
-           (e->edit->kind == EX_NUM || e->edit->kind == EX_NAME);
-}
-
 /* Per Meta Kernel doc 8.2.4: a NUM followed by an alpha character (or a
    prefix function, or a sqrt, etc.) auto-inserts an implicit multiply.
    Similarly a NAME followed by a prefix-fn auto-multiplies. After this
@@ -137,11 +130,14 @@ static int auto_imul_for_kind(eqw_t *e, int trigger)
     /* trigger == 'A' for an alpha char, 'F' for a prefix-fn (incl. sqrt). */
     if (e->mode != EQW_MODE_EDIT || !e->edit) return 0;
     if (trigger == 'A' && e->edit->kind == EX_NUM) {
+        /* HP renders NUM*ALPHA auto-mul WITH a visible cdot ("2·X"). */
         op_binary(e, EX_MUL);
         return 1;
     }
     if (trigger == 'F' && (e->edit->kind == EX_NUM || e->edit->kind == EX_NAME)) {
-        op_binary(e, EX_MUL);
+        /* HP renders auto-mul against a prefix function (sin/cos/sqrt/etc.)
+           as a bare juxtaposition with no visible operator. */
+        op_binary(e, EX_IMUL);
         return 1;
     }
     return 0;
@@ -197,10 +193,13 @@ static void apply_char(eqw_t *e, int c)
     }
 }
 
-/* Commit current edit (no-op other than mode change). */
+/* Commit current edit: leave SEL pointing at the just-committed node so
+   subsequent operators wrap it (instead of wrapping whatever node the
+   selection happened to point at when EDIT started). */
 static void commit_edit(eqw_t *e)
 {
     if (e->mode == EQW_MODE_EDIT) {
+        if (e->edit) e->sel = e->edit;
         e->edit = NULL;
         e->mode = EQW_MODE_SEL;
     }
@@ -213,15 +212,53 @@ static void commit_edit(eqw_t *e)
 
 /* ---------- ops ---------- */
 
+/* True iff k is an "unfenced" binary chain — a horizontal sequence with no
+   visual subregion.  ADD/SUB/MUL/IMUL chain in a row; DIV/POW carve out
+   visual subregions (numerator/denominator/exponent) where new operators
+   apply *inside* the subregion, so we must not walk out through them. */
+static int is_linear_chain(expr_kind k)
+{
+    return k == EX_ADD || k == EX_SUB || k == EX_MUL || k == EX_IMUL;
+}
+
 static void op_binary(eqw_t *e, expr_kind k)
 {
-    /* In edit mode: commit, then act in selection mode. */
+    /* Whether the user invoked us from a freshly-arrived selection (e.g.
+       after a navigation arrow) vs from inside text edit.  In SEL mode the
+       user has visually highlighted a subtree and pressed an operator; HP
+       keeps that subtree's selection box visible while opening an edit
+       cursor on the new right placeholder.  In EDIT mode, the operator
+       commits the current text and moves focus to the new placeholder so
+       the user can continue typing. */
+    int from_sel = (e->mode == EQW_MODE_SEL);
     if (e->mode == EQW_MODE_EDIT) commit_edit(e);
     if (!e->sel) return;
+    /* Operator-precedence parse for ADD/SUB (left-associative).  Walk up
+       from sel while the parent is part of an unfenced binary chain and
+       our target is the rightmost child.  This makes "5*1+_" wrap MUL
+       instead of just the rightmost 1, while "2/L+_" stays inside the
+       denominator slot (DIV is visually fenced). */
+    if (k == EX_ADD || k == EX_SUB) {
+        expr *target = e->sel;
+        while (target->parent) {
+            expr *p = target->parent;
+            if (!is_linear_chain(p->kind)) break;
+            int idx = expr_index_in_parent(target);
+            if (idx != p->nkids - 1) break;  /* not on right side */
+            target = p;
+        }
+        e->sel = target;
+    }
     expr *wrap = expr_new(k);
-    expr_add_kid(wrap, expr_placeholder()); /* slot 0 placeholder; will be replaced by sel */
-    expr_add_kid(wrap, expr_placeholder()); /* slot 1 placeholder */
+    expr_add_kid(wrap, expr_placeholder()); /* slot 0 — replaced by sel */
+    expr_add_kid(wrap, expr_placeholder()); /* slot 1 — new edit target */
     wrap_sel(e, wrap, 0, 1);
+    if (from_sel && wrap->kids[0]) {
+        /* Keep the visible selection on the wrapped subtree.  Edit cursor
+           remains on the new right placeholder so subsequent typing fills
+           the placeholder. */
+        e->sel = wrap->kids[0];
+    }
 }
 
 static void op_pow(eqw_t *e)            { op_binary(e, EX_POW); }
@@ -229,34 +266,10 @@ static void op_div(eqw_t *e)            { op_binary(e, EX_DIV); }
 static void op_add(eqw_t *e)            { op_binary(e, EX_ADD); }
 static void op_sub(eqw_t *e)
 {
-    /* HP behavior: pressing - on an empty placeholder creates unary NEG, not
-       binary SUB. Detect by checking if the current selection is a fresh
-       placeholder. */
-    if (e->sel && e->sel->kind == EX_PLACEHOLDER) {
-        /* Wrap placeholder in NEG containing a placeholder body. */
-        expr *cur = e->sel;
-        expr *parent = (cur == e->root) ? NULL : cur->parent;
-        int idx = parent ? expr_index_in_parent(cur) : -1;
-        if (parent) {
-            parent->kids[idx] = NULL;
-            cur->parent = NULL;
-        } else {
-            e->root = NULL;
-        }
-        expr *neg = expr_new(EX_NEG);
-        expr_add_kid(neg, cur);
-        if (parent) {
-            parent->kids[idx] = neg;
-            neg->parent = parent;
-        } else {
-            e->root = neg;
-            neg->parent = NULL;
-        }
-        e->sel = cur;     /* the placeholder inside NEG */
-        e->edit = cur;
-        e->mode = EQW_MODE_EDIT;
-        return;
-    }
+    /* HP behavior: pressing - on a fresh empty placeholder is a no-op
+       (HP discards leading/redundant minus keys; e.g., "-5" renders as
+       "5" and "X--Y" renders as "X-Y"). */
+    if (e->sel && e->sel->kind == EX_PLACEHOLDER) return;
     op_binary(e, EX_SUB);
 }
 static void op_mul(eqw_t *e)            { op_binary(e, EX_MUL); }
@@ -354,7 +367,7 @@ static void op_func_apply(eqw_t *e, const char *name)
     int was_atom = (e->mode == EQW_MODE_EDIT && e->edit &&
                     (e->edit->kind == EX_NUM || e->edit->kind == EX_NAME));
     if (was_atom) {
-        op_binary(e, EX_MUL);
+        op_binary(e, EX_IMUL);
         /* Now sel = placeholder, edit = placeholder, mode = EDIT, after the
            NUM/NAME we just committed. Fall through to put a FUNC there. */
     }
@@ -818,7 +831,12 @@ void eqw_render(eqw_t *e, bitmap_t *bm, int caret_visible)
 
     render_ctx ctx = { 0 };
     ctx.use_mini = e->use_mini;
-    ctx.sel = (e->mode == EQW_MODE_SEL) ? e->sel : NULL;
+    /* Show the selection box in SEL mode; also in EDIT mode when sel and
+       edit are distinct nodes (e.g., after a binary op wrapped a previously
+       SEL'd subtree — the box stays on the wrapped subtree while the edit
+       caret moves to the new placeholder). */
+    ctx.sel = (e->mode != EQW_MODE_CURSOR && e->sel && e->sel != e->edit)
+              ? e->sel : NULL;
     ctx.sel_boxed = 1;
     ctx.edit = (e->mode == EQW_MODE_EDIT) ? e->edit : NULL;
     ctx.caret_visible = caret_visible;

@@ -14,34 +14,65 @@
 #define LCD_H 80
 #define SCALE 4
 
-#define WIN_W (LCD_W * SCALE)
-#define WIN_H (LCD_H * SCALE + 80)   /* extra strip for hints */
+/* On-screen keyboard layout: 6 cols × N rows of clickable operator buttons. */
+#define KBD_COLS    6
+#define KBD_ROWS    7
+#define KBD_BTN_W   ((LCD_W * SCALE) / KBD_COLS)   /* 524 / 6 = 87 */
+#define KBD_BTN_H   30
+#define KBD_H       (KBD_BTN_H * KBD_ROWS + 4)
+#define HINT_H      40
 
-#define COLOR_OFF 0xFFB5BD8C        /* LCD background */
-#define COLOR_ON  0xFF1A1F1A        /* LCD foreground */
-#define COLOR_BG  0xFF202020
-#define COLOR_HINT 0xFFCCCCCC
+#define WIN_W (LCD_W * SCALE)
+#define WIN_H (LCD_H * SCALE + KBD_H + HINT_H)
+
+#define COLOR_OFF   0xFFB5BD8C        /* LCD background */
+#define COLOR_ON    0xFF1A1F1A        /* LCD foreground */
+#define COLOR_BG    0xFF202020
+#define COLOR_HINT  0xFFCCCCCC
+#define COLOR_BTN   0xFF383838        /* button face */
+#define COLOR_BTN_HI 0xFF505868       /* hover */
+#define COLOR_BTN_DN 0xFF7A8A9C       /* pressed */
+#define COLOR_BTN_BD 0xFF606060       /* border */
+#define COLOR_BTN_TX 0xFFE8E8E8       /* label text */
 
 static const char *KEY_HINTS[] = {
-    "  digits/letters: enter NUM/NAME",
-    "  +  -  *  /  : binary ops",
-    "  ^ : power     ' : parens",
-    "  | : abs       , : next arg",
-    "  q : sqrt      Q : nth-root",
-    "  i : integral  s : sum",
-    "  d : deriv     w : where",
-    "  c : complex   u : userfunc",
-    "  S : SIN       C : COS  T : TAN",
-    "  L : LN        E : EXP  G : LOG",
-    "  TAB: edit/sel BackSp: del-sel",
-    "  Ctrl+D: forward-del 1-arg fn",
-    "  Ctrl+C: clear-arg of 2-arg fn",
-    "  Ctrl+L: clear-all-but-sel",
-    "  z: zoom (mini font toggle)",
-    "  k: cursor mode",
-    "  F1: load demo expression",
-    "  Esc: quit       Enter: commit",
+    "  Letters/digits: type on keyboard.  Operators: click below or use shortcut.",
+    "  TAB: edit/select toggle    F2: zoom (mini font)    F3: cursor mode",
+    "  Ctrl+D: del-1-arg-fn   Ctrl+C: clear-arg   Ctrl+L: keep-only-selection",
     NULL,
+};
+
+/* Clickable operator keyboard.  Each entry is (label, keycode, shift).
+   Empty label = blank cell.  Keys that already have keyboard shortcuts are
+   still included for discoverability. */
+typedef struct {
+    const char  *label;
+    eqw_keycode  k;
+    int          shift;
+} kbd_btn;
+
+static const kbd_btn KBD[KBD_ROWS][KBD_COLS] = {
+    /* Row 0 — binary ops + comma */
+    { {"+", EQW_K_PLUS, 0},  {"-", EQW_K_MINUS, 0}, {"*", EQW_K_MUL, 0},
+      {"/", EQW_K_DIV, 0},   {"^", EQW_K_POW, 0},   {",", EQW_K_COMMA, 0} },
+    /* Row 1 — wrappers */
+    { {"sqrt", EQW_K_SQRT, 0},  {"nrt",  EQW_K_NTHROOT, 0}, {"(  )",  EQW_K_PAREN, 0},
+      {"|x|",  EQW_K_ABS, 0},   {"INT", EQW_K_INTEG, 0},   {"SUM", EQW_K_SUM, 0} },
+    /* Row 2 — multi-slot constructors */
+    { {"DRV", EQW_K_DERIV, 0},   {"WHR", EQW_K_WHERE, 0}, {"a+bi", EQW_K_CMPLX, 0},
+      {"f()", EQW_K_USERFUNC, 0},{"DEMO",EQW_K_DEMO, 0},  {"",   EQW_K_NONE, 0} },
+    /* Row 3 — prefix functions */
+    { {"SIN", EQW_K_FUNC_SIN, 0}, {"COS", EQW_K_FUNC_COS, 0}, {"TAN", EQW_K_FUNC_TAN, 0},
+      {"LN",  EQW_K_FUNC_LN, 0},  {"EXP", EQW_K_FUNC_EXP, 0}, {"LOG", EQW_K_FUNC_LOG, 0} },
+    /* Row 4 — ABS func, navigation */
+    { {"ABS", EQW_K_FUNC_ABS, 0}, {"<-",  EQW_K_LEFT, 0},  {"->",  EQW_K_RIGHT, 0},
+      {"UP",  EQW_K_UP, 0},       {"DN",  EQW_K_DOWN, 0},  {"TAB", EQW_K_TAB, 0} },
+    /* Row 5 — editing */
+    { {"BS",  EQW_K_BACKSPACE, 0},{"DEL", EQW_K_DEL, 0},   {"CLR", EQW_K_CLEAR, 0},
+      {"CL!", EQW_K_CLEAR, 1},    {"ENT", EQW_K_ENTER, 0}, {"ESC", EQW_K_ESC, 0} },
+    /* Row 6 — misc */
+    { {"ZOOM",EQW_K_ZOOM, 0},     {"CUR", EQW_K_CURSOR, 0},{"",  EQW_K_NONE, 0},
+      {"",    EQW_K_NONE, 0},     {"",   EQW_K_NONE, 0},   {"",  EQW_K_NONE, 0} },
 };
 
 /* Convert 1-bpp bitmap to 32-bit RGBA buffer (premultiplied alpha not needed). */
@@ -368,6 +399,81 @@ static void draw_text_software(uint32_t *fb, int fbw, int fbh,
     }
 }
 
+static int measure_text_software(const char *s, int scale)
+{
+    int x = 0;
+    while (*s) {
+        const glyph_t *g = font_stack((unsigned char)*s++);
+        x += g->advance * scale;
+    }
+    return x;
+}
+
+static void fill_rect_sw(uint32_t *fb, int fbw, int fbh,
+                         int x, int y, int w, int h, uint32_t color)
+{
+    for (int j = 0; j < h; j++) {
+        int py = y + j;
+        if (py < 0 || py >= fbh) continue;
+        for (int i = 0; i < w; i++) {
+            int px = x + i;
+            if (px < 0 || px >= fbw) continue;
+            fb[py * fbw + px] = color;
+        }
+    }
+}
+
+static void stroke_rect_sw(uint32_t *fb, int fbw, int fbh,
+                           int x, int y, int w, int h, uint32_t color)
+{
+    fill_rect_sw(fb, fbw, fbh, x,         y,         w, 1, color);
+    fill_rect_sw(fb, fbw, fbh, x,         y + h - 1, w, 1, color);
+    fill_rect_sw(fb, fbw, fbh, x,         y,         1, h, color);
+    fill_rect_sw(fb, fbw, fbh, x + w - 1, y,         1, h, color);
+}
+
+/* Returns 1 if (mx, my) hit a button; sets r_row/r_col on hit. */
+static int kbd_hit(int mx, int my, int kbd_y0, int *r_row, int *r_col)
+{
+    if (mx < 0 || mx >= WIN_W) return 0;
+    int ly = my - kbd_y0;
+    if (ly < 2 || ly >= 2 + KBD_BTN_H * KBD_ROWS) return 0;
+    int row = (ly - 2) / KBD_BTN_H;
+    int col = mx / KBD_BTN_W;
+    if (row < 0 || row >= KBD_ROWS) return 0;
+    if (col < 0 || col >= KBD_COLS) return 0;
+    if (!KBD[row][col].label[0]) return 0;
+    *r_row = row; *r_col = col;
+    return 1;
+}
+
+/* Render the on-screen keyboard into the side framebuffer, with optional
+   highlight on (hi_row, hi_col) (set to -1 for none) and pressed (down). */
+static void draw_kbd(uint32_t *fb, int fbw, int fbh,
+                     int kbd_y0, int hi_row, int hi_col, int down)
+{
+    for (int row = 0; row < KBD_ROWS; row++) {
+        for (int col = 0; col < KBD_COLS; col++) {
+            const kbd_btn *b = &KBD[row][col];
+            if (!b->label[0]) continue;
+            int x = col * KBD_BTN_W + 2;
+            int y = kbd_y0 + 2 + row * KBD_BTN_H + 1;
+            int w = KBD_BTN_W - 4;
+            int h = KBD_BTN_H - 2;
+            uint32_t face = COLOR_BTN;
+            if (row == hi_row && col == hi_col) {
+                face = down ? COLOR_BTN_DN : COLOR_BTN_HI;
+            }
+            fill_rect_sw(fb, fbw, fbh, x, y, w, h, face);
+            stroke_rect_sw(fb, fbw, fbh, x, y, w, h, COLOR_BTN_BD);
+            int tw = measure_text_software(b->label, 2);
+            int tx = x + (w - tw) / 2;
+            int ty = y + (h - STACK_FONT_H * 2) / 2;
+            draw_text_software(fb, fbw, fbh, tx, ty, b->label, COLOR_BTN_TX, 2);
+        }
+    }
+}
+
 int main(int argc, char **argv)
 {
     int headless = 0;
@@ -433,6 +539,14 @@ int main(int argc, char **argv)
     Uint32 last_blink = SDL_GetTicks();
     int caret_visible = 1;
 
+    /* Mouse / keyboard interaction state for the on-screen keyboard. */
+    int hover_row = -1, hover_col = -1;
+    int press_row = -1, press_col = -1;
+
+    /* y-offset of the keyboard area within the side panel. */
+    const int kbd_y0_panel = HINT_H;             /* relative to side panel */
+    const int kbd_y0_window = LCD_H * SCALE + HINT_H;  /* absolute in window */
+
     int running = 1;
     while (running) {
         SDL_Event ev;
@@ -458,6 +572,47 @@ int main(int argc, char **argv)
                     }
                 }
             }
+            if (ev.type == SDL_MOUSEMOTION) {
+                int r, c;
+                if (kbd_hit(ev.motion.x, ev.motion.y, kbd_y0_window, &r, &c)) {
+                    hover_row = r; hover_col = c;
+                } else {
+                    hover_row = hover_col = -1;
+                }
+            }
+            if (ev.type == SDL_MOUSEBUTTONDOWN && ev.button.button == SDL_BUTTON_LEFT) {
+                int r, c;
+                if (kbd_hit(ev.button.x, ev.button.y, kbd_y0_window, &r, &c)) {
+                    press_row = r; press_col = c;
+                }
+            }
+            if (ev.type == SDL_MOUSEBUTTONUP && ev.button.button == SDL_BUTTON_LEFT) {
+                int r, c;
+                if (press_row >= 0 &&
+                    kbd_hit(ev.button.x, ev.button.y, kbd_y0_window, &r, &c) &&
+                    r == press_row && c == press_col) {
+                    const kbd_btn *b = &KBD[r][c];
+                    eqw_key k = { 0 };
+                    k.k = b->k;
+                    k.shift = b->shift;
+                    eqw_handle(e, &k);
+                    caret_visible = 1;
+                    last_blink = SDL_GetTicks();
+                    if (e->exit_code) {
+                        if (e->exit_code == 1) {
+                            char *s = expr_to_string(e->root);
+                            printf("ENTER: %s\n", s);
+                            fflush(stdout);
+                            free(s);
+                        } else {
+                            printf("ESC: cancelled\n");
+                            fflush(stdout);
+                        }
+                        running = 0;
+                    }
+                }
+                press_row = press_col = -1;
+            }
         }
 
         Uint32 now = SDL_GetTicks();
@@ -473,16 +628,19 @@ int main(int argc, char **argv)
         blit_lcd(bm, lcd_pix);
         SDL_UpdateTexture(lcd_tex, NULL, lcd_pix, LCD_W * 4);
 
-        /* Update side panel. */
+        /* Update side panel: hint strip on top, keyboard below. */
         int sw = WIN_W;
         int sh = WIN_H - LCD_H * SCALE;
         for (int i = 0; i < sw * sh; i++) side_fb[i] = COLOR_BG;
         int ty = 4;
         for (int i = 0; KEY_HINTS[i]; i++) {
-            draw_text_software(side_fb, sw, sh, 4, ty, KEY_HINTS[i], COLOR_HINT, 1);
-            ty += STACK_FONT_H + 1;
-            if (ty > sh - STACK_FONT_H) break;
+            draw_text_software(side_fb, sw, sh, 6, ty, KEY_HINTS[i], COLOR_HINT, 1);
+            ty += STACK_FONT_H + 3;
+            if (ty > kbd_y0_panel - STACK_FONT_H) break;
         }
+        int down = (press_row == hover_row && press_col == hover_col &&
+                    press_row >= 0);
+        draw_kbd(side_fb, sw, sh, kbd_y0_panel, hover_row, hover_col, down);
         SDL_UpdateTexture(side_tex, NULL, side_fb, sw * 4);
 
         SDL_SetRenderDrawColor(ren, 0x10, 0x10, 0x10, 0xFF);

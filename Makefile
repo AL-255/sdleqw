@@ -34,7 +34,7 @@ screenshot.pgm: $(BIN)
 test: test_keys
 	./test_keys
 
-test_keys: src/test_keys.c src/expr.c src/eqw.c src/render.c src/font.c src/bitmap.c
+test_keys: src/test_keys.c src/expr.c src/eqw.c src/render.c src/font.c src/bitmap.c src/hp_font.c src/hp_menu.c
 	$(CC) $(CFLAGS) $(INCLUDE) $^ -o $@
 
 .PHONY: all clean test
